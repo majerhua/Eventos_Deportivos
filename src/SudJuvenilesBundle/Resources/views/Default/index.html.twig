@@ -1,0 +1,144 @@
+{% extends '::base.html.twig' %}
+{% block title %}La Academia{% endblock %}
+{% block body  %}
+
+<section>
+
+{# 	<div style=" width:500px; margin-left:40px; margin-top:30px; " >
+		<form action="#" id="submit_form"  enctype="multipart/form-data">
+
+		  	<div class="form-group">
+		    	<label for="tipoDocumento">Tipo Documento</label>
+		    	<select class="form-control" name="tipoDocumento"  id="tipoDocumento">
+		    		<option value="1">DNI</option>
+		    		<option value="2">PASAPORTE</option>
+		    	</select>
+		  	</div>
+
+		  	<div class="form-group">
+		    	<label for="numeroDocumento">Numero Documento</label>
+		    	<input type="text"  name="numeroDocumento" class="form-control" id="numeroDocumento" >
+		  	</div>
+
+		  	<div class="form-group">
+		    	<label for="sexo">Pais de Origen</label>
+		    	<select class="form-control" name="paisOrigenId" id="paisOrigenId">
+		    		<option value="1">Argentina</option>
+		    		<option value="2">Peru</option>
+		    		<option value="3">Bolivia</option>
+		    	</select>
+		  	</div>
+
+	  	  	<div class="form-group">
+		    	<label for="nombre">Nombres</label>
+		    	<input type="text" class="form-control" name="nombre" id="nombre" value="carlos">
+		  	</div>
+
+
+		  	<div class="form-group">
+		    	<label for="apellidoPaterno">Apellido Paterno</label>
+		    	<input type="text" class="form-control" name="apellidoPaterno" id="apellidoPaterno" value="majerhua" >
+		  	</div>
+
+		  	<div class="form-group">
+		    	<label for="apellidoMaterno">Apellido Materno</label>
+		    	<input type="text" class="form-control" name="apellidoMaterno"  id="apellidoMaterno" value="nuñez" >
+		  	</div>
+
+		  	<div class="form-group">
+		    	<label for="sexo">sexo</label>
+		    	<select class="form-control" name="sexoId" id="sexoId">
+		    		<option value="1">Hombre</option>
+		    		<option value="2">Mujer</option>
+		    	</select>
+		  	</div>
+
+		  	<div class="form-group">
+		    	<label for="fechaNacimiento">fecha Nacimiento</label>
+		    	<input type="date" class="form-control" name="fechaNacimiento" id="fechaNacimiento" value="1994-10-05" >
+		  	</div>
+
+		  	<div class="form-group">
+		    	<label for="correo">Correo</label>
+		    	<input type="email" class="form-control" name="correo" id="correo" value="majerhua123@gmail.com" >
+		  	</div>
+
+	  		<div class="form-group">
+	    		<label for="documentoIdentidad">Documento Identidad</label>
+	    		<input type="file" class="form-control-file" name="documentoIdentidad" id="documentoIdentidad" multiple aria-describedby="documentoIdentidad">
+	    		<small id="documentoIdentidad" class="form-text text-muted">Ingrese su Documento Identidad</small>
+	  		</div>
+
+		  	<button id="btn_guardar" class="btn btn-primary">Guardar</button>
+		</form> #}
+
+
+<form action="#" class="form-horizontal" id="submit_form" name="submit_form" enctype="multipart/form-data">
+
+	<input class="form-control" name="documentoIdentidad" id="documentoIdentidad" type="file"/>
+
+</form>
+<button type="button" class="btn red button-enviar colorbnt">Guardar Archivo</button>
+
+	</div>
+
+</section>
+
+{% endblock %}
+
+{% block javascripts %}
+
+	<script>
+
+	$('#btn_guardar').click( function () {
+
+        var obj = new FormData($("#submit_form")[0]);
+
+        console.log("Objecto => ",obj);
+		
+        $.ajax({
+            url: "{{url('participanteRegistrar')}}",
+            type: 'POST',
+            data: obj,
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+                console.log("Datos a Enviar ==> ",obj);
+            },
+            success: function(data) {
+                 console.log("Estado Respuesta =>",data);
+            },
+            error: function (error) {
+                console.log("Error =>",error);
+            }
+        });
+    });
+
+    	$('.button-enviar').click( function () {
+
+        	var obj = new FormData($("#submit_form")[0]);
+
+			$.ajax({
+			       url: "{{url('participanteRegistrar')}}",
+			       type: 'POST',
+			       data: obj,
+			       contentType: false,
+			       cache: false,
+			       processData: false,
+			       beforeSend: function (jqXHR) {
+
+			       },
+			       success: function (data, textStatus, jqXHR) {
+
+			       },
+			       error: function (error) {
+			          console.log("error")
+			       }
+	       });
+
+    	});
+               
+	</script>
+
+{% endblock %}

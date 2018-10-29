@@ -1,0 +1,11 @@
+sud_juveniles:
+    resource: "@SudJuvenilesBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+sudamericanos_juveniles_logout:
+  path: /logout

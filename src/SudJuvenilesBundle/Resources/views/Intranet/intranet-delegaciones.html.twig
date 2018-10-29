@@ -1,0 +1,103 @@
+{% extends '::base.html.twig' %}
+{% block title %}Sudamericanos Juveniles{% endblock %}
+{% block body %}
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
+        <a class="navbar-brand" href="#">
+            <img src="{{asset('assets/images/logaso.png')}}" height="80" class="d-inline-block align-top" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <span class="nav-link" style="margin-right:30px;">
+                        Usuario: <b>Administrador</b>
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="intranet-menu.html">Volver</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">Salir</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    </header>
+
+
+    <section class="section-white">
+
+        <div class="container">
+
+            <h1 class="text-center">Delegaciones</h1>
+
+        </div>
+
+    </section>
+
+    <section class="section-white">
+
+        <div class="container">
+
+
+            <div class="row">
+
+                {% for delegacion in delegaciones %}
+
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                        <a href="{{url('delegacion',{delegacionId:delegacion['delegacionId']})}}" class="container-escenario-item">
+
+                            <img src="{{asset(delegacion['imagen'])}}" class="img-fluid">
+
+                            <div class="header-delegacion-item">
+                                <h5 class="card-title text-center">{{delegacion['nombre']}}</h5>
+                            </div>
+                        </a>
+                    </div>
+
+                {% endfor %}
+            </div>
+
+        </div>
+
+
+    </section>
+
+    <footer class="bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-center">
+                    <br>
+                    <br>
+                    <br>
+                    <img class="img-fluid" src="{{asset('assets/images/logaso.png')}}">
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <br><br>
+                    <h4>Instituto Peruano del Deporte</h4>
+                    <p class="footerTex">
+                        Dirección:Calle Madre de Dios N° 463
+                    </p>
+                    <p class="footerTex">
+                        Teléfono: 204-8420 /anexo 1302
+                    </p>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <br><br>
+                    <h4>Enlaces de Interés</h4>
+                    <p><a class="footerTex" href="http://www.ipd.gob.pe/">Instituto Peruano del Deporte</a></p>
+                    <p><a class="footerTex" href="https://www.facebook.com/recreacion.ipd/">Facebook Recreación</a></p>
+                    <p><a class="footerTex" href="http://www.ipd.gob.pe/formacion-deportiva">Formación Deportiva</a></p>
+                </div>
+            </div>
+        </div>
+        <p class="text-center">&copy; 2018 Todos los derechos reservados</p>
+    </footer>
+
+{% endblock %}

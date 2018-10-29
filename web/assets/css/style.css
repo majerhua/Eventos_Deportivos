@@ -1,0 +1,208 @@
+body{
+    font-family: Montserrat, sans-serif;
+}
+
+header {
+    opacity: 0.9;
+}
+
+.nav-link{
+    font-size: 1.0em;
+}
+
+.logo{
+    padding: 16px;
+}
+
+.container-social-item {
+
+    height: 446px;
+    margin: 10px;
+
+}
+
+.header-social-item {
+
+    text-align: center;
+    background-color: #AD003E;
+    color: white;
+    padding: 10px;
+
+}
+
+.section-white {
+
+    padding: 20px;
+    background-color: white;
+
+}
+
+.section-light-gray {
+
+    padding: 20px;
+    background-color: rgb(241, 238, 238);
+
+}
+
+.section-dark-gray {
+
+    padding: 40px;
+    background-color: rgb(66, 65, 65);
+    color: white;
+
+}
+
+.section-brown {
+
+    padding: 40px;
+    background-color:#e87722;
+    color: white;
+
+}
+
+
+.image-gallery {
+
+    width: 300px;
+    height: auto;
+
+}
+
+.container-escenario-item {
+
+    position: relative; 
+    max-width: 800px; /* Maximum width */
+    margin: 0 auto; /* Center it */
+    margin-bottom: 20px;
+
+}
+
+.escenario-item-detail {
+
+    padding: 10px;
+
+}
+
+.header-foto-item {
+
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-right: 8px;
+    padding-left: 10px;
+    background-color: #424242;
+    color: white;
+
+}
+
+.header-delegacion-item {
+
+    padding: 10px;
+
+}
+
+.login-container {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    background: url('../images/fondo3.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.login-detail {
+
+    background-color: white;
+    margin-top: 20px;
+    padding: 30px;
+    margin-bottom: 10px;
+
+}
+
+.container-menu-item{
+
+    margin-bottom: 20px;
+    padding: 20px;
+    text-decoration: none;
+    color: black;
+
+}
+
+
+.footer{
+    background-color: #F2A900;
+    color: white;
+}
+
+.header-modal{
+
+    text-align: center;
+    background-color: #0091EA;
+    color: white;
+    padding: 20px;    
+
+}
+
+
+
+/* Style all font awesome icons */
+.fa {
+    padding: 10px;
+    font-size: 30px;
+    width: 35px;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* Add a hover effect if you want */
+.fa:hover {
+    opacity: 0.7;
+}
+
+/* Set a specific color for each brand */
+
+/* Facebook */
+.fa-facebook {
+    background: #3B5998;
+    color: white;
+}
+
+/* Twitter */
+.fa-twitter {
+    background: #55ACEE;
+    color: white;
+}
+
+/* Youtube */
+.fa-youtube {
+    background: rgb(238, 85, 85);
+    color: white;
+}
+
+
+.portada-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: url('../images/fondo3.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+.multimedia-container {
+    position: relative; 
+    max-width: 800px; /* Maximum width */
+    margin: 0 auto; /* Center it */
+  }
+  
+  .container-escenario-item .img-container {
+    position: absolute; /* Position the background text */
+    bottom: 0; /* At the bottom. Use top:0 to append it to the top */
+    background: rgb(0, 0, 0); /* Fallback color */
+    background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+    color: #f1f1f1; /* Grey text */
+    width: 100%;
+    padding: 10px; /* Some padding */
+  }
