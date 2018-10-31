@@ -16,22 +16,39 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
 
     try {
           $query="  SELECT 
-                    per.tipo_documento tipoDocumento,
-                    per.numero_documento numeroDocumento,
-                    per.nombre nombre,
-                    per.apellido_paterno apellidoPaterno,
-                    per.apellido_materno apellidoMaterno,
-                    per.sexo_id sexoId,
-                    per.fecha_nacimiento fechaNacimiento,
-                    per.correo correo,
-                    per.pais_origen_id paisOrigen,
-                    par.tipo_participante_id tipoParticipante,
-                    par.estado_dis estadoDiscipacidad
-                    FROM inscripcion ins
-                    INNER JOIN participante par ON par.id = ins.participante_id
-                    INNER JOIN tipo_participante tipoPar ON tipoPar.id = par.tipo_participante_id
-                    INNER JOIN persona per ON per.id = par.persona_id
-                    WHERE ins.id = '$id'";
+                      per.tipo_documento tipoDocumento,
+                      per.numero_documento numeroDocumento,
+                      per.nombre nombre,
+                      per.apellido_paterno apellidoPaterno,
+                      per.apellido_materno apellidoMaterno,
+                      per.sexo_id sexoId,
+                      per.fecha_nacimiento fechaNacimiento,
+                      per.correo correo,
+                      per.pais_origen_id paisOrigen,
+                      par.tipo_participante_id tipoParticipante,
+                      par.estado_dis estadoDiscipacidad,
+                      CONVERT(VARCHAR(100),STUFF(( SELECT  ',' +
+                           CONVERT(VARCHAR(100),modal.id)
+                              FROM    inscripcion_modalidad AS insMod
+                              INNER JOIN modalidad modal ON modal.id = insMod.modalidad_id
+                              WHERE   insMod.inscripcion_id = ins.id
+                              FOR
+                              XML PATH('')
+                          ), 1, 1, '') ) AS modalidades,
+                      CONVERT(VARCHAR(100),STUFF(( SELECT  ',' +
+                           CONVERT(VARCHAR(100),divi.id)
+                              FROM    inscripcion_divisiones AS insDiv
+                              INNER JOIN divisiones divi ON divi.id = insDiv.divisiones_id
+                              WHERE   insDiv.inscripcion_id = ins.id
+                              FOR
+                              XML PATH('')
+                          ), 1, 1, '') ) AS divisiones
+
+                      FROM inscripcion ins
+                      INNER JOIN participante par ON par.id = ins.participante_id
+                      INNER JOIN tipo_participante tipoPar ON tipoPar.id = par.tipo_participante_id
+                      INNER JOIN persona per ON per.id = par.persona_id
+                      WHERE ins.id = '$id'";
 
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
@@ -56,11 +73,17 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
               $result = $stmt->fetchAll();
 
               $estadoRegistro = $result[0]['estadoRegistro'];
-              //$inscripcionId = $result[0]['inscripcionId'];
 
-              echo $estadoRegistro;
-              exit;
-              if( $estadoRegistro < 1 ){//SI NO OCURRE UN ERROR  EN EL REGISTRO DE PARTICIPANTE E INSCRIPCION
+              if($estadoRegistro == 1){
+
+                $inscripcionId = $result[0]['inscripcionId'];
+                $tipoGrupoId = $result[0]['tipoGrupoId'];
+
+              }
+              
+
+
+              if( $estadoRegistro >= 1 ){//SI NO OCURRE UN ERROR  EN EL REGISTRO DE PARTICIPANTE E INSCRIPCION
 
                 for ($i = 0; $i < count($arrayModalidades) ; $i++) {
 
@@ -85,12 +108,52 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
 
               }
 
+              $query="SELECT id FROM asignacion";
+              $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+              $stmt->execute();
+              $asignaciones = $stmt->fetchAll();
+
+              for ($i = 0; $i < count($asignaciones) ; $i++) {
+
+                if($tipoGrupoId == 2){
+                  
+                  $paramAsignacionId = $asignaciones[$i]['id'];
+
+                  $query="INSERT INTO inscripcion_asignacion(inscripcion_id,asignacion_id,estado)
+                          VALUES($inscripcionId , $paramAsignacionId ,1)";
+                  $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+                  $stmt->execute();
+
+                }
+                
+              }
+
               return $estadoRegistro;
 
             //}catch (DBALException $e) {
             //  $message = $e->getCode();
             //}
 	}
+
+
+public function editar($idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,$numeroDocumento,$nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$tipoParticipanteId,$rutaDocIdentidad,$rutaConstEstudio,$rutaFichaMedicaVigente,$rutaFormularioInscripcion,$rutaPolizaSeguro,$estadoDis,$rutaCertificadoDis,$rutaFotoPerfil){
+
+    //try {
+              $query="EXEC editarParticipante $idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,'$numeroDocumento','$nombre','$apellidoPaterno','$apellidoMaterno','$fechaNacimiento','$correo',$tipoParticipanteId,'$rutaDocIdentidad','$rutaConstEstudio','$rutaFichaMedicaVigente','$rutaFormularioInscripcion','$rutaPolizaSeguro',$estadoDis,'$rutaCertificadoDis','$rutaFotoPerfil'";
+              $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+              $stmt->execute();
+
+              $result = $stmt->fetchAll();
+              $estadoRegistro = $result[0]['estadoRegistro'];
+              //$inscripcionId = $result[0]['inscripcionId'];
+
+              return $estadoRegistro;
+
+            //}catch (DBALException $e) {
+            //  $message = $e->getCode();
+            //}
+  }
+
 
   public function getParticipantesByDisDelegId($delegId){
 
