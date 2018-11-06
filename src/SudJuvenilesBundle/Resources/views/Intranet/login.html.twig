@@ -2,136 +2,64 @@
 {% block title %}Sudamericanos Juveniles{% endblock %}
 {% block body  %}
 
-    <header class="bg-light">
+<body class="login-bg">
 
-        <div class="container">
+    {% if error == false %}
+    <div id="loader-wrapper">
+        <div id="loader"></div>
 
-            <div class="row">
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
 
-                <div class="col-12 col-xs-12 col-sm-12 col-md-6 col-lg-4 mr-auto">
-                    <img class="img-fluid logo" src="{{asset('assets/images/logaso.png')}}">
-                </div>
+    </div>
+    {% endif %}
 
-                <div class="col-md-auto">
 
-                    <div class="row">
+    <div class="container-fluid text-right">
+        <button class="btn btn-light" style="margin:16px;" onclick="goBack()"><i class="fa fa-times"></i></button>
+    </div>
 
-                        <div class="mr-auto col-8 col-xs-8 col-sm-8 col-md-12 col-lg-12" style="padding: 16px;">
 
-                            <div class="container">
+    <div class="login-container">
 
-                                <p>Siguenos en</p>
+        <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 container">
 
-                                <a href="#" class="fa fa-facebook"></a>
-                                <a href="#" class="fa fa-twitter"></a>
-                                <a href="#" class="fa fa-youtube"></a>
+            <div class="card">
 
-                            </div>
+                <div class="login-detail">
 
+                    <img src="{{asset('assets/images/icono.png')}}" class="img-fluid" width="100" height="100">
+
+                    <br>
+
+                    <h3>Bienvenido</h3>
+
+                    <p class="card-title">Juegos Sudamericanos Escolares - Arequipa 2018</p>
+
+                    <br>
+
+                    <form action="{{path('login')}}" method="POST">
+
+                        {% if error %}
+                        <div class="alert alert-danger alert-dismissible">
+                            <p style="text-center"><strong>Credenciales Inválidas </strong></p>
+                        </div>
+                        {% endif %}
+
+                        <div class="input-container">
+                            <i class="fa fa-user icon"></i>
+                            <input class="input-field" type="text" id="username" name="_username" value="{{last_username}}" maxlength="30" autofocus required placeholder="Usuario">
                         </div>
 
-                        <div class="col-auto nav-justified navbar navbar-expand-md navbar-light">
-
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-
-                            </button>
-
+                        <div class="input-container">
+                            <i class="fa fa-key icon"></i>
+                            <input class="input-field" id="password" type="password" name="_password" maxlength="30" required placeholder="Password">
                         </div>
+                        <br>
+                        <button class="btn btn-danger container" type="submit" id="btn-login"><strong>Iniciar sesion</strong></button>
+                    </form>
 
-                    </div>
-
-                </div>
-
-                <div class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12">
-
-                    <div class="container">
-
-                        <nav class="navbar nav-justified navbar-expand-md navbar-light">
-
-                            <div class="collapse navbar-collapse" id="navbarNav">
-
-                                <ul class="navbar-nav container">
-
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#">Inicio</span></a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="multimedia.html">Multimedia</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="agenda.html">Agenda</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="resultados.html">Resultados</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="escenarios.html">Escenarios</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="delegaciones.html">Delegaciones</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="login.html">Intranet</a>
-                                    </li>
-
-                                </ul>
-
-                            </div>
-
-                        </nav>
-                    </div>
-
-                </div>
-
-
-            </div>
-        </div>
-
-    </header>
-
-
-    <section class="section-white login-container">
-
-        <div class="row">
-
-            <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 container">
-
-                <div class="card" style="margin-top: 100px; margin-bottom: 100px;">
-
-                    <div class="header-social-item">
-
-                        <h4>Intranet</h4>
-
-                    </div>
-
-                    <div class="login-detail">
-                        <form action="{{path('login')}}" method="POST">
-
-                            {% if error %}
-                                <div class="alert alert-danger alert-dismissible">
-                                    <p style="text-center">
-                                    <strong>Credenciales Inválidas </strong>
-                                    </p>
-                                </div>
-                            {% endif %}
-
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">Usuario</label>
-                                <input type="text" id="username" class="form-control" name="_username"  value="{{last_username}}" maxlength="30" autofocus required placeholder="Usuario" >
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleFormControlInput2">Contrasena</label>
-                                <input id="password" type="password" class="form-control" name="_password" maxlength="30" required placeholder="Password">
-                            </div>
-
-                            <br>
-                            <br>
-                            <button  type="submit" class="btn btn-danger" id="btn-login">Ingresar</button>
-                        </form>
-                    </div>
+                    <br>
 
                 </div>
 
@@ -139,37 +67,9 @@
 
         </div>
 
-    </section>
+    </div>
 
-    <footer class="bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-center">
-                    <br>
-                    <br>
-                    <br>
-                    <img class="img-fluid" src="{{asset('assets/images/logaso.png')}}">
-                </div>
-                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                    <br><br>
-                    <h4>Instituto Peruano del Deporte</h4>
-                    <p class="footerTex">
-                        Dirección:Calle Madre de Dios N° 463
-                    </p>
-                    <p class="footerTex">
-                        Teléfono: 204-8420 /anexo 1302
-                    </p>
-                </div>
-                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                    <br><br>
-                    <h4>Enlaces de Interés</h4>
-                    <p><a class="footerTex" href="http://www.ipd.gob.pe/">Instituto Peruano del Deporte</a></p>
-                    <p><a class="footerTex" href="https://www.facebook.com/recreacion.ipd/">Facebook Recreación</a></p>
-                    <p><a class="footerTex" href="http://www.ipd.gob.pe/formacion-deportiva">Formación Deportiva</a></p>
-                </div>
-            </div>
-        </div>
-        <p class="text-center">&copy; 2018 Todos los derechos reservados</p>
-    </footer>
+</body>
+
 
 {% endblock %}
