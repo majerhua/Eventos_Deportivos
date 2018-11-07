@@ -104,10 +104,10 @@
                                                             <td class="text-center">{{participante['estado']}}</td>
 
                                                             <td>
-                                                            <button data-toggle="tooltip" title="Editar" type="button" class="btn btn-info"><i class="fas fa-edit" style="color:white;" ></i></button>
+                                                            <button data-toggle="modal" data-target="#modal-editar-integrante" onclick="obtenerInfoParti({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" title="Editar" type="button" class="btn btn-info"><i class="fas fa-edit" style="color:white;" ></i></button>
                                                             </td>
 
-                                                            <td><button data-toggle="tooltip" title="Mostrar Documentos"  type="button" class="btn btn-info "><i class="fas fa-eye" style="color:white;" ></i></button>
+                                                            <td><button onclick="detalleInformacionParticipante({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" title="Mostrar Detalle" title="Mostrar Documentos"  type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-detalle-integrante" ><i class="fas fa-eye" style="color:white;" ></i></button>
                                                             </td>
 
                                                             <td><button data-toggle="tooltip" title="Eliminar" type="button" class="btn btn-info "><i class="fas fa-trash-alt" style="color:white;" ></i></button>
@@ -176,7 +176,6 @@
                                                     <th></th>
                                                     <th></th>
                                                 </tr>
-
                                             </thead>
 
                                             <tbody  class="buscar">
@@ -193,13 +192,16 @@
                                                             <td class="text-center">{{participante['estado']}}</td>
 
                                                             <td>
-                                                            <button onclick="obtenerInfoParti({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" data-toggle="modal" data-target="#modal-editar-integrante"  data-toggle="tooltip" title="Editar" type="button" class="btn btn-info "><i class="fas fa-edit" style="color:white;"></i></button>
+                                                                <button onclick="obtenerInfoParti({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" data-toggle="modal" data-target="#modal-editar-integrante"  data-toggle="tooltip" title="Editar" type="button" class="btn btn-info "><i class="fas fa-edit" style="color:white;"></i></button>
                                                             </td>
 
-                                                            <td><button data-toggle="tooltip" title="Mostrar Detalle"  type="button" class="btn btn-info "><i class="fas fa-eye" style="color:white;" ></i></button>
+                                                            <td>
+                                                                <button onclick="detalleInformacionParticipante({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" title="Mostrar Detalle"  type="button" class="btn btn-info " data-toggle="modal" data-toggle="tooltip" data-target="#modal-detalle-integrante" ><i class="fas fa-eye" style="color:white;" ></i></button>
                                                             </td>
 
-                                                            <td><button data-toggle="tooltip" title="Eliminar" type="button" class="btn btn-info "><i class="fas fa-trash-alt" style="color:white;" ></i></button>
+                                                            <td>
+                                                                <button  title="Eliminar" onclick="setInscripcionIdInput({{participante['inscripcionId']}})"  type="button" class="btn btn-info " data-toggle="modal" data-target="#modal-eliminar-integrante"><i class="fas fa-trash-alt" style="color:white;"></i>
+                                                                </button>
                                                             </td>
                                                         </tr>
 
@@ -246,27 +248,296 @@
 
     </section>
 
-    {% include 'SudJuvenilesBundle:Default:footer.html.twig' %} 
 
-    <!-- MODAL EDITAR INFO PARTICIPANTE -->
+
+    <div class="modal fade" id="modal-eliminar-integrante" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+          
+                <div class="modal-header">
+                  <h5 class="modal-title text-center" style="font-size:1.1em;">Desea eliminar Participante?</h5>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                  <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <input type="hidden" name="elimInscripcionId" id="elimInscripcionId">
+                            <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                        <div class="col-lg-6">
+                            <button class="btn btn-danger" id="btnConfElimInscripcion">Aceptar</button>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-detalle-integrante" role="dialog" aria-hidden="true"   >
+
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header header-modal">
+                    <h4 class="modal-title">Detalle Integrante</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true" style="color:white;">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                   <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                    <h5>Informacion personal</h5>
+
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-8 col-md-8 col-lg-6 offset-lg-5 ">
+                                            <div class="form-group">
+                                                <img src="{{asset('assets/images/img-persona.gif')}}" class="rounded-circle" alt="Cinque Terre" width="150" height="150" id="detFotoPerfil" > 
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="container" style="font-size:0.85em;" >
+                                        <div class="row" style="padding:5px 30px;">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div  class="col-lg-5" style="font-weight:bold;font-size:1.1em;" id="detTipoDocumento" >
+                                                    </div>
+                                                    <div class="col-lg-6" id="detNumeroDocumento">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Nombres:</div><div id="detNombre" class="col-lg-6"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="font-size:1em;padding:5px 30px;">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-5" style="font-weight:bold;font-size:1.1em;" >A.Paterno:</div><div class="col-lg-5" id="detApellidoPaterno"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div class="col-lg-5" style="font-weight:bold;font-size:1.1em;">A.Materno:</div><div class="col-lg-6" id="detApellidoMaterno"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="font-size:1em;padding:5px 30px;">
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Sexo:</div><div class="col-lg-6" id="detSexoId"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Fec.Nac:</div><div id="detFechaNacimiento" class="col-lg-7"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="font-size:1em;padding:5px 30px;" >
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Correo:</div><div id="detCorreo" class="col-lg-7"></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">País:</div><div id="detPaisOrigen" class="col-lg-7"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="font-size:1em;padding:5px 30px;" >
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Tipo:
+                                                    </div>
+                                                    <div id="detTipoParticipante" class="col-lg-6" >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="font-size:1em;padding:5px 30px;" >
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Asignaciones:</div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <ul id="detModal-container-asignaciones" style="padding:0 0 0 30px;">
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="font-size:1em;padding:5px 30px;" >
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Modalidad:</div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <ul id="detModal-container-modalidades" style="padding:0 0 0 30px;">
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Divisiones:</div>
+                                                    <div class="col-lg-6">
+                                                        <div class="row">
+                                                            <ul id="detModal-container-divisiones" style="padding:0 0 0 30px;" >
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="font-size:1em;padding:5px 30px;" id="detContainer-docIdentidad" >
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Documento de identidad:</div>
+                                                    <div  class="col-lg-7">
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <a  href="" target="_blank" name="detDocumentoIdentidad" id="detDocumentoIdentidad">Visibilizar</a>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <a  href="" id="detDesDocumentoIdentidad" download>Descargar</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="font-size:1em;padding:5px 30px;" id="detContainer-docConsEstudio" >
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Constancia de estudios:</div>
+                                                    <div  class="col-lg-7">
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <a  href="" target="_blank" name="detConstEstudio" id="detConstEstudio">Visibilizar</a>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <a  href="" id="detDesConstEstudio" download>Descargar</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" style="font-size:1em;padding:5px 30px;" id="detContainer-docFichVigente">
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Ficha medica vigente:</div>
+                                                    <div  class="col-lg-7">
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <a  href="" target="_blank" name="detFichaMedicaVigente" id="detFichaMedicaVigente">Visibilizar</a>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <a  href="" id="detDesFichaMedicaVigente" download>Descargar</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="font-size:1em;padding:5px 30px;" id="detContainer-docFormIns">
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Formulario de inscripción:</div>
+                                                    <div  class="col-lg-7">
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <a  href="" target="_blank" name="detFichaMedicaVigente" name="detFormularioInscripcion" id="detFormularioInscripcion">Visibilizar</a>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <a  href="" id="detDesdetFormularioInscripcion" download>Descargar</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="font-size:1em;padding:5px 30px;" id="detContainer-docPolizSegu">
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Poliza de seguro:</div>
+                                                    <div  class="col-lg-7">
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <a  href="" target="_blank" name="detFichaMedicaVigente" name="detPolizaSeguro" id="detPolizaSeguro">Visibilizar</a>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <a  href="" id="detDesPolizaSeguro" download>Descargar</a>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="font-size:1em;padding:5px 30px;" id="detContainer-docCertDis">
+                                            <div class="col-lg-12">
+                                                <div class="row">
+                                                    <div style="font-weight:bold;font-size:1.1em;" class="col-lg-5">Certificado de discapacidad:</div>
+                                                    <div  class="col-lg-7">
+                                                        <div class="row">
+                                                            <div class="col-lg-4">
+                                                                <a  href="" target="_blank" name="detFichaMedicaVigente" name="detCertificadoDis">Visibilizar</a>
+                                                            </div>
+                                                            <div class="col-lg-4">
+                                                                <a  href="" id="detDesCertificadoDis" download>Descargar</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span><br>
+                                        <span style="color:grey; font-size:12px;"> Los formatos válidos en las imágenes son:
+                                        'png', 'jpg' o 'jpeg'. Peso máximo de 5M. </span>
+                                    </div>
+                                </div>
+                            </div>
+                       </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="modal-nuevo-integrante" role="dialog" aria-hidden="true">
 
         <div class="modal-dialog modal-lg" role="document">
 
-                <div class="modal-content">
+            <div class="modal-content">
 
-                    <form id="submit_form" action="#" enctype="multipart/form-data" method="POST" >
-
+                <form id="submit_form" action="#" enctype="multipart/form-data" method="POST" >
 
                     <div class="modal-header header-modal">
-
                         <h4 class="modal-title">Registra un nuevo integrante</h4>
-
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true" style="color:white;">&times;</span>
                         </button>
-
                     </div>
 
                     <div class="modal-body">
@@ -283,34 +554,23 @@
 
                                     <input type="hidden" name="disDelegId" id="disDelegId">
                                     <input type="hidden" name="paisRepresenta" id="paisRepresenta">
+                                    <input type="hidden" name="disciplinaId" id="disciplinaId" >
 
-                                    <li class="list-group-item">
-
+                                    <li class="list-group-item"  atr-id="cond_doc_fot_perf" >
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Foto de perfil</strong></p>
-
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
-
                                                     <input type="file" class="form-control-file" name="fotoPerfil"  id="fotoPerfil">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
 
                                     <li class="list-group-item">
-
                                         <div class="row">
-
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
@@ -324,6 +584,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -336,7 +597,6 @@
                                             </div>
 
                                         </div>
-
                                     </li>
 
                                     <li class="list-group-item">
@@ -351,9 +611,7 @@
                                     </li>
 
                                     <li class="list-group-item">
-
                                         <div class="row">
-
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
@@ -376,15 +634,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </li>
 
                                     <li class="list-group-item">
-
                                         <div class="row">
-
                                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
@@ -409,15 +663,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </li>
 
                                     <li class="list-group-item">
-
                                         <div class="row" >
-
                                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
@@ -428,7 +678,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
@@ -443,61 +692,43 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </li>
 
                                     <li class="list-group-item">
 
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
                                                 <p><span style="color:#B31A12">*</span><strong> Modalidad:</strong></p>
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-9">
-
                                                 <div class="row"  id="modal-container-modalidades">
-
-
-                                                   
                                                 </div>
-
                                             </div>
                                         </div>
 
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
                                                 <p><span style="color:#B31A12">*</span><strong> Divisiones:</strong></p>
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-9">
-
                                                 <div class="row"  id="modal-container-divisiones">
-
-
-                                                   
                                                 </div>
-
                                             </div>
                                         </div>    
                                     </li>
 
                                     <li  class="list-group-item">
-
                                         <div class="row">
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
                                                 <p><span style="color:#B31A12">*</span><strong> Tipo de participante:</strong></p>
                                             </div>
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                <select class="form-control" id="tipoParticipante" name="tipoParticipante" >
+                                                <select class="form-control" id="tipoParticipante" name="tipoParticipante" onchange="changeTipoParticipante(this)" >
                                                 </select>
                                             </div>
                                         </div>
-
                                     </li>
-
                                 </ul>
 
                                 <br>
@@ -506,124 +737,80 @@
 
                                 <ul class="list-group">
 
-                                    <li class="list-group-item">
-
+                                    <li class="list-group-item" atr-id="cond_doc_ident"  style="display:none;" >
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Documento de identidad</strong></p>
-
                                             </div>
 
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file"  name="documentoIdentidad" id="documentoIdentidad">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
-                                    <li class="list-group-item">
 
+                                    <li class="list-group-item" atr-id="cond_doc_const_est" style="display:none;">
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Constancia de estudios</strong></p>
-
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file"  name="constEstudio" id="constEstudio">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
-                                    <li class="list-group-item">
 
+                                    <li class="list-group-item" atr-id="cond_doc_ficha_medica" style="display:none;" >
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
-                                                <p><span style="color:#B31A12">*</span><strong> Ficha medica vigente</strong></p>
-
+                                                <p><span style="color:#B31A12">*</span><strong> Ficha médica vigente</strong></p>
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file" name="fichaMedicaVigente" id="fichaMedicaVigente">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
-                                    <li class="list-group-item">
 
+                                    <li class="list-group-item" atr-id="cond_doc_form_inscrip" style="display:none;">
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Formulario de
-                                                        inscripcion</strong></p>
-
+                                                        inscripción</strong></p>
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file" name="formularioInscripcion" id="formularioInscripcion">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
-                                    <li class="list-group-item">
 
+                                    <li class="list-group-item" atr-id="cond_doc_poliz_seg" style="display:none;">
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
-                                                <p><span style="color:#B31A12">*</span><strong> Poliza de seguro</strong></p>
-
+                                                <p><span style="color:#B31A12">*</span><strong> Póliza de seguro</strong></p>
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file" name="polizaSeguro" id="polizaSeguro">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
 
-                                    <li class="list-group-item">
-
+                                    <li class="list-group-item" atr-id="cond_doc_cert_disc" style="display:none;">
                                         <div class="row">
-
                                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                                 <p> ¿El participante presenta algún tipo de discapacidad física o
                                                     mental?
                                                 </p>
                                             </div>
-
-
                                             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="estadoDis"  name="estadoDis" value="1">
@@ -632,38 +819,28 @@
                                                     </label>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Certificado de
                                                         discapacidad</strong></p>
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file" id="certificadoDis" name="certificadoDis" >
                                                 </div>
-
                                             </div>
                                         </div>
                                     </li>
-
                                 </ul>
 
                                 <br>
-
                                 <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span><br>
                                 <span style="color:grey; font-size:12px;"> Los formatos válidos en las imágenes son:
                                     'png', 'jpg' o 'jpeg'. Peso máximo de 5M. </span>
 
                             </div>
                         </div>
-                        </form>
                     </div>
 
                     <div class="modal-footer">
@@ -671,9 +848,9 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                         <button id="btn_guardar" type="button" class="btn btn-success">Guardar</button>
                     </div>
-                </div>
-            
 
+                </form>
+            </div>
         </div>
     </div>
 
@@ -681,10 +858,9 @@
 
         <div class="modal-dialog modal-lg" role="document">
 
-                <div class="modal-content">
+            <div class="modal-content">
 
-                    <form id="submit_form_editar" action="#" enctype="multipart/form-data" method="POST" >
-
+                <form id="submit_form_editar" action="#" enctype="multipart/form-data" method="POST" >
 
                     <div class="modal-header header-modal">
 
@@ -711,32 +887,23 @@
                                     <input type="hidden" name="editDisDelegId" id="editDisDelegId">
                                     <input type="hidden" name="editInscribiteId" id="editInscribiteId">
 
-                                    <li class="list-group-item">
-
+                                    <li class="list-group-item" atr-id="cond_doc_fot_perf">
                                         <div class="row">
 
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Foto de perfil</strong></p>
-
                                             </div>
 
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file" name="editFotoPerfil"  id="editFotoPerfil">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
 
                                     <li class="list-group-item">
-
                                         <div class="row">
-
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
@@ -750,6 +917,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -760,9 +928,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </li>
 
                                     <li class="list-group-item">
@@ -777,9 +943,7 @@
                                     </li>
 
                                     <li class="list-group-item">
-
                                         <div class="row">
-
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
@@ -802,15 +966,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </li>
 
                                     <li class="list-group-item">
-
                                         <div class="row">
-
                                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
@@ -835,15 +995,11 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </li>
 
                                     <li class="list-group-item">
-
                                         <div class="row" >
-
                                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                                 <div class="row">
                                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
@@ -869,187 +1025,125 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </li>
 
                                     <li class="list-group-item">
 
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
                                                 <p><span style="color:#B31A12">*</span><strong> Modalidad:</strong></p>
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-9">
-
                                                 <div class="row"  id="editModal-container-modalidades">
-
-
-                                                   
                                                 </div>
-
                                             </div>
                                         </div>
 
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-3">
                                                 <p><span style="color:#B31A12">*</span><strong> Divisiones:</strong></p>
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-9">
-
                                                 <div class="row"  id="editModal-container-divisiones">
-
-
-                                                   
                                                 </div>
-
                                             </div>
                                         </div>    
                                     </li>
 
-                                    <li  class="list-group-item">
-
+                                    <li  class="list-group-item" >
                                         <div class="row">
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
                                                 <p><span style="color:#B31A12">*</span><strong> Tipo de participante:</strong></p>
                                             </div>
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                <select class="form-control" id="editTipoParticipante" name="editTipoParticipante" >
+                                                <select class="form-control" id="editTipoParticipante" name="editTipoParticipante" onchange="changeTipoParticipante(this)">
                                                 </select>
                                             </div>
                                         </div>
-
                                     </li>
-
                                 </ul>
-
                                 <br>
 
                                 <h5>Documentacion</h5>
 
                                 <ul class="list-group">
-
-                                    <li class="list-group-item">
-
+                                    <li class="list-group-item"  style="display:none;" atr-id="cond_doc_ident">
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Documento de identidad</strong></p>
-
                                             </div>
 
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file"  name="editDocumentoIdentidad" id="editDocumentoIdentidad">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
-                                    <li class="list-group-item">
 
+                                    <li class="list-group-item"  style="display:none;" atr-id="cond_doc_const_est">
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Constancia de estudios</strong></p>
-
                                             </div>
 
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file"  name="editConstEstudio" id="editConstEstudio">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
-                                    <li class="list-group-item">
 
+                                    <li class="list-group-item" style="display:none;" atr-id="cond_doc_ficha_medica">
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Ficha medica vigente</strong></p>
-
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file" name="editFichaMedicaVigente" id="editFichaMedicaVigente">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
-                                    <li class="list-group-item">
 
+                                    <li class="list-group-item"  style="display:none;" atr-id="cond_doc_form_inscrip">
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Formulario de
                                                         inscripcion</strong></p>
-
                                             </div>
-
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file" name="editFormularioInscripcion" id="editFormularioInscripcion">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
-                                    <li class="list-group-item">
 
+                                    <li class="list-group-item"  style="display:none;" atr-id="cond_doc_poliz_seg">
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Poliza de seguro</strong></p>
-
                                             </div>
 
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file" name="editPolizaSeguro" id="editPolizaSeguro">
                                                 </div>
-
                                             </div>
-
                                         </div>
-
                                     </li>
 
-                                    <li class="list-group-item">
-
+                                    <li class="list-group-item"  style="display:none;" atr-id="cond_doc_cert_disc">
                                         <div class="row">
-
                                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
                                                 <p> ¿El participante presenta algún tipo de discapacidad física o
                                                     mental?
                                                 </p>
                                             </div>
-
-
                                             <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" id="editEstadoDis"  name="editEstadoDis" value="1">
@@ -1058,27 +1152,20 @@
                                                     </label>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                         <div class="row">
-
                                             <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
                                                 <p><span style="color:#B31A12">*</span><strong> Certificado de
                                                         discapacidad</strong></p>
                                             </div>
 
                                             <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
                                                 <div class="form-group">
                                                     <input type="file" class="form-control-file" id="editCertificadoDis" name="editCertificadoDis">
                                                 </div>
-
                                             </div>
                                         </div>
                                     </li>
-
                                 </ul>
 
                                 <br>
@@ -1089,17 +1176,24 @@
 
                             </div>
                         </div>
-                        </form>
                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button id="btn_editar" type="button" class="btn btn-success">Editar</button>
-                    </div>
+                </form>
 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button id="btn_editar" type="button" class="btn btn-success">Editar</button>
                 </div>
+
+            </div>
+
         </div>
     </div>
+
+
+    {% include 'SudJuvenilesBundle:Default:footer.html.twig' %} 
+
+    <!-- MODAL EDITAR INFO PARTICIPANTE -->
 
 {% endblock %}
 
@@ -1112,17 +1206,44 @@
         var modalidadInscripcion =  new Array();
         var divisionInscripcion =  new Array();
 
-        const obtenerInfoParti = function(disDelegId,inscripcionId,disciplinaCategoria,delegTipoGrupo,disciplinaId){
+    //ELIMINAR INSCRIPCION
 
-            modalidadInscripcion = [];
-            divisionInscripcion = [];
+    $("#btnConfElimInscripcion").on('click',function(){
+            let datos = { 'inscripcionId':$("#elimInscripcionId").val() };
+            $.ajax({
+                url: "{{url('participanteEliminar')}}",
+                type: 'POST',
+                data: datos ,
+                beforeSend: function() {
+                    console.log("Datos a Enviar ==> ",datos);
+                },
+                success: function(data) {
+                    if( data == 0 ){
+                        alertify.warning("<p style='color:black'; >Ocurrio un Error en el Sistema!</p>");
+                    }else if(data==1){
+                        alertify.success("Se elimino al participante correctamente!.");
+                    }
+                },
+                error: function (error) {
+                    console.log("Error =>",error);
+                }
+            });
+    });
 
-            $("#editModal-container-modalidades").empty();
-            $("#editTipoParticipante").empty();
-            $("#editModal-container-divisiones").empty();
 
-            $("#editDisDelegId").val(disDelegId);
-            $("#editInscribiteId").val(inscripcionId);
+    //PASAR INSCRIPCION ID AL INPUT PARA ELIMINAR INSCRIPCION
+    const setInscripcionIdInput = function(inscripcionId){
+        $("#elimInscripcionId").val(inscripcionId);
+    };
+
+    //DETALLE PARTICIPANTE
+    const detalleInformacionParticipante = function(disDelegId,inscripcionId,disciplinaCategoria,delegTipoGrupo,disciplinaId){
+
+
+            $("#detModal-container-modalidades").empty();
+            $("#detTipoParticipante").empty();
+            $("#detModal-container-divisiones").empty();
+            $("#detModal-container-asignaciones").empty();
 
             const datos = {
                                     'inscripcionId':inscripcionId
@@ -1137,6 +1258,182 @@
                 },
                 success: function(data) {
                     let datosParticipante = JSON.parse(data)[0];
+
+                    console.log("Datos Participante =>",datosParticipante);
+
+                    $("#detNumeroDocumento").text(datosParticipante.numeroDocumento);
+                    $("#detTipoDocumento").text(datosParticipante.nombreTipoDocumento);
+                    $("#detNombre").text(datosParticipante.nombre);
+                    $("#detApellidoPaterno").text(datosParticipante.apellidoPaterno);
+                    $("#detApellidoMaterno").text(datosParticipante.apellidoMaterno);
+                    $("#detSexoId").text(datosParticipante.sexoNombre);
+                    $("#detFechaNacimiento").text(datosParticipante.fechaNacimiento);
+                    $("#detCorreo").text(datosParticipante.correo);
+                    $("#detPaisOrigen").text(datosParticipante.paisOrigenNombre);
+
+                    $("#detFotoPerfil").attr('src','/sudamericanos_juveniles/web/'+datosParticipante.rutaFotoPerfil)
+
+                    if(datosParticipante.rutaDocumentoIdentidad != null){
+
+                        $("#detContainer-docIdentidad").show();
+                        $("#detDocumentoIdentidad").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaDocumentoIdentidad);
+                        $("#detDesDocumentoIdentidad").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaDocumentoIdentidad);
+                    }else{
+                        $("#detContainer-docIdentidad").hide();
+                    }
+
+                    if(datosParticipante.rutaConstanciaEstudio != null){
+
+                        $("#detContainer-docConsEstudio").show();
+                        $("#detConstEstudio").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaConstanciaEstudio);
+                        $("#detDesConstEstudio").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaConstanciaEstudio);
+                    }else{
+                        $("#detContainer-docConsEstudio").hide();
+                    }
+
+                    if(datosParticipante.rutaFichaMedica != null){
+
+                        $("#detContainer-docFichVigente").show();
+                        $("#detFichaMedicaVigente").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFichaMedica);
+                        $("#detDesFichaMedicaVigente").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFichaMedica);
+                    }else{
+                        $("#detContainer-docFichVigente").hide();
+                    }
+
+                    if(datosParticipante.rutaFormularioInscripcion != null){
+
+                        $("#detContainer-docFormIns").show();
+                        $("#detFormularioInscripcion").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFormularioInscripcion);
+                        $("#detDesFormularioInscripcion").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFormularioInscripcion);
+                    }else{
+                        $("#detContainer-docFormIns").hide();
+                    }
+
+                    if(datosParticipante.rutaPolizaSeguro != null){
+
+                        $("#detContainer-docPolizSegu").show();
+                        $("#detPolizaSeguro").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaPolizaSeguro);
+                        $("#detDesPolizaSeguro").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaPolizaSeguro);  
+                    }else{
+                        $("#detContainer-docPolizSegu").hide();
+                    }
+
+                    if( datosParticipante.rutaCertificadoDiscapacidad != null){
+
+                        $("#detContainer-docCertDis").show();
+                        $("#detCertificadoDis").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaCertificadoDiscapacidad);
+                        $("#detDesCertificadoDis").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaCertificadoDiscapacidad);
+                    }else{
+                        $("#detContainer-docCertDis").hide();
+                    }
+
+                    var arrayModalidad = new Array();
+                    var arrayDivision = new Array();
+                    var arrayAsignacion = new Array();
+
+                    if(datosParticipante.modalidades != null)
+                         arrayModalidad = datosParticipante.modalidades.split(",");
+                    else
+                        arrayModalidad = [];
+
+                    if(datosParticipante.divisiones != null)
+                         arrayDivision = datosParticipante.divisiones.split(",");
+                    else
+                        arrayDivision = [];
+
+                    if(datosParticipante.asignaciones != null)
+                         arrayAsignacion = datosParticipante.asignaciones.split(",");
+                    else
+                        arrayAsignacion = [];
+
+                    {% for tipPar in tiposParticipante %}
+
+                        if( "{{tipPar['categoria_id']}}" == disciplinaCategoria && "{{tipPar['tipo_grupo_id']}}" == delegTipoGrupo &&  "{{tipPar['id']}}" ){ 
+
+                            if(  "{{tipPar['id']}}" == datosParticipante.tipoParticipante )
+                                $("#detTipoParticipante").append("{{tipPar['nombre']}}");
+                        }
+
+                    {%  endfor %}
+
+
+                    {%  for modalidad in modalidades %}
+
+                        if("{{modalidad['disciplinaId']}}" == disciplinaId ){
+
+                            for (let i = 0; i < arrayModalidad.length; i++) { 
+                                
+                                if( "{{modalidad['modalidadId']}}" == arrayModalidad[i] )
+                                    $("#detModal-container-modalidades").append("<li>{{modalidad['modalidadNombre']}}</li>");
+                            }
+                        }
+
+                    {% endfor %}
+
+                    {%  for division in divisiones %}
+
+                        if("{{division['disciplinaId']}}" == disciplinaId ){
+            
+                            for (let i = 0; i < arrayDivision.length; i++) {
+                                
+                                if( "{{division['divisionId']}}" == arrayDivision[i] ){
+                                    $("#detModal-container-divisiones").append("<li>{{division['divisionNombre']}}</li>");
+                                }
+                            }
+                        }
+
+                    {% endfor %}
+
+                    {%  for asignacion in asignaciones %}
+            
+                        for (let i = 0; i < arrayAsignacion.length; i++) {
+                            
+                            if( "{{asignacion['asignacionId']}}" == arrayAsignacion[i] ){
+                                $("#detModal-container-asignaciones").append("<li>{{asignacion['asignacionNombre']}}</li>");
+                            }
+                        }
+
+                    {% endfor %}
+
+                   // console.log("Informacion Participante => ",datosParticipante);
+                },
+                error: function (error) {
+                    console.log("Error =>",error);
+                }
+            });
+    };
+
+    //OBTENER INFORMACION PARTICIPANTE PARA EDITAR
+    const obtenerInfoParti = function(disDelegId,inscripcionId,disciplinaCategoria,delegTipoGrupo,disciplinaId){
+
+            modalidadInscripcion = [];
+            divisionInscripcion = [];
+
+            $("#editModal-container-modalidades").empty();
+            $("#editTipoParticipante").empty();
+            $("#editTipoParticipante").append("<option value=''>--Seleccionar--</option>");
+            $("#editModal-container-divisiones").empty();
+
+            $("#editDisDelegId").val(disDelegId);
+            $("#editInscribiteId").val(inscripcionId);
+
+
+
+            const datos = {
+                                    'inscripcionId':inscripcionId
+                                    }
+
+            $.ajax({
+                url: "{{url('participanteObtener')}}",
+                type: 'POST',
+                data: datos ,
+                beforeSend: function() {
+                    //console.log("Datos a Enviar ==> ",datos);
+                },
+                success: function(data) {
+                    let datosParticipante = JSON.parse(data)[0];
+
+
 
                     $("#editNumeroDocumento").val(datosParticipante.numeroDocumento);
                     $("#editTipoDocumento").val(datosParticipante.tipoDocumento);
@@ -1236,48 +1533,51 @@
                     console.log("Error =>",error);
                 }
             });
-        };
+    };
 
-        const btnNuevoIntegrante = function(disDelegId,disciplinaCategoria,disciplinaId,delegTipoGrupo){
+    //INICIALIZA EL REGISTRO PARTICIPANTE
+    const btnNuevoIntegrante = function(disDelegId,disciplinaCategoria,disciplinaId,delegTipoGrupo){
 
-            modalidadInscripcion = [];
-            divisionInscripcion = [];
+        modalidadInscripcion = [];
+        divisionInscripcion = [];
 
-            $("#tipoParticipante").empty();
-            $("#modal-container-modalidades").empty();
-            $("#modal-container-divisiones").empty();
+        $("#tipoParticipante").empty();
+        $("#tipoParticipante").append("<option value=''>--Seleccionar--</option>");
+        $("#modal-container-modalidades").empty();
+        $("#modal-container-divisiones").empty();
 
-            $("#disDelegId").val(disDelegId);
-            $("#paisRepresenta").val("{{delegacion['paisId']}}");
+        $("#disDelegId").val(disDelegId);
+        $("#paisRepresenta").val("{{delegacion['paisId']}}");
+        $("#disciplinaId").val(disciplinaId);
 
-            {% for tipPar in tiposParticipante %}
+        {% for tipPar in tiposParticipante %}
 
-                if( "{{tipPar['categoria_id']}}" == disciplinaCategoria && "{{tipPar['tipo_grupo_id']}}" == delegTipoGrupo ){ 
-                    $("#tipoParticipante").append("<option value='{{tipPar['id']}}'>{{tipPar['nombre']}}</option>");
-                }
+            if( "{{tipPar['categoria_id']}}" == disciplinaCategoria && "{{tipPar['tipo_grupo_id']}}" == delegTipoGrupo ){ 
+                $("#tipoParticipante").append("<option value='{{tipPar['id']}}'>{{tipPar['nombre']}}</option>");
+            }
 
-            {%  endfor %}
+        {%  endfor %}
 
 
-            {%  for modalidad in modalidades %}
+        {%  for modalidad in modalidades %}
 
-                if("{{modalidad['disciplinaId']}}" == disciplinaId ){
-                    $("#modal-container-modalidades").append("<div class='col-xs-6 col-sm-8 col-md-8 col-lg-4'><div class='form-group form-check'><label class='form-check-label'><input class='form-check-input' type='checkbox' onclick='checkModalidad(this)' value='{{modalidad['modalidadId']}}' >{{modalidad['modalidadNombre']}}</label></div></div>");
-                }
+            if("{{modalidad['disciplinaId']}}" == disciplinaId ){
+                $("#modal-container-modalidades").append("<div class='col-xs-6 col-sm-8 col-md-8 col-lg-4'><div class='form-group form-check'><label class='form-check-label'><input class='form-check-input' type='checkbox' onclick='checkModalidad(this)' value='{{modalidad['modalidadId']}}' >{{modalidad['modalidadNombre']}}</label></div></div>");
+            }
 
-            {% endfor %}
+        {% endfor %}
 
-            {%  for division in divisiones %}
+        {%  for division in divisiones %}
 
-                if("{{division['disciplinaId']}}" == disciplinaId ){
-                    $("#modal-container-divisiones").append("<div class='col-xs-6 col-sm-8 col-md-8 col-lg-4'><div class='form-group form-check'><label class='form-check-label'><input class='form-check-input' type='checkbox' onclick='checkDivision(this)' value='{{division['divisionId']}}'>{{division['divisionNombre']}}</label></div></div>");
-                }
+            if("{{division['disciplinaId']}}" == disciplinaId ){
+                $("#modal-container-divisiones").append("<div class='col-xs-6 col-sm-8 col-md-8 col-lg-4'><div class='form-group form-check'><label class='form-check-label'><input class='form-check-input' type='checkbox' onclick='checkDivision(this)' value='{{division['divisionId']}}'>{{division['divisionNombre']}}</label></div></div>");
+            }
 
-            {% endfor %}
+        {% endfor %}
 
-        };
+    };
 
-        $('#btn_editar').click( function () {
+    $('#btn_editar').click( function () {
 
             var obj = new FormData($("#submit_form_editar")[0]);
             
@@ -1298,25 +1598,25 @@
                 },
                 success: function(data) {
 
-                    // if(data == 1){
-                    //     alertify.success('<p style="color:white">Se Edito Correctamente.</p>');
-                    //     setTimeout(function(){ location.reload(true) }, 1000);
+                     if(data == 1){
+                        alertify.success('<p style="color:white">Se edito Correctamente.</p>');
+                        setTimeout(function(){ location.reload(true) }, 1000);
                         
-                    // }else if(data == 0){
-                    //     alertify.warning('<p style="color:black">Ocurrio un Error a la hora de Registrar.</p>')
-                    // }else if(data == -1){
-                    //     alertify.warning('<p style="color:black">Ya no existe vacantes para el Tipo de Participante!.</p>')
-                    // }
+                    }else if(data == 0){
+                        alertify.warning('<p style="color:black">Ocurrio un Error a la hora de Registrar.</p>')
+                    }else if(data == -1){
+                        alertify.warning('<p style="color:black">Ya no existe vacantes para el participante.</p>')
+                    }
                 },
                 error: function (error) {
                     console.log("Error =>",error);
                 }
             });
 
-        });
+    });
 
 
-        $('#btn_guardar').click( function () {
+    $('#btn_guardar').click( function () {
 
             var obj = new FormData($("#submit_form")[0]);
             
@@ -1345,36 +1645,109 @@
                         alertify.warning('<p style="color:black">Ocurrio un Error a la hora de Registrar.</p>')
                     }else if(data == -1){
                         alertify.warning('<p style="color:black">Ya no existe vacantes para el Tipo de Participante!.</p>')
+                    }else if(data == -2){
+                        alertify.warning('<p style="color:black">Ya existe un participante activo en el evento con el mismo DNI!.</p>')
                     }
                 },
                 error: function (error) {
                     console.log("Error =>",error);
                 }
             });
-        });
+    });
 
-        const checkModalidad = function(element){
+    const checkModalidad = function(element){
 
-            if (element.checked) 
-                modalidadInscripcion.push(element.value);
+        if (element.checked) 
+            modalidadInscripcion.push(element.value);
 
-            else         
-                modalidadInscripcion.splice( modalidadInscripcion.indexOf(element.value), 1);
+        else         
+            modalidadInscripcion.splice( modalidadInscripcion.indexOf(element.value), 1);
 
-            console.log("Array Modalidad =>",modalidadInscripcion);
-        };
+        console.log("Array Modalidad =>",modalidadInscripcion);
+    };
 
-        const checkDivision = function(element){
+    const checkDivision = function(element){
 
-            if (element.checked) 
-                divisionInscripcion.push(element.value);
+        if (element.checked) 
+            divisionInscripcion.push(element.value);
 
-            else         
-                divisionInscripcion.splice( divisionInscripcion.indexOf(element.value), 1);
+        else         
+            divisionInscripcion.splice( divisionInscripcion.indexOf(element.value), 1);
 
-        };
+    };
+
+    const changeTipoParticipante = function(element){
+
+        let tipoParticipanteId = element.value;
+        let disciplinaId = $("#disciplinaId").val();
+
+        {% for confCondDoc in configuracionCondicionDocumento %}
+
+            if( "{{confCondDoc['tipoParticipanteId']}}" == tipoParticipanteId && "{{confCondDoc['disciplinaId']}}" == disciplinaId  ){
+
+                if("{{confCondDoc['cond_doc_fot_perf']}}" == 1){
+                    $("[atr-id='cond_doc_fot_perf']").show(); //OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_fot_perf']}}" == 2 ){
+                    $("[atr-id='cond_doc_fot_perf']").show(); //NO OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_fot_perf']}}" == 3 ){
+                    $("[atr-id='cond_doc_fot_perf']").hide(); //NO SE SOLICITA
+                }
+
+                if("{{confCondDoc['cond_doc_ident']}}" == 1){
+                    $("[atr-id='cond_doc_ident']").show(); //OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_ident']}}" == 2 ){
+                    $("[atr-id='cond_doc_ident']").show(); //NO OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_ident']}}" == 3 ){
+                    $("[atr-id='cond_doc_ident']").hide(); //NO SE SOLICITA
+                }
+
+                if("{{confCondDoc['cond_doc_const_est']}}" == 1){
+                    $("[atr-id='cond_doc_const_est']").show(); //OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_const_est']}}" == 2 ){
+                    $("[atr-id='cond_doc_const_est']").show(); //NO OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_const_est']}}" == 3 ){
+                    $("[atr-id='cond_doc_const_est']").hide(); //NO SE SOLICITA
+                }
+
+                if("{{confCondDoc['cond_doc_ficha_medica']}}" == 1){
+                    $("[atr-id='cond_doc_ficha_medica']").show(); //OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_ficha_medica']}}" == 2 ){
+                    $("[atr-id='cond_doc_ficha_medica']").show(); //NO OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_ficha_medica']}}" == 3 ){
+                    $("[atr-id='cond_doc_ficha_medica']").hide(); //NO SE SOLICITA
+                }
+
+                if("{{confCondDoc['cond_doc_form_inscrip']}}" == 1){
+                    $("[atr-id='cond_doc_form_inscrip']").show(); //OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_form_inscrip']}}" == 2 ){
+                    $("[atr-id='cond_doc_form_inscrip']").show(); //NO OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_form_inscrip']}}" == 3 ){
+                    $("[atr-id='cond_doc_form_inscrip']").hide(); //NO SE SOLICITA
+                }
+
+                if("{{confCondDoc['cond_doc_poliz_seg']}}" == 1){
+                    $("[atr-id='cond_doc_poliz_seg']").show(); //OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_poliz_seg']}}" == 2 ){
+                   $("[atr-id='cond_doc_poliz_seg']").show(); //NO OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_poliz_seg']}}" == 3 ){
+                    $("[atr-id='cond_doc_poliz_seg']").hide(); //NO SE SOLICITA
+                }
+
+                if("{{confCondDoc['cond_doc_cert_disc']}}" == 1){
+                    $("[atr-id='cond_doc_cert_disc']").show(); //OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_cert_disc']}}" == 2 ){
+                    $("[atr-id='cond_doc_cert_disc']").show(); //NO OBLIGATORIO
+                }else if( "{{confCondDoc['cond_doc_cert_disc']}}" == 3 ){
+                    $("[atr-id='cond_doc_cert_disc']").hide(); //NO SE SOLICITA
+                }
+
+            }
+
+        {% endfor %}
+
+    };
 
     </script>
-        }
+    
 
 {% endblock %}

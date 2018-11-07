@@ -17,11 +17,25 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class ParticipanteController extends Controller
 {
 
+/**
+     * @Route("participante/delete",name="participanteEliminar")
+     * @Method({"POST","GET"})
+     */
+    public function participanteEliminarAction(Request $request)
+    {
+      $inscripcionId = $request->get('inscripcionId');
+
+      $em = $this->getDoctrine()->getManager();
+      $estadoElim = $em->getRepository('SudJuvenilesBundle:Participante')->eliminarParticipanteInscripcion($inscripcionId);
+
+      
+      return new JsonResponse($estadoElim);
+    }
+
   /**
      * @Route("participante/get",name="participanteObtener")
      * @Method({"POST","GET"})
      */
-
     public function participanteObtenerAction(Request $request)
     {
       $inscripcionId = $request->get('inscripcionId');
@@ -94,38 +108,68 @@ class ParticipanteController extends Controller
 
       	//FILE DOCUMENTO IDENTIDAD
         $fileDocumentoIdentidad = $file->get("documentoIdentidad");
-        $fileNameDocIdent = 'DocumentoIdentidad'.'.'.$fileDocumentoIdentidad->guessExtension();
-        $rutaDocumentoIdentidadAll = $rutaDocumento.$fileNameDocIdent;
+
+        if(!empty($fileDocumentoIdentidad)){
+          $fileNameDocIdent = 'DocumentoIdentidad'.'.'.$fileDocumentoIdentidad->guessExtension();
+          $rutaDocumentoIdentidadAll = $rutaDocumento.$fileNameDocIdent;         
+        }else{
+          $rutaDocumentoIdentidadAll = NULL;
+        }
 
         //FILE CONSTANCIA DE ESTUDIO
         $fileConstanciaEstudio = $file->get("constEstudio");
-        $fileNameConstEstud = 'ConstanciaEstudio'.'.'.$fileConstanciaEstudio->guessExtension();
-        $rutaConstanciaEstudioAll = $rutaDocumento.$fileNameConstEstud;
+
+        if(!empty($fileConstanciaEstudio)){
+          $fileNameConstEstud = 'ConstanciaEstudio'.'.'.$fileConstanciaEstudio->guessExtension();
+          $rutaConstanciaEstudioAll = $rutaDocumento.$fileNameConstEstud;
+        }else{
+          $rutaConstanciaEstudioAll = NULL;
+        }
         // 
 
         //FILE FICHA MEDICA VIGENTE
         $fileFichaMedicaVigente = $file->get("fichaMedicaVigente");
-        $fileNameFichMed = 'FichaMedicaVigente'.'.'.$fileFichaMedicaVigente->guessExtension();
-        $rutaFichaMedicaVigenteAll = $rutaDocumento.$fileNameFichMed;
+
+        if(!empty($fileFichaMedicaVigente)){
+          $fileNameFichMed = 'FichaMedicaVigente'.'.'.$fileFichaMedicaVigente->guessExtension();
+          $rutaFichaMedicaVigenteAll = $rutaDocumento.$fileNameFichMed;          
+        }else{
+          $rutaFichaMedicaVigenteAll = NULL;
+        }
         // 
 
         //FILE FORMULARIO INSCRIPCION
         $fileFormularioInscripcion = $file->get("formularioInscripcion");
-        $fileNameFormIns = 'FormularioInscripcion'.'.'.$fileFormularioInscripcion->guessExtension();
-        $rutaFormularioInscripcionAll = $rutaDocumento.$fileNameFormIns;
+
+        if(!empty($fileFormularioInscripcion)){
+          $fileNameFormIns = 'FormularioInscripcion'.'.'.$fileFormularioInscripcion->guessExtension();
+          $rutaFormularioInscripcionAll = $rutaDocumento.$fileNameFormIns;       
+        }else{
+          $rutaFormularioInscripcionAll = NULL;
+        }
         //
 
         //FILE POLIZA DE SEGURO
         $filePolizaSeguro = $file->get("polizaSeguro");
-        $fileNamePolizSeg = 'PolizaSeguro'.'.'.$filePolizaSeguro->guessExtension();
-        $rutaPolizaSeguroAll = $rutaDocumento.$fileNamePolizSeg;
+
+        if(!empty($filePolizaSeguro)){
+          $fileNamePolizSeg = 'PolizaSeguro'.'.'.$filePolizaSeguro->guessExtension();
+          $rutaPolizaSeguroAll = $rutaDocumento.$fileNamePolizSeg;
+        }else{
+          $rutaPolizaSeguroAll = NULL;
+        }
         //
 
         //FILE FOTO PERFIL
         $fileFotoPerfil = $file->get("fotoPerfil");
-        $fileNameFotoPerfil = 'FotoPerfil'.'.'.$fileFotoPerfil->guessExtension();
-        $rutaFotoPerfilAll = $rutaDocumento.$fileNameFotoPerfil;
 
+        if(!empty($fileFotoPerfil)){
+          $fileNameFotoPerfil = 'FotoPerfil'.'.'.$fileFotoPerfil->guessExtension();
+          $rutaFotoPerfilAll = $rutaDocumento.$fileNameFotoPerfil;  
+        }else{
+          $rutaFotoPerfilAll = NULL;
+        }
+ 
         if(empty($estadoDis)){
           $estadoDis=0;
           $rutacertificadoDiscapacidadAll = NULL; 
@@ -141,15 +185,26 @@ class ParticipanteController extends Controller
 
         if($estadoRegistro == 1){//SI SE REGISTRO CORRECTAMENTE
 
-          $fileDocumentoIdentidad->move($rutaDocumento, $fileNameDocIdent);
-          $fileConstanciaEstudio->move($rutaDocumento, $fileNameConstEstud);
-          $fileFichaMedicaVigente->move($rutaDocumento, $fileNameFichMed);
-          $fileFormularioInscripcion->move($rutaDocumento, $fileNameFormIns);
-          $filePolizaSeguro->move($rutaDocumento, $fileNamePolizSeg);
-          $fileFotoPerfil->move($rutaDocumento, $fileNameFotoPerfil);
+          if(!empty($rutaDocumentoIdentidadAll ))
+            $fileDocumentoIdentidad->move($rutaDocumento, $fileNameDocIdent);
 
-            if(!empty($estadoDis))
-              $fileCertificadoDiscapacidad->move($rutaDocumento, $fileNameCertificadoDiscapacidad);
+          if(!empty($rutaConstanciaEstudioAll))
+            $fileConstanciaEstudio->move($rutaDocumento, $fileNameConstEstud);
+
+          if(!empty($rutaFichaMedicaVigenteAll))
+            $fileFichaMedicaVigente->move($rutaDocumento, $fileNameFichMed);
+
+          if(!empty($rutaFormularioInscripcionAll))
+            $fileFormularioInscripcion->move($rutaDocumento, $fileNameFormIns);
+
+          if(!empty($rutaPolizaSeguroAll))
+            $filePolizaSeguro->move($rutaDocumento, $fileNamePolizSeg);
+          
+          if(!empty($rutaFotoPerfilAll))
+            $fileFotoPerfil->move($rutaDocumento, $fileNameFotoPerfil);
+          
+          if(!empty($estadoDis))
+            $fileCertificadoDiscapacidad->move($rutaDocumento, $fileNameCertificadoDiscapacidad);
         }
 
         return new JsonResponse($estadoRegistro);
@@ -178,7 +233,8 @@ class ParticipanteController extends Controller
       $fechaNacimiento = $request->get('editFechaNacimiento');
       $correo = $request->get('editCorreo');
       
-
+      //DELEGACION DISCIPLINA
+      $disciplinaDelegacionId = $request->get('editDisDelegId');
 
       //PARTICIPANTE
       $tipoParticipanteId = $request->get('editTipoParticipante');
@@ -283,7 +339,7 @@ class ParticipanteController extends Controller
           $rutacertificadoDiscapacidadAll = $rutaDocumento.$fileNameCertificadoDiscapacidad;
         }
 
-          $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:Participante')->editar($inscripcionId,$paisOrigenId,$tipoDocumento, $sexoId,$numeroDocumento, $nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$tipoParticipanteId,$rutaDocumentoIdentidadAll,$rutaConstanciaEstudioAll,$rutaFichaMedicaVigenteAll,$rutaFormularioInscripcionAll,$rutaPolizaSeguroAll,$estadoDis,$rutacertificadoDiscapacidadAll,$rutaFotoPerfilAll);        
+          $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:Participante')->editar($inscripcionId,$paisOrigenId,$tipoDocumento, $sexoId,$numeroDocumento, $nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$tipoParticipanteId,$rutaDocumentoIdentidadAll,$rutaConstanciaEstudioAll,$rutaFichaMedicaVigenteAll,$rutaFormularioInscripcionAll,$rutaPolizaSeguroAll,$estadoDis,$rutacertificadoDiscapacidadAll,$rutaFotoPerfilAll,$disciplinaDelegacionId);        
 
         if($estadoRegistro == 1){//SI SE REGISTRO CORRECTAMENTE
 

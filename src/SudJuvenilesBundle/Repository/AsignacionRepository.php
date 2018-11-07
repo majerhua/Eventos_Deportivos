@@ -10,4 +10,20 @@ namespace SudJuvenilesBundle\Repository;
  */
 class AsignacionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAsignaciones(){
+
+        try {
+
+            $query="    SELECT id asignacionId,nombre asignacionNombre from asignacion WHERE estado=1";
+            $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+            $stmt->execute();
+            $asignaciones = $stmt->fetchAll();
+
+            return $asignaciones;
+
+        }catch (DBALException $e) {
+            $message = $e->getCode();
+            return $message;
+        }
+    }
 }

@@ -14,6 +14,21 @@ class DelegacionRepository extends \Doctrine\ORM\EntityRepository
 {
 
 
+    public function configuracionCondicionDocumento(){
+        
+        try {
+            $query="  SELECT *FROM configuracion_condicion_documentos";
+            $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+            $stmt->execute();
+            $confCondDoc = $stmt->fetchAll();
+
+            return $confCondDoc;
+
+        }catch (DBALException $e) {
+            $message = $e->getCode();
+            return $message;
+        }
+    }
 
 
 	public function getDelegaciones(){

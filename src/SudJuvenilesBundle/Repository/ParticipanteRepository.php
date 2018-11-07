@@ -12,21 +12,43 @@ use Doctrine\DBAL\DBALException;
 class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
 {
 
+  public function eliminarParticipanteInscripcion($inscripcionId){
+
+      $query="EXEC eliminarParticipanteInscripcion $inscripcionId";
+      $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+      $stmt->execute();
+      $estadoElim = $stmt->fetchAll();
+
+      return $estadoElim[0]['estadoElim'];
+  }
+
+
   public function getPariticipanteInscripcionById($id){
 
     try {
           $query="  SELECT 
                       per.tipo_documento tipoDocumento,
+                      tipDoc.nombre nombreTipoDocumento,
                       per.numero_documento numeroDocumento,
                       per.nombre nombre,
                       per.apellido_paterno apellidoPaterno,
                       per.apellido_materno apellidoMaterno,
                       per.sexo_id sexoId,
+                      sex.nombre sexoNombre,
                       per.fecha_nacimiento fechaNacimiento,
                       per.correo correo,
                       per.pais_origen_id paisOrigen,
+                      pais.nombre paisOrigenNombre,
                       par.tipo_participante_id tipoParticipante,
                       par.estado_dis estadoDiscipacidad,
+                      CONVERT(VARCHAR(100),STUFF(( SELECT  ',' +
+                           CONVERT(VARCHAR(100),asig.id)
+                              FROM    inscripcion_asignacion AS insAsig
+                              INNER JOIN asignacion asig ON asig.id = insAsig.asignacion_id
+                              WHERE   insAsig.inscripcion_id = ins.id
+                              FOR
+                              XML PATH('')
+                          ), 1, 1, '') ) AS asignaciones,
                       CONVERT(VARCHAR(100),STUFF(( SELECT  ',' +
                            CONVERT(VARCHAR(100),modal.id)
                               FROM    inscripcion_modalidad AS insMod
@@ -42,12 +64,22 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
                               WHERE   insDiv.inscripcion_id = ins.id
                               FOR
                               XML PATH('')
-                          ), 1, 1, '') ) AS divisiones
+                          ), 1, 1, '') ) AS divisiones,
+                        par.ruta_certificado_dis rutaCertificadoDiscapacidad,
+                        par.ruta_const_estudio rutaConstanciaEstudio,
+                        par.ruta_doc_identidad rutaDocumentoIdentidad,
+                        par.ruta_ficha_medica_vigente rutaFichaMedica,
+                        par.ruta_formulario_inscripcion rutaFormularioInscripcion,
+                        par.ruta_foto_perfil rutaFotoPerfil,
+                        par.ruta_poliza_seguro rutaPolizaSeguro
 
                       FROM inscripcion ins
                       INNER JOIN participante par ON par.id = ins.participante_id
                       INNER JOIN tipo_participante tipoPar ON tipoPar.id = par.tipo_participante_id
                       INNER JOIN persona per ON per.id = par.persona_id
+                      INNER JOIN tipo_documento tipDoc ON tipDoc.id = per.tipo_documento
+                      INNER JOIN sexo sex ON sex.id = per.sexo_id
+                      INNER JOIN pais pais ON pais.id = per.pais_origen_id 
                       WHERE ins.id = '$id'";
 
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
@@ -75,13 +107,9 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
               $estadoRegistro = $result[0]['estadoRegistro'];
 
               if($estadoRegistro == 1){
-
                 $inscripcionId = $result[0]['inscripcionId'];
                 $tipoGrupoId = $result[0]['tipoGrupoId'];
-
               }
-              
-
 
               if( $estadoRegistro >= 1 ){//SI NO OCURRE UN ERROR  EN EL REGISTRO DE PARTICIPANTE E INSCRIPCION
 
@@ -106,27 +134,29 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
 
                 }
 
-              }
+                $query="SELECT id FROM asignacion";
+                $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+                $stmt->execute();
+                $asignaciones = $stmt->fetchAll();
 
-              $query="SELECT id FROM asignacion";
-              $stmt = $this->getEntityManager()->getConnection()->prepare($query);
-              $stmt->execute();
-              $asignaciones = $stmt->fetchAll();
+                for ($i = 0; $i < count($asignaciones) ; $i++) {
 
-              for ($i = 0; $i < count($asignaciones) ; $i++) {
+                  if($tipoGrupoId == 2){
+                    
+                    $paramAsignacionId = $asignaciones[$i]['id'];
 
-                if($tipoGrupoId == 2){
+                    $query="INSERT INTO inscripcion_asignacion(inscripcion_id,asignacion_id,estado)
+                            VALUES($inscripcionId , $paramAsignacionId ,1)";
+                    $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+                    $stmt->execute();
+
+                  }
                   
-                  $paramAsignacionId = $asignaciones[$i]['id'];
-
-                  $query="INSERT INTO inscripcion_asignacion(inscripcion_id,asignacion_id,estado)
-                          VALUES($inscripcionId , $paramAsignacionId ,1)";
-                  $stmt = $this->getEntityManager()->getConnection()->prepare($query);
-                  $stmt->execute();
-
                 }
-                
+
               }
+
+
 
               return $estadoRegistro;
 
@@ -136,10 +166,10 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
 	}
 
 
-public function editar($idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,$numeroDocumento,$nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$tipoParticipanteId,$rutaDocIdentidad,$rutaConstEstudio,$rutaFichaMedicaVigente,$rutaFormularioInscripcion,$rutaPolizaSeguro,$estadoDis,$rutaCertificadoDis,$rutaFotoPerfil){
+public function editar($idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,$numeroDocumento,$nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$tipoParticipanteId,$rutaDocIdentidad,$rutaConstEstudio,$rutaFichaMedicaVigente,$rutaFormularioInscripcion,$rutaPolizaSeguro,$estadoDis,$rutaCertificadoDis,$rutaFotoPerfil,$disciplinaDelegacionId){
 
     //try {
-              $query="EXEC editarParticipante $idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,'$numeroDocumento','$nombre','$apellidoPaterno','$apellidoMaterno','$fechaNacimiento','$correo',$tipoParticipanteId,'$rutaDocIdentidad','$rutaConstEstudio','$rutaFichaMedicaVigente','$rutaFormularioInscripcion','$rutaPolizaSeguro',$estadoDis,'$rutaCertificadoDis','$rutaFotoPerfil'";
+              $query="EXEC editarParticipante $idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,'$numeroDocumento','$nombre','$apellidoPaterno','$apellidoMaterno','$fechaNacimiento','$correo',$tipoParticipanteId,'$rutaDocIdentidad','$rutaConstEstudio','$rutaFichaMedicaVigente','$rutaFormularioInscripcion','$rutaPolizaSeguro',$estadoDis,'$rutaCertificadoDis','$rutaFotoPerfil',$disciplinaDelegacionId";
               $stmt = $this->getEntityManager()->getConnection()->prepare($query);
               $stmt->execute();
 
@@ -175,7 +205,7 @@ public function editar($idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,$nu
                       INNER JOIN persona per ON per.id = par.persona_id
                       INNER JOIN sexo sex ON sex.id = per.sexo_id
                       INNER JOIN estado_inscripcion estadoIns ON estadoIns.id = ins.estado 
-                      WHERE deleg.id = '$delegId'; ";
+                      WHERE deleg.id = '$delegId' AND ins.estado = 1;";
 
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();

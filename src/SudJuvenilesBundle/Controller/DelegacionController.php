@@ -40,12 +40,14 @@ class DelegacionController extends Controller
         $participantes = $em->getRepository('SudJuvenilesBundle:Participante')->getParticipantesByDisDelegId($delegacionId);
         $modalidades = $em->getRepository('SudJuvenilesBundle:Disciplina')->getModalidades();
         $divisiones = $em->getRepository('SudJuvenilesBundle:Disciplina')->getDivisiones();
+        $asignaciones = $em->getRepository('SudJuvenilesBundle:Asignacion')->getAsignaciones();
+        $configuracionCondicionDocumento = $em->getRepository('SudJuvenilesBundle:Delegacion')->configuracionCondicionDocumento();
 
         if( empty($delegacion) ){
             return $this->render('SudJuvenilesBundle:Default:pagina_no_encontrada.html.twig' );
         }
 
-        return $this->render('SudJuvenilesBundle:Intranet:intranet-delegacion.html.twig',array( 'delegacion' => $delegacion[0], 'disciplinasDelegacion' => $disciplinasDelegacion, 'tiposParticipante' => $tiposParticipante,'paises'=>$paises, 'participantes' => $participantes, 'modalidades'=>$modalidades,'divisiones'=>$divisiones  ) );
+        return $this->render('SudJuvenilesBundle:Intranet:intranet-delegacion.html.twig',array( 'delegacion' => $delegacion[0], 'disciplinasDelegacion' => $disciplinasDelegacion, 'tiposParticipante' => $tiposParticipante,'paises'=>$paises, 'participantes' => $participantes, 'modalidades'=>$modalidades,'divisiones'=>$divisiones, 'asignaciones'=>$asignaciones, 'configuracionCondicionDocumento' => $configuracionCondicionDocumento  ) );
     }
 
 }
