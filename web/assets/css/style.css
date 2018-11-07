@@ -1,4 +1,4 @@
-body{
+body {
     font-family: Montserrat, sans-serif;
 }
 
@@ -6,11 +6,22 @@ header {
     opacity: 0.9;
 }
 
-.nav-link{
+p {
+    line-height: normal;
+    margin-bottom: 5px;
+}
+
+img {
+    -webkit-user-drag: none;
+    -ms-user-drag: none;
+    -moz-user-drag: none;
+}
+
+.nav-link {
     font-size: 1.0em;
 }
 
-.logo{
+.logo {
     padding: 16px;
 }
 
@@ -21,32 +32,32 @@ header {
 
 }
 
-.header-social-item {
-
-    text-align: center;
-    background-color: #AD003E;
-    color: white;
-    padding: 10px;
-
-}
-
 .section-white {
 
-    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
     background-color: white;
 
 }
 
 .section-light-gray {
 
-    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
     background-color: rgb(241, 238, 238);
 
 }
 
 .section-dark-gray {
 
-    padding: 40px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
     background-color: rgb(66, 65, 65);
     color: white;
 
@@ -55,7 +66,7 @@ header {
 .section-brown {
 
     padding: 40px;
-    background-color:#e87722;
+    background-color: #e87722;
     color: white;
 
 }
@@ -70,9 +81,11 @@ header {
 
 .container-escenario-item {
 
-    position: relative; 
-    max-width: 800px; /* Maximum width */
-    margin: 0 auto; /* Center it */
+    position: relative;
+    max-width: 800px;
+    /* Maximum width */
+    margin: 0 auto;
+    /* Center it */
     margin-bottom: 20px;
 
 }
@@ -100,26 +113,34 @@ header {
 
 }
 
-.login-container {
-    padding-top: 60px;
-    padding-bottom: 60px;
-    background: url('../images/fondo3.png') no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
+.login-bg {
+    background: url('../images/fondologin.png') no-repeat center center fixed;
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
     background-size: cover;
+}
+
+.login-container {
+    position: absolute;
+    left: 0;
+    top: 30%;
+    width: 100%;
+    text-align: center;
 }
 
 .login-detail {
 
     background-color: white;
-    margin-top: 20px;
-    padding: 30px;
-    margin-bottom: 10px;
+    padding: 20px;
 
 }
 
-.container-menu-item{
+.container-menu-item {
 
     margin-bottom: 20px;
     padding: 20px;
@@ -129,80 +150,197 @@ header {
 }
 
 
-.footer{
-    background-color: #F2A900;
+.footer {
+    text-align: center;
+    background-image: url("../images/footer2.png");
     color: white;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
-.header-modal{
+.container-header-yellow {
 
     text-align: center;
-    background-color: #0091EA;
-    color: white;
-    padding: 20px;    
-
-}
-
-
-
-/* Style all font awesome icons */
-.fa {
     padding: 10px;
-    font-size: 30px;
-    width: 35px;
+    background-image: url("../images/cab2.png");
+    color: white;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+}
+
+
+.container-header-orange {
+
     text-align: center;
-    text-decoration: none;
+    padding: 10px;
+    background-image: url("../images/cab1.png");
+    color: white;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
 }
 
-/* Add a hover effect if you want */
-.fa:hover {
-    opacity: 0.7;
+.container-header-brown {
+
+    text-align: center;
+    opacity: 0.8;
+    background: #5C462B;
+    color: white;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
 }
 
-/* Set a specific color for each brand */
 
-/* Facebook */
-.fa-facebook {
+/* Style the icon bar links */
+.container-social-media a {
+    padding: 4px 8px 4px 8px;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+/* Style the social media icons with color, if you want */
+.container-social-media a:hover {
+    background-color: #000;
+}
+
+.facebook {
     background: #3B5998;
     color: white;
+    font-size: 1.5em;
 }
 
-/* Twitter */
-.fa-twitter {
+.twitter {
     background: #55ACEE;
     color: white;
+    font-size: 1.5em;
+
 }
 
-/* Youtube */
-.fa-youtube {
-    background: rgb(238, 85, 85);
+.google {
+    background: #dd4b39;
     color: white;
+    font-size: 1.5em;
+
+}
+
+.youtube {
+    background: #bb0000;
+    color: white;
+    font-size: 1.5em;
+
 }
 
 
 .portada-container {
     padding-top: 10px;
     padding-bottom: 10px;
-    background: url('../images/fondo3.png') no-repeat center center fixed;
+    background: url('../images/fondooficial2.png') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 
 .multimedia-container {
-    position: relative; 
-    max-width: 800px; /* Maximum width */
-    margin: 0 auto; /* Center it */
-  }
-  
-  .container-escenario-item .img-container {
-    position: absolute; /* Position the background text */
-    bottom: 0; /* At the bottom. Use top:0 to append it to the top */
-    background: rgb(0, 0, 0); /* Fallback color */
-    background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
-    color: #f1f1f1; /* Grey text */
+    position: relative;
+    max-width: 800px;
+    /* Maximum width */
+    margin: 0 auto;
+    /* Center it */
+}
+
+.container-escenario-item .img-container {
+    position: absolute;
+    bottom: 0;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
     width: 100%;
-    padding: 10px; /* Some padding */
-  }
+    padding: 10px;
+    transition: .5s ease;
+    opacity: 0;
+}
+
+.zoom:hover {
+    -ms-transform: scale(1.02);
+    /* IE 9 */
+    -webkit-transform: scale(1.02);
+    /* Safari 3-8 */
+    transform: scale(1.02);
+}
+
+.container-escenario-item:hover .img-container {
+    opacity: 1;
+}
+
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+
+.input-container {
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Style the form icons */
+.icon {
+    padding: 10px;
+    background: gray;
+    color: white;
+    min-width: 50px;
+    text-align: center;
+}
+
+/* Style the input fields */
+.input-field {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+}
+
+.container-margin {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.section-title {
+
+    margin-top: 50px;
+
+}
+
+.top-right {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    color: white;
+    font-size: 0.8em;
+}
+
+input:valid, textarea:valid {
+  background:rgb(35, 237, 17, 0.05);
+}
+
+input:invalid, textarea:invalid {
+  background:rgb(250, 4, 20, 0.05);
+}

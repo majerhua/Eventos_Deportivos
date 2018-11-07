@@ -28,6 +28,38 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/multimedia", name="multimedia")
+     */
+    public function multimediaAction(Request $request)
+    {
+        return $this->render('SudJuvenilesBundle:Web:multimedia.html.twig');
+    }
+
+    /**
+     * @Route("/resultados", name="resultados")
+     */
+    public function resultadosAction(Request $request)
+    {
+        return $this->render('SudJuvenilesBundle:Web:resultados.html.twig');
+    }
+
+    /**
+     * @Route("/escenarios", name="escenarios")
+     */
+    public function escenariosAction(Request $request)
+    {
+        return $this->render('SudJuvenilesBundle:Web:escenarios.html.twig');
+    }    
+
+    /**
+     * @Route("/delegaciones", name="delegaciones")
+     */
+    public function delegacionesAction(Request $request)
+    {
+        return $this->render('SudJuvenilesBundle:Web:delegaciones.html.twig');
+    }
+
+    /**
      * @Route("/panel",name="panel-general")
      */
     public function panelAction(Request $request)

@@ -2,109 +2,60 @@
 {% block title %}Sudamericanos Juveniles{% endblock %}
 {% block body  %}
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
-        <a class="navbar-brand" href="#">
-            <img src="{{asset('assets/images/logaso.png')}}" height="80" class="d-inline-block align-top" alt="">
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+    {% include 'SudJuvenilesBundle:Default:loader.html.twig' %} 
+    {% include 'SudJuvenilesBundle:Default:menu_intranet.html.twig' %}
 
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <span class="nav-link" style="margin-right:30px;">
-                        Usuario: <b>{{tipoUsuario}}</b>
-                    </span>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Volver</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{url('sudamericanos_juveniles_logout')}}">Salir</a>
-                </li>
-            </ul>
+    <div class="section-title">
+
+        <div class="container">
+
+            <h1 class="text-center container-header-orange card">Panel de Administracion</h1>
+
         </div>
-    </nav>
-
-    </header>
-
+        
+    </div>
 
     <section class="section-white">
 
         <div class="container">
 
-            <h1 class="text-center">Panel de Administracion</h1>
+            <div class="row" style="margin-bottom:60px; margin-top:30px;">
 
-        </div>
-
-    </section>
-
-    <section class="section-white">
-
-        <div class="container">
-
-
-            <div class="row">
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
 
                     <a href="{{url('panel-delegaciones')}}" class="container-menu-item card" style="text-decoration: none;">
 
-                        <img src="{{asset('assets/images/item4.png')}}" class="img-fluid">
-
-                        <div class="header-delegacion-item">
-
-                            <h4 class="card-title text-center">Delegaciones</h4>
-
-                        </div>
+                        <img src="{{asset('assets/images/icon_delegaciones.png')}}" class="img-fluid">
 
                     </a>
 
                 </div>
 
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
 
                     <a href="intranet-resultados.html" class="container-menu-item card" style="text-decoration: none;">
 
-                        <img src="{{asset('assets/images/item3.png')}}" class="img-fluid">
+                        <img src="{{asset('assets/images/icon_resultados.png')}}" class="img-fluid">
 
-                        <div class="header-delegacion-item">
-
-                            <h4 class="card-title text-center">Resultados</h4>
-
-                        </div>
                     </a>
+
                 </div>
 
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3" >
+                <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
 
                     <a href="intranet-galeria.html" class="container-menu-item card" style="text-decoration: none;">
 
-                        <img src="{{asset('assets/images/item2.png')}}" class="img-fluid">
-
-                        <div class="header-delegacion-item">
-
-                            <h4 class="card-title text-center">Galeria</h4>
-
-                        </div>
+                        <img src="{{asset('assets/images/icon_galeria.png')}}" class="img-fluid">
 
                     </a>
 
                 </div>
 
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
 
                     <a href="intranet-videos.html" class="container-menu-item card" style="text-decoration: none;">
 
-                        <img src="{{asset('assets/images/item1.png')}}" class="img-fluid">
-
-                        <div class="header-delegacion-item">
-
-                            <h4 class="card-title text-center">Videos</h4>
-
-                        </div>
+                        <img src="{{asset('assets/images/icon_videos.png')}}" class="img-fluid">
 
                     </a>
 
@@ -114,11 +65,23 @@
 
         </div>
 
+
     </section>
 
-    <footer class="section-dark-gray">
 
-        <div class="row">
+    <footer class="footer">
+
+        <div class="container">
+
+            <div class="row justify-content-center">
+
+                <div class="col-10 col-xs-8 col-sm-6 col-md-5 col-lg-3">
+
+                    <img src="{{asset('assets/images/logoblanco.png')}}" class="img-fluid">
+
+                </div>
+
+            </div>
 
         </div>
 
