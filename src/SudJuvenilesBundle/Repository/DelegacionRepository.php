@@ -36,7 +36,8 @@ class DelegacionRepository extends \Doctrine\ORM\EntityRepository
 		try {
             $query="SELECT del.id delegacionId,pa.nombre nombre,del.url_imagen imagen FROM delegacion del
     				INNER JOIN pais pa ON pa.id = del.pais_id 
-    				WHERE del.estado=1;";
+    				WHERE del.estado=1
+                    ORDER BY del.tipo_grupo_id DESC";
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
             $delegaciones = $stmt->fetchAll();
