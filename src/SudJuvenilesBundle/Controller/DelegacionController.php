@@ -22,7 +22,17 @@ class DelegacionController extends Controller
     	$em = $this->getDoctrine()->getManager();
     	$delegaciones = $em->getRepository('SudJuvenilesBundle:Delegacion')->getDelegaciones();
 
-        return $this->render('SudJuvenilesBundle:Intranet:intranet-delegaciones.html.twig',array('delegaciones'=>$delegaciones));
+        $usuario = $this->getUser();
+
+        $tipoUsuarioId = $usuario->getTipoUsuarioId()->getId();
+
+        if($tipoUsuarioId == 3){
+            $delegacionId = $usuario->getDelegacionId()->getId();
+            return $this->redirectToRoute('delegacion',array('delegacionId'=>$delegacionId));
+        }else{
+
+            return $this->render('SudJuvenilesBundle:Intranet:intranet-delegaciones.html.twig',array('delegaciones'=>$delegaciones));
+        }
     }
 
 	/**

@@ -34,9 +34,9 @@ class DelegacionRepository extends \Doctrine\ORM\EntityRepository
 	public function getDelegaciones(){
 
 		try {
-            $query="	SELECT del.id delegacionId,pa.nombre nombre,del.url_imagen imagen FROM delegacion del
-						INNER JOIN pais pa ON pa.id = del.pais_id 
-						WHERE del.estado=1;";
+            $query="SELECT del.id delegacionId,pa.nombre nombre,del.url_imagen imagen FROM delegacion del
+    				INNER JOIN pais pa ON pa.id = del.pais_id 
+    				WHERE del.estado=1;";
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
             $delegaciones = $stmt->fetchAll();
