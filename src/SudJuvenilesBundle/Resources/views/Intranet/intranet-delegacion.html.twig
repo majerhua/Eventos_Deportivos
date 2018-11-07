@@ -1257,7 +1257,8 @@
                     //console.log("Datos a Enviar ==> ",datos);
                 },
                 success: function(data) {
-                    let datosParticipante = JSON.parse(data)[0];
+                    console.log(data);
+                    let datosParticipante = data[0];//JSON.parse(data)[0];
 
                     console.log("Datos Participante =>",datosParticipante);
 
@@ -1431,7 +1432,7 @@
                     //console.log("Datos a Enviar ==> ",datos);
                 },
                 success: function(data) {
-                    let datosParticipante = JSON.parse(data)[0];
+                    let datosParticipante =data[0] //JSON.parse(data)[0];
 
 
 
