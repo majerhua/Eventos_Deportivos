@@ -1,0 +1,60 @@
+{% xlsdocument %}
+    {% xlssheet 'Worksheet' 
+
+    %}
+        {% xlsrow %}
+
+            {% xlscell  {  
+
+                        style: { 
+                                font: { 
+                                        size: '18', 
+                                        color: { rgb: 'f9f7f7' },
+                                        bold:'true'
+                                      },
+                                alignment:{
+                                        horizontal: 'center'
+                                        },
+                                fill:{
+                                        type: 'solid',
+                                        color: { rgb: 'F48128' }
+                                    } 
+                                },
+
+                        merge: 10
+                        }
+
+            %}Datos de los Participantes{% endxlscell %}
+
+        {% endxlsrow %}
+
+        {% xlsrow %}
+            {% xlscell { style: { font: { size: '13', bold:'true' },autosize:'true' } } %}Delegación/Organización{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Apellidos{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Nombre{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Tipo de Documento{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' }, autosize:'true' } } %}N° de documento{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Sexo{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Tipo de Miembro{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Tipo de Participante{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Deporte{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Modalidades{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' } } } %}División{% endxlscell %}
+        {% endxlsrow %}
+        {% for value in data %}
+            {% xlsrow %}
+                {% xlscell %}{{ value.delegacionExport }}{% endxlscell %}
+                {% xlscell %}{{ value.apellidosExport }}{% endxlscell %}
+                {% xlscell %}{{ value.nombreExport }}{% endxlscell %}
+                {% xlscell %}{{ value.tipoDocumentoExport }}{% endxlscell %}
+                {% xlscell %}{{ value.numeroDocumento }}{% endxlscell %}
+                {% xlscell %}{{ value.sexo }}{% endxlscell %}
+                {% xlscell %}{{ value.categoriaExport }}{% endxlscell %}
+                {% xlscell %}{{ value.tipoParticipanteExport }}{% endxlscell %}
+                {% xlscell %}{{ value.disciplinaExport }}{% endxlscell %}
+                {% xlscell %}{{ value.modalidadesExport }}{% endxlscell %}
+                {% xlscell %}{{ value.divisionesExport }}{% endxlscell %}
+            {% endxlsrow %}
+        {% endfor %}
+    {% endxlssheet %}
+{% endxlsdocument %}

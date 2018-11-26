@@ -34,6 +34,14 @@ class Delegacion
      */
     private $estado;
 
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="periodo_id", type="integer")
+     */
+    private $periodoId;
+
     /**
      * Get id
      *
@@ -43,6 +51,32 @@ class Delegacion
     {
         return $this->id;
     }
+
+
+    /**
+     * Set periodoId
+     *
+     * @param integer $periodoId
+     *
+     * @return Delegacion
+     */
+    public function setPeriodoId($periodoId)
+    {
+        $this->periodoId = $periodoId;
+
+        return $this;
+    }
+
+    /**
+     * Get periodoId
+     *
+     * @return int
+     */
+    public function getPeriodoId()
+    {
+        return $this->periodoId;
+    }
+
 
     /**
      * Set estado

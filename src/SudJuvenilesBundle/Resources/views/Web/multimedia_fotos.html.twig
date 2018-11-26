@@ -1,0 +1,53 @@
+{% extends '::base.html.twig' %}
+{% block title %}Sudamericanos Juveniles{% endblock %}
+{% block body  %}
+
+    {% include 'SudJuvenilesBundle:Default:menu_landing.html.twig' %}
+    {% include 'SudJuvenilesBundle:Default:loader.html.twig' %}
+
+    <section class="section-title">
+
+        <div class="container">
+
+            <h1 class="text-center container-header-orange card" style="z-index:-1;" >Multimedia-Fotos</h1>
+        </div>
+
+    </section>
+
+    <section class="section-white">
+
+        <div class="container">
+
+            <h3>Fotos</h3>
+
+            <br>
+
+        <div class="row">   
+
+            {% for entry in pagination %}
+
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                   <div class="container-escenario-item card">
+                        <img src="{{asset(entry['foto_url'])}}" alt="Notebook" style="width:100%;">
+                        <div class="img-container">
+                            <p class="card-title"><strong> {{entry['titulo']}}</strong></p>
+                            <p class="card-text">{{entry['descripcion_foto']}}</p>
+                        </div>
+                    </div>
+                </div>      
+
+            {% endfor %}
+        </div>
+
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        </div>
+
+    </section>
+
+
+    {% include 'SudJuvenilesBundle:Default:footer.html.twig' %} 
+    
+{% endblock %}

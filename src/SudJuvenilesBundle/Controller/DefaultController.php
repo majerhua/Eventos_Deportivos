@@ -8,15 +8,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
 
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/",name="inicio")
      */
     public function indexAction(Request $request)
     {
-        return $this->render('SudJuvenilesBundle:Web:index.html.twig');
+
+        $em = $this->getDoctrine()->getManager();
+        $galeriaFotos =  $em->getRepository('SudJuvenilesBundle:GaleriaFotos')->mostrarFotoGaleria();
+        $galeriaVideos =  $em->getRepository('SudJuvenilesBundle:GaleriaVideos')->mostrarVideosGaleria();  
+
+        return $this->render('SudJuvenilesBundle:Web:index.html.twig',array('galeriaFotos'=>$galeriaFotos,'galeriaVideos'=>$galeriaVideos) );
     }
 
     /**
@@ -28,11 +37,43 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/multimedia", name="multimedia")
+     * @Route("/multimedia/fotos", name="multimediaFotos")
      */
-    public function multimediaAction(Request $request)
+    public function multimediaFotosAction(Request $request)
     {
-        return $this->render('SudJuvenilesBundle:Web:multimedia.html.twig');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $galeriaFotos =  $em->getRepository('SudJuvenilesBundle:GaleriaFotos')->mostrarFotoGaleria(); 
+ 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $galeriaFotos,
+                $request->query->getInt('page', 1),
+                6
+        );
+
+        return $this->render( 'SudJuvenilesBundle:Web:multimedia_fotos.html.twig',array('pagination'=>$pagination) );
+    }
+
+    /**
+     * @Route("/multimedia/videos", name="multimediaVideos")
+     */
+    public function multimediaVideosAction(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+
+        $galeriaVideos =  $em->getRepository('SudJuvenilesBundle:GaleriaVideos')->mostrarVideosGaleria(); 
+ 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $galeriaVideos,
+                $request->query->getInt('page', 1),
+                6
+        );
+
+        return $this->render( 'SudJuvenilesBundle:Web:multimedia_videos.html.twig',array('pagination'=>$pagination) );
     }
 
     /**
@@ -40,7 +81,20 @@ class DefaultController extends Controller
      */
     public function resultadosAction(Request $request)
     {
-        return $this->render('SudJuvenilesBundle:Web:resultados.html.twig');
+
+        $em = $this->getDoctrine()->getManager();
+        $disciplinas = $em->getRepository('SudJuvenilesBundle:Disciplina')->getDisciplinas();
+
+        $galeriaResultados =  $em->getRepository('SudJuvenilesBundle:GaleriaResultados')->mostrarResultadosGaleria(); 
+ 
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                 $galeriaResultados,
+                $request->query->getInt('page', 1),
+                 6
+        );
+
+        return $this->render('SudJuvenilesBundle:Web:resultados.html.twig', array( 'disciplinas'=>$disciplinas,'pagination'=>$pagination ) );
     }
 
     /**
@@ -56,7 +110,12 @@ class DefaultController extends Controller
      */
     public function delegacionesAction(Request $request)
     {
-        return $this->render('SudJuvenilesBundle:Web:delegaciones.html.twig');
+
+        $em = $this->getDoctrine()->getManager();
+        $periodoId = $em->getRepository('SudJuvenilesBundle:Delegacion')->getPeriodoIdActivo();
+
+        $delegaciones = $em->getRepository('SudJuvenilesBundle:Delegacion')->getDelegacionesWeb($periodoId);
+        return $this->render('SudJuvenilesBundle:Web:delegaciones.html.twig',array('delegaciones'=>$delegaciones));
     }
 
     /**
@@ -66,18 +125,32 @@ class DefaultController extends Controller
     {
     	$em = $this->getDoctrine()->getManager();
 
-    	$tipoUsuarioId = $this->getUser()->getTipoUsuarioId()->getId();
+        $usuario = $this->getUser();
+    	$tipoUsuarioId = $usuario->getTipoUsuarioId()->getId();
 
-    	if( $tipoUsuarioId == 1 ){
+    	if( $tipoUsuarioId == 1 || $tipoUsuarioId == 2 ){
 
-			$tipoUsuarioNombre = $this->getUser()->getTipoUsuarioId()->getNombre();
-
-        	return $this->render('SudJuvenilesBundle:Intranet:intranet-menu.html.twig',array('tipoUsuario'=>$tipoUsuarioNombre));
+            $username = $usuario->getUsername();
+        	return $this->render('SudJuvenilesBundle:Intranet:intranet-menu.html.twig',array('username'=>$username));
 
     	}else if( $tipoUsuarioId == 3 ){
 
-    		return $this->redirectToRoute('panel-delegaciones');
+    		$delegacionId = $usuario->getDelegacionId()->getId();
+            return $this->redirectToRoute('delegacion',array('delegacionId'=>$delegacionId));
     	}
 
     }
+
+
+    /**
+     * @Route("/export/participantes/{delegacionId}", name="participantesExport",defaults={"_format"="xls","_filename"="participantes"}, requirements={"_format"="csv|xls|xlsx"})
+     * @Template("SudJuvenilesBundle:Excel:participantes.xlsx.twig")
+     */
+    public function participantesExportAction($_filename,$delegacionId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $participantes =  $em->getRepository('SudJuvenilesBundle:participante')->getParticipantesByDisDelegId($delegacionId);
+        return ['data' => $participantes]; 
+    }
+
 }

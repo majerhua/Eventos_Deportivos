@@ -40,6 +40,7 @@ class Usuarios implements AdvancedUserInterface
      */
     private $delegacionId;
 
+
     /**
      * @var string
      *
@@ -77,6 +78,9 @@ class Usuarios implements AdvancedUserInterface
     {
         return $this->id;
     }
+
+
+
 
     /**
      * Set username

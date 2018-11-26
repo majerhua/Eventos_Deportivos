@@ -9,7 +9,7 @@
 
         <div class="container">
 
-            <h1 class="text-center container-header-orange card">Resultados</h1>
+            <h1 class="text-center container-header-orange card" style="z-index:-1;">Resultados</h1>
 
         </div>
 
@@ -22,319 +22,146 @@
 
             <div class="accordion" id="accordion">
 
-                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div id="collapseDisciplinas" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 
                     <div class="row justify-content-center" style="margin-bottom:50px;">
 
-                        <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
+                        {% for dis in disciplinas if dis.categoria_id == 2 %}
 
-                            <div class="btn container-escenario-item container" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-
-                                <img src="{{asset('assets/images/dis_ajedrez.png')}}" class="img-fluid zoom card">
-
+                            <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3" id="btnVerDisciplina{{dis.id}}">
+                                <div class="btn container-escenario-item container" data-toggle="collapse" data-target="#collapseDisciplina{{dis.id}}" aria-expanded="false" aria-controls="collapseDisciplina{{dis.id}}">
+                                    <img src="{{asset(dis.foto_url)}}" class="img-fluid zoom card"  onclick="verFotosDisciplina({{dis.id}})">
+                                </div>
                             </div>
 
-                        </div>
-
-                        <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
-
-                            <div class="btn container-escenario-item container" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-
-                                <img src="{{asset('assets/images/dis_atletismo.png')}}" class="img-fluid zoom card">
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
-
-                            <div class="btn container-escenario-item container" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-
-                                <img src="{{asset('assets/images/dis_balonmano.png')}}" class="img-fluid zoom card">
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
-
-                            <div class="btn container-escenario-item container" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-
-                                <img src="{{asset('assets/images/dis_futbol.png')}}" class="img-fluid zoom card">
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
-
-                            <div class="btn container-escenario-item container" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-
-                                <img src="{{asset('assets/images/dis_judo.png')}}" class="img-fluid zoom card">
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
-
-                            <div class="btn container-escenario-item container" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-
-                                <img src="{{asset('assets/images/dis_natacion.png')}}" class="img-fluid zoom card">
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
-
-                            <div class="btn container-escenario-item container" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-
-                                <img src="{{asset('assets/images/dis_paralimpico.png')}}" class="img-fluid zoom card">
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
-
-                            <div class="btn container-escenario-item container" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-
-                                <img src="{{asset('assets/images/dis_tenis.png')}}" class="img-fluid zoom card">
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
-
-                            <div class="btn container-escenario-item container" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-
-                                <img src="{{asset('assets/images/dis_voleibol.png')}}" class="img-fluid zoom card">
-
-                            </div>
-
-                        </div>
-
-                        <div class="col-6 col-xs-6 col-sm-6 col-md-3 col-lg-3">
-
-                            <div class="btn container-escenario-item container" data-toggle="collapse" data-target="#collapseTwo"
-                                aria-expanded="false" aria-controls="collapseTwo">
-
-                                <img src="{{asset('assets/images/dis_ajedrez.png')}}" class="img-fluid zoom card">
-
-                            </div>
-
-                        </div>
-
+                        {% endfor %}
 
                     </div>
-
                 </div>
 
+           {% for dis in disciplinas if dis.categoria_id == 2 %}
 
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div id="collapseDisciplina{{dis.id}}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
 
                     <div class="modal-content">
-
                         <div class="row align-items-center">
-
                             <div class="col-4 col-xs-3 col-sm-2 col-md-2 col-lg-2">
-                                <img src="{{asset('assets/images/icon_dis_natacion.png')}}" class="img-fluid" style="padding:8px;"></div>
-
-                            <div class="col-8 col-xs-9 col-sm-10 col-md-10 col-lg-10">
-
-                                <div class="row justify-content-between">
-
-                                    <div class="col-12 col-xs-12 col-sm-7 col-md-8 col-lg-9">
-                                        <h3 class="modal-title" style="margin:8px;">Natacion</h3>
-                                    </div>
-
-                                    <div class="col-12 col-xs-12 col-sm-5 col-md-4 col-lg-3">
-                                        <button id="btn_guardar_editar_deportista" type="button" class="btn btn-info"
-                                            type="button" data-toggle="collapse" data-target="#collapseOne"
-                                            aria-expanded="true" aria-controls="collapseOne" style="margin:8px;">Ver
-                                            disciplinas</button>
-                                    </div>
-
-                                </div>
-
+                                <img src="{{asset('assets/images/icon_dis_natacion.png')}}" class="img-fluid" style="padding:8px;">
                             </div>
 
-                        </div>
+                            <div class="col-8 col-xs-9 col-sm-10 col-md-10 col-lg-10">
+                                        <div class="row justify-content-between">
 
+                                            <div class="col-12 col-xs-12 col-sm-7 col-md-8 col-lg-9">
+                                                <h3 class="modal-title" style="margin:8px;">{{dis.nombre}}</h3>
+                                            </div>
+                                            <div class="col-12 col-xs-12 col-sm-5 col-md-4 col-lg-3">
+                                                <button    type="button" class="btn btn-info"
+                                                    type="button" data-toggle="collapse" data-target="#collapseDisciplinas"
+                                                    aria-expanded="true" aria-controls="collapseDisciplinas" style="margin:8px;"  >Ver
+                                                    disciplinas</button>
+                                            </div>
+
+                                        </div>
+                            </div>
+                        </div>
                     </div>
                     <br>
 
-                    <div class="row">
+                    <div class="container">
 
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                        {# {% for entry in pagination  if entry.disciplinaId == dis.id %}
 
-                            <div class="container-escenario-item card">
-                                <p class="top-right">Lun 24</p>
-                                <img src="{{asset('assets/images/img2.png')}}" alt="Notebook" style="width:100%;">
-                                <div class="img-container">
-                                    <p class="card-title""><strong>200m combinados</strong></p>
-                                    <p class="
-                                        card-text"">Oro para el equipo boliviano</p>
+                            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                                <div class="container-escenario-item card">
+                                    <p class="top-right">{{entry['fecha_tomo_foto']}}</p>
+                                    <img src="{{asset(entry['foto_url'])}}" alt="Notebook" style="width:100%;">
+                                    <div class="img-container">
+                                        <p class="card-title"><strong>{{entry['titulo']}}</strong></p>
+                                        <p class="card-text">{{entry['descripcion_foto']}}</p>
+                                    </div>
                                 </div>
                             </div>
 
-                        </div>
+                        {% endfor %}
 
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+                        <div class="navigation">
+                            {{ knp_pagination_render(pagination) }}
+                        </div> #}
 
-                            <div class="container-escenario-item card">
-                                <p class="top-right">Lun 24</p>
-                                <img src="{{asset('assets/images/img2.png')}}" alt="Notebook" style="width:100%;">
-                                <div class="img-container">
-                                    <p class="card-title""><strong>200m combinados</strong></p>
-                                        <p class="
-                                        card-text"">Oro para el equipo boliviano</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-
-                            <div class="container-escenario-item card">
-                                <p class="top-right">Lun 24</p>
-                                <img src="{{asset('assets/images/img2.png')}}" alt="Notebook" style="width:100%;">
-                                <div class="img-container">
-                                    <p class="card-title""><strong>200m combinados</strong></p>
-                                            <p class="
-                                        card-text"">Oro para el equipo boliviano</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-
-                            <div class="container-escenario-item card">
-                                <p class="top-right">Lun 24</p>
-                                <img src="{{asset('assets/images/img2.png')}}" alt="Notebook" style="width:100%;">
-                                <div class="img-container">
-                                    <p class="card-title""><strong>200m combinados</strong></p>
-                                                <p class="
-                                        card-text"">Oro para el equipo boliviano</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-
-                            <div class="container-escenario-item card">
-                                <p class="top-right">Lun 24</p>
-                                <img src="{{asset('assets/images/img2.png')}}" alt="Notebook" style="width:100%;">
-                                <div class="img-container">
-                                    <p class="card-title""><strong>200m combinados</strong></p>
-                                                    <p class="
-                                        card-text"">Oro para el equipo boliviano</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-
-                            <div class="container-escenario-item card">
-                                <p class="top-right">Lun 24</p>
-                                <img src="{{asset('assets/images/img2.png')}}" alt="Notebook" style="width:100%;">
-                                <div class="img-container">
-                                    <p class="card-title""><strong>200m combinados</strong></p>
-                                                        <p class="
-                                        card-text"">Oro para el equipo boliviano</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-
-                            <div class="container-escenario-item card">
-                                <p class="top-right">Lun 24</p>
-                                <img src="{{asset('assets/images/img2.png')}}" alt="Notebook" style="width:100%;">
-                                <div class="img-container">
-                                    <p class="card-title""><strong>200m combinados</strong></p>
-                                                            <p class="
-                                        card-text"">Oro para el equipo boliviano</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-
-                            <div class="container-escenario-item card">
-                                <p class="top-right">Lun 24</p>
-                                <img src="{{asset('assets/images/img2.png')}}" alt="Notebook" style="width:100%;">
-                                <div class="img-container">
-                                    <p class="card-title""><strong>200m combinados</strong></p>
-                                        <p class="
-                                        card-text"">Oro para el equipo boliviano</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-
-                            <div class="container-escenario-item card">
-                                <p class="top-right">Lun 24</p>
-                                <img src="{{asset('assets/images/img2.png')}}" alt="Notebook" style="width:100%;">
-                                <div class="img-container">
-                                    <p class="card-title""><strong>200m combinados</strong></p>
-                                            <p class="
-                                        card-text"">Oro para el equipo boliviano</p>
-                                </div>
-                            </div>
-
-                        </div>
-
-
+                            <div id="data-container{{dis.id}}"></div>
+                            <div id="pagination-container{{dis.id}}"></div> 
                     </div>
 
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination justify-content-end">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" tabindex="-1">Anterior</a>
-                            </li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#">Siguiente</a>
-                            </li>
-                        </ul>
-                    </nav>
+                    
 
                 </div>
-            </div>
 
-        </div>
+            {% endfor %} 
+
+        </div>  
+    </div>
+
+{# <h1>----------------------------------------------</h1>
+
+                <div id="data-container" class="row"></div>
+                <div id="pagination-container"></div> #}
 
 
     </section>
     
     {% include 'SudJuvenilesBundle:Default:footer.html.twig' %} 
     
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+
+       
+        var verFotosDisciplina = function(disciplinaId){
+
+         
+            var arrayJson = '{{pagination.items|json_encode|raw}}';
+            var arrayObject = JSON.parse(arrayJson);
+
+            var newArrayObject = arrayObject.filter(function(elem){
+                return elem.disciplinaId == disciplinaId
+            });
+
+            console.log(newArrayObject);
+
+            $(`#pagination-container${disciplinaId}`).pagination({
+                dataSource: newArrayObject,
+                pageSize: 3,
+                callback: function(data, pagination) {
+                    // template method of yourself
+                    var html = simpleTemplating(data);
+                    $(`#data-container${disciplinaId}`).html(html);
+                }
+            });
+
+        };
+
+
+        function simpleTemplating(data) {
+
+            var html = "<div class='row'>";
+            $.each(data, function(index, item){               
+                html += "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-4'><div class='container-escenario-item card'><p class='top-right'>"+item.fecha_tomo_foto+
+                "</p>"+
+                "<img src="+item.foto_url+" alt='Notebook' style='width:100%;'>"
+                +"<div class='img-container'>"+
+                "<p class='card-title'><strong>"+item.titulo+"</strong></p>"
+                +"<p class='card-text'>"+item.descripcion_foto+"</p>"
+                +"</div>"+
+                "</div></div>";
+            });
+            html += "</div>";
+            return html;
+        }
+
+    </script>
+
+
 {% endblock %}

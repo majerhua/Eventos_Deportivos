@@ -109,7 +109,9 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
               if($estadoRegistro == 1){
                 $inscripcionId = $result[0]['inscripcionId'];
                 $tipoGrupoId = $result[0]['tipoGrupoId'];
+                
               }
+
 
               if( $estadoRegistro >= 1 ){//SI NO OCURRE UN ERROR  EN EL REGISTRO DE PARTICIPANTE E INSCRIPCION
 
@@ -188,24 +190,81 @@ public function editar($idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,$nu
   public function getParticipantesByDisDelegId($delegId){
 
     try {
-          $query="    SELECT 
+          $query="   SELECT 
+                      pa.nombre delegacionExport,
+                      per.apellido_paterno+' '+per.apellido_materno apellidosExport,
+                      per.nombre nombreExport,
+                      tipDoc.nombre tipoDocumentoExport,
+                      per.numero_documento numeroDocumento,
+                      sex.nombre sexo,
+                      cat.descripcion categoriaExport,
+                      tipoPar.nombre tipoParticipanteExport,
+                      dis.nombre disciplinaExport,
+                      per.fecha_nacimiento fechaNacimientoExport,
+                      
+                      CONVERT(VARCHAR(100),STUFF(( SELECT  ',' +
+                       CONVERT(VARCHAR(100),modal.nombre)
+                          FROM    inscripcion_modalidad AS insMod
+                          INNER JOIN modalidad modal ON modal.id = insMod.modalidad_id
+                          WHERE   insMod.inscripcion_id = ins.id
+                          FOR
+                          XML PATH('')
+                      ), 1, 1, '') ) AS modalidadesExport,
+                      
+                    CONVERT(VARCHAR(100),STUFF(( SELECT  ',' +
+                       CONVERT(VARCHAR(100),divi.nombre)
+                          FROM    inscripcion_divisiones AS insDiv
+                          INNER JOIN divisiones divi ON divi.id = insDiv.divisiones_id
+                          WHERE   insDiv.inscripcion_id = ins.id
+                          FOR
+                          XML PATH('')
+                      ), 1, 1, '') ) AS divisionesExport,
+                      
                       dis.id disciplinaId,
                       per.nombre+' '+per.apellido_paterno+' '+per.apellido_materno nombresApellidos,
-                      per.numero_documento numeroDocumento,
                       tipoPar.nombre tipoParticipante,
-                      sex.nombre sexo,
                       estadoIns.nombre estado,
                       ins.id inscripcionId
                       FROM inscripcion ins
                       INNER JOIN disciplina_delegacion disDeleg ON disDeleg.id = ins.disciplina_delegacion_id
                       INNER JOIN delegacion deleg ON deleg.id = disDeleg.delegacion_id
+                      INNER JOIN pais pa ON pa.id = deleg.pais_id
                       INNER JOIN disciplina dis ON dis.id = disDeleg.disciplina_id
                       INNER JOIN participante par ON par.id = ins.participante_id
                       INNER JOIN tipo_participante tipoPar ON tipoPar.id = par.tipo_participante_id
+                      INNER JOIN tipo_grupo tipGrup On tipGrup.id = deleg.tipo_grupo_id
+                      INNER JOIN categoria cat ON cat.id = dis.categoria_id
                       INNER JOIN persona per ON per.id = par.persona_id
+                      INNER JOIN tipo_documento tipDoc ON tipDoc.id = per.tipo_documento
                       INNER JOIN sexo sex ON sex.id = per.sexo_id
                       INNER JOIN estado_inscripcion estadoIns ON estadoIns.id = ins.estado 
-                      WHERE deleg.id = '$delegId' AND ins.estado = 1;";
+                      WHERE  ins.estado = 1
+                      AND deleg.id = '$delegId'";
+
+            $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+            $stmt->execute();
+            $participantes = $stmt->fetchAll();
+
+            return $participantes;
+
+        }catch (DBALException $e) {
+            $message = $e->getCode();
+            return $message;
+        }
+  }
+
+
+  public function getParticipantes(){
+
+    try {
+          $query="  SELECT 
+                    per.numero_documento numeroDocumento,
+                    per.nombre nombre,
+                    per.apellido_paterno apellidoPaterno,
+                    per.apellido_materno apellidoMaterno,
+                    per.fecha_nacimiento fechaNacimiento
+                    FROM persona per
+                    INNER JOIN participante par ON par.persona_id = per.id";
 
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();

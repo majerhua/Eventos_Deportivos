@@ -10,7 +10,7 @@
 
         <div class="container">
 
-            <h1 class="text-center container-header-orange card">Delegaciones</h1>
+            <h1 class="text-center container-header-orange card" style="z-index:-1;">Delegaciones</h1>
 
         </div>
     </div>
@@ -21,204 +21,24 @@
 
             <div class="row" style="margin-bottom:80px;">
 
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                {% for delegacion in delegaciones %}
 
-                    <div class="container-escenario-item container">
+                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
 
-                        <img src="{{asset('assets/images/flag_argentina.png')}}" class="img-fluid zoom card">
+                        <div class="container-escenario-item container">
 
-                        <div class="header-delegacion-item">
+                            <img src="{{asset(delegacion['imagen'])}}" class="img-fluid zoom card">
 
-                            <h5 class="card-title text-center">Argentina</h5>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-
-                    <div class="container-escenario-item container">
-
-                        <img src="{{asset('assets/images/flag_bolivia.png')}}" class="img-fluid zoom card">
-
-                        <div class="header-delegacion-item">
-
-                            <h5 class="card-title text-center">Bolivia</h5>
+                            <div class="header-delegacion-item">
+                                <h5 class="card-title text-center">{{delegacion['nombre']}}</h5>
+                            </div>
 
                         </div>
-
                     </div>
+                {% endfor %}
 
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-
-                    <div class="container-escenario-item container">
-
-                        <img src="{{asset('assets/images/flag_bonaire.png')}}" class="img-fluid zoom card">
-
-                        <div class="header-delegacion-item">
-
-                            <h5 class="card-title text-center">Bonaire</h5>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-
-                    <div class="container-escenario-item container">
-
-                        <img src="{{asset('assets/images/flag_brasil.png')}}" class="img-fluid zoom card">
-
-                        <div class="header-delegacion-item">
-
-                            <h5 class="card-title text-center">Brasil</h5>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-
-                    <div class="container-escenario-item container">
-
-                        <img src="{{asset('assets/images/flag_chile.png')}}" class="img-fluid zoom card">
-
-                        <div class="header-delegacion-item">
-
-                            <h5 class="card-title text-center">Chile</h5>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-
-                    <div class="container-escenario-item container">
-
-                        <img src="{{asset('assets/images/flag_colombia.png')}}" class="img-fluid zoom card">
-
-                        <div class="header-delegacion-item">
-
-                            <h5 class="card-title text-center">Colombia</h5>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-
-                    <div class="container-escenario-item container">
-
-                        <img src="{{asset('assets/images/flag_ecuador.png')}}" class="img-fluid zoom card">
-
-                        <div class="header-delegacion-item">
-
-                            <h5 class="card-title text-center">Ecuador</h5>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-
-                    <div class="container-escenario-item container">
-
-                        <img src="{{asset('assets/images/flag_paraguay.png')}}" class="img-fluid zoom card">
-
-                        <div class="header-delegacion-item">
-
-                            <h5 class="card-title text-center">Paraguay</h5>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-
-                    <div class="container-escenario-item container">
-
-                        <img src="{{asset('assets/images/flag_peru.png')}}" class="img-fluid zoom card">
-
-                        <div class="header-delegacion-item">
-
-                            <h5 class="card-title text-center">Peru</h5>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-
-                    <div class="container-escenario-item container">
-
-                        <img src="{{asset('assets/images/flag_suriman.png')}}" class="img-fluid zoom card">
-
-                        <div class="header-delegacion-item">
-
-                            <h5 class="card-title text-center">Surinam</h5>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-
-                    <div class="container-escenario-item container">
-
-                        <img src="{{asset('assets/images/flag_uruguay.png')}}" class="img-fluid zoom card">
-
-                        <div class="header-delegacion-item">
-
-                            <h5 class="card-title text-center">Uruguay</h5>
-
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-
-                    <div class="container-escenario-item container">
-
-                        <img src="{{asset('assets/images/flag_venezuela.png')}}" class="img-fluid zoom card">
-
-                        <div class="header-delegacion-item">
-
-                            <h5 class="card-title text-center">Venezuela</h5>
-
-                        </div>
-
-                    </div>
-
-                </div>
             </div>
-
-
         </div>
-
 
     </section>
 

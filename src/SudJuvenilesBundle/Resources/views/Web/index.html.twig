@@ -28,7 +28,7 @@
                         <p>Sigue el dia a dia de los Juegos Sudamericanos Escolares a traves de nuestro Facebook y
                             Twitter, interactuando con los hashtags</p>
                         <br>
-                        <p>#JuegosSudamericanosEscolares</p>
+                        <p>#JuegosSudamericanosEscolares</p>s
                         <p>#Arequipa2018</p>
 
                     </div>
@@ -71,93 +71,69 @@
 
     <section class="section-light-gray">
 
-        <h3 class="text-center">Galeria de fotos</h3>
+                {% set cantVueltas = ( ((galeriaFotos|length)/3) - 1)  %}
+                {% set cantVueltasInt = cantVueltas|round %}
+                
+                {% if cantVueltas < cantVueltasInt %}
+                    {% set cantVueltas = (cantVueltas - 0.5)|round %}
+                {% else  %}  
+                        {% set cantVueltas = cantVueltasInt  %}     
+                {% endif %}
 
-        <br>
+                {% if cantVueltas >= 0 %}
+                    <h3 class="text-center">Galeria de fotos</h3>
 
-        <div id="carousel-gallery" class="carousel slide carousel-multi-item" data-ride="carousel">
+                    <br>
+                    <div id="carousel-gallery" class="carousel slide carousel-multi-item" data-ride="carousel">
 
-            <div class="carousel-inner mdb-lightbox" role="listbox">
+                        <div class="carousel-inner mdb-lightbox" role="listbox">
 
-                <div class="carousel-item active text-center">
+                        {% for i in 0..cantVueltas %}
 
-                    <figure class="col-md-3 d-md-inline-block">
-                        <a href="{{asset('assets/images/img1.png')}}" data-size="1600x1067">
-                            <img src="{{asset('assets/images/img1.png')}}" class="img-fluid card">
+                            {% set numInicio = i*3 %}
+                            {% set numFin = i*3 + 2 %}
+
+                            {% if i == 0 %}
+
+                                <div class="carousel-item active text-center">
+                                    {% for j in numInicio..numFin %}
+                                        <figure class="col-md-3 d-md-inline-block">
+                                            <a href="{{asset(galeriaFotos[j]['foto_url'])}}" data-size="1600x1067">
+                                                <img src="{{asset(galeriaFotos[j]['foto_url'])}}" class="img-fluid card">
+                                            </a>
+                                        </figure>
+                                    {% endfor %}
+                                </div>
+
+                            {% elseif i > 0 %}
+
+                                <div class="carousel-item  text-center">
+                                    {% for j in numInicio..numFin %}
+                                        <figure class="col-md-3 d-md-inline-block">
+                                            <a href="{{asset(galeriaFotos[j]['foto_url'])}}" data-size="1600x1067">
+                                                <img src="{{asset(galeriaFotos[j]['foto_url'])}}" class="img-fluid card">
+                                            </a>
+                                        </figure>
+                                    {% endfor %}
+                                </div>
+
+                            {% endif %}
+                        {% endfor %}
+                        
+                        </div>
+
+                        <a class="carousel-control-prev" href="#carousel-gallery" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Anterior</span>
                         </a>
-                    </figure>
-
-                    <figure class="col-md-3 d-md-inline-block">
-                        <a href="{{asset('assets/images/img2.png')}}" data-size="1600x1067">
-                            <img src="{{asset('assets/images/img2.png')}}" class="img-fluid card">
+                        <a class="carousel-control-next" href="#carousel-gallery" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Siguiente</span>
                         </a>
-                    </figure>
+                    </div>
 
-                    <figure class="col-md-3 d-md-inline-block">
-                        <a href="{{asset('assets/images/img3.png')}}" data-size="1600x1067">
-                            <img src="{{asset('assets/images/img3.png')}}" class="img-fluid card">
-                        </a>
-                    </figure>
+                {% endif %}
 
-                </div>
-
-                <div class="carousel-item text-center">
-
-                    <figure class="col-md-3 d-md-inline-block">
-                        <a href="{{asset('assets/images/img1.png')}}" data-size="1600x1067">
-                            <img src="{{asset('assets/images/img1.png')}}" class="img-fluid card">
-                        </a>
-                    </figure>
-
-                    <figure class="col-md-3 d-md-inline-block">
-                        <a href="{{asset('assets/images/img2.png')}}" data-size="1600x1067">
-                            <img src="{{asset('assets/images/img2.png')}}" class="img-fluid card">
-                        </a>
-                    </figure>
-
-                    <figure class="col-md-3 d-md-inline-block">
-                        <a href="{{asset('assets/images/img3.png')}}" data-size="1600x1067">
-                            <img src="{{asset('assets/images/img3.png')}}" class="img-fluid card">
-                        </a>
-                    </figure>
-
-                </div>
-
-
-                <div class="carousel-item text-center">
-
-                    <figure class="col-md-3 d-md-inline-block">
-                        <a href="{{asset('assets/images/img3.png')}}" data-size="1600x1067">
-                            <img src="{{asset('assets/images/img3.png')}}" class="img-fluid card">
-                        </a>
-                    </figure>
-
-                    <figure class="col-md-3 d-md-inline-block">
-                        <a href="{{asset('assets/images/img2.png')}}" data-size="1600x1067">
-                            <img src="{{asset('assets/images/img2.png')}}" class="img-fluid card">
-                        </a>
-                    </figure>
-
-                    <figure class="col-md-3 d-md-inline-block">
-                        <a href="{{asset('assets/images/img1.png')}}" data-size="1600x1067">
-                            <img src="{{asset('assets/images/img1.png')}}" class="img-fluid card">
-                        </a>
-                    </figure>
-
-                </div>
-
-            </div>
-
-            <a class="carousel-control-prev" href="#carousel-gallery" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Anterior</span>
-            </a>
-            <a class="carousel-control-next" href="#carousel-gallery" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Siguiente</span>
-            </a>
-
-        </div>
 
     </section>
 
@@ -184,7 +160,6 @@
                             </div>
 
                         </div>
-
                     </div>
 
                     <div class="col-md-3 d-md-inline-block">
@@ -198,10 +173,9 @@
                             </div>
 
                         </div>
-
                     </div>
-                    <div class="col-md-3 d-md-inline-block">
 
+                    <div class="col-md-3 d-md-inline-block">
                         <div class="container-escenario-item card">
 
                             <div class="embed-responsive embed-responsive-16by9">
@@ -211,7 +185,6 @@
                             </div>
 
                         </div>
-
                     </div>
 
                 </div>
@@ -219,7 +192,6 @@
                 <div class="carousel-item text-center">
 
                     <div class="col-md-3 d-md-inline-block">
-
                         <div class="container-escenario-item card">
 
                             <div class="embed-responsive embed-responsive-16by9">
@@ -227,13 +199,10 @@
                                     frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
                             </div>
-
                         </div>
-
                     </div>
 
                     <div class="col-md-3 d-md-inline-block">
-
                         <div class="container-escenario-item card">
 
                             <div class="embed-responsive embed-responsive-16by9">
@@ -243,10 +212,9 @@
                             </div>
 
                         </div>
-
                     </div>
-                    <div class="col-md-3 d-md-inline-block">
 
+                    <div class="col-md-3 d-md-inline-block">
                         <div class="container-escenario-item card">
 
                             <div class="embed-responsive embed-responsive-16by9">
@@ -256,57 +224,10 @@
                             </div>
 
                         </div>
-
                     </div>
 
                 </div>
-
-                <div class="carousel-item text-center">
-
-                    <div class="col-md-3 d-md-inline-block">
-
-                        <div class="container-escenario-item card">
-
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/CPUPtJqsD1A"
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-3 d-md-inline-block">
-
-                        <div class="container-escenario-item card">
-
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/CPUPtJqsD1A"
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="col-md-3 d-md-inline-block">
-
-                        <div class="container-escenario-item card">
-
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/CPUPtJqsD1A"
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
+                
             </div>
 
             <a class="carousel-control-prev" href="#carousel-videos" role="button" data-slide="prev">

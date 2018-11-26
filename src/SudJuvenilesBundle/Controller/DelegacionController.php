@@ -20,18 +20,19 @@ class DelegacionController extends Controller
     public function delegacionesAction(Request $request)
     {
     	$em = $this->getDoctrine()->getManager();
-    	$delegaciones = $em->getRepository('SudJuvenilesBundle:Delegacion')->getDelegaciones();
-
         $usuario = $this->getUser();
 
+        $periodoId = $usuario->getDelegacionId()->getPeriodoId();
         $tipoUsuarioId = $usuario->getTipoUsuarioId()->getId();
+
+    	$delegaciones = $em->getRepository('SudJuvenilesBundle:Delegacion')->getDelegaciones($periodoId);
 
         if($tipoUsuarioId == 3){
             $delegacionId = $usuario->getDelegacionId()->getId();
             return $this->redirectToRoute('delegacion',array('delegacionId'=>$delegacionId));
         }else{
-
-            return $this->render('SudJuvenilesBundle:Intranet:intranet-delegaciones.html.twig',array('delegaciones'=>$delegaciones));
+            $username = $usuario->getUsername();
+            return $this->render('SudJuvenilesBundle:Intranet:intranet-delegaciones.html.twig',array('delegaciones'=>$delegaciones,'username'=>$username));
         }
     }
 
@@ -42,6 +43,7 @@ class DelegacionController extends Controller
     public function delegacionAction(Request $request,$delegacionId)
     {
     	$em = $this->getDoctrine()->getManager();
+        $usuario = $this->getUser();
 
     	$delegacion = $em->getRepository('SudJuvenilesBundle:Delegacion')->getDelegacionById($delegacionId);
         $disciplinasDelegacion = $em->getRepository('SudJuvenilesBundle:Delegacion')->getDisciplinasDelegacionById($delegacionId);
@@ -53,11 +55,14 @@ class DelegacionController extends Controller
         $asignaciones = $em->getRepository('SudJuvenilesBundle:Asignacion')->getAsignaciones();
         $configuracionCondicionDocumento = $em->getRepository('SudJuvenilesBundle:Delegacion')->configuracionCondicionDocumento();
 
+        $username = $usuario->getUsername();
+        $roleUsuario = $usuario->getRoles()[0];
+
         if( empty($delegacion) ){
             return $this->render('SudJuvenilesBundle:Default:pagina_no_encontrada.html.twig' );
         }
 
-        return $this->render('SudJuvenilesBundle:Intranet:intranet-delegacion.html.twig',array( 'delegacion' => $delegacion[0], 'disciplinasDelegacion' => $disciplinasDelegacion, 'tiposParticipante' => $tiposParticipante,'paises'=>$paises, 'participantes' => $participantes, 'modalidades'=>$modalidades,'divisiones'=>$divisiones, 'asignaciones'=>$asignaciones, 'configuracionCondicionDocumento' => $configuracionCondicionDocumento  ) );
+        return $this->render('SudJuvenilesBundle:Intranet:intranet-delegacion.html.twig',array( 'delegacion' => $delegacion[0], 'disciplinasDelegacion' => $disciplinasDelegacion, 'tiposParticipante' => $tiposParticipante,'paises'=>$paises, 'participantes' => $participantes, 'modalidades'=>$modalidades,'divisiones'=>$divisiones, 'asignaciones'=>$asignaciones, 'configuracionCondicionDocumento' => $configuracionCondicionDocumento,'username'=>$username,'roleUsuario'=>$roleUsuario,'delegacionId'=>$delegacionId ) );
     }
 
 }

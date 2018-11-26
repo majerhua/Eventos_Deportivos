@@ -19,8 +19,9 @@ class AppKernel extends Kernel
             new AppBundle\AppBundle(),
             
             new SudJuvenilesBundle\SudJuvenilesBundle(),
-
             new Realestate\MssqlBundle\RealestateMssqlBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new MewesK\TwigExcelBundle\MewesKTwigExcelBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

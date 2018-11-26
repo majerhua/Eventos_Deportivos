@@ -42,7 +42,7 @@ class ParticipanteController extends Controller
 
       $em = $this->getDoctrine()->getManager();
       $participante = $em->getRepository('SudJuvenilesBundle:Participante')->getPariticipanteInscripcionById($inscripcionId);
-      /*
+      
       $encoders = array(new JsonEncoder());
       $normalizer = new ObjectNormalizer();
       $normalizer->setCircularReferenceLimit(1);
@@ -52,8 +52,8 @@ class ParticipanteController extends Controller
       $normalizers = array($normalizer);
       $serializer = new Serializer($normalizers, $encoders);
       $jsonContent = $serializer->serialize($participante,'json');
-      */
-      return new JsonResponse($participante);
+      
+      return new JsonResponse($jsonContent);
     }
   /**
      * @Route("participante/registrar",name="participanteRegistrar")
