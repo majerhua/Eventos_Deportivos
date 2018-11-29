@@ -28,11 +28,10 @@ class ParticipanteController extends Controller
       $em = $this->getDoctrine()->getManager();
       $estadoElim = $em->getRepository('SudJuvenilesBundle:Participante')->eliminarParticipanteInscripcion($inscripcionId);
 
-      
       return new JsonResponse($estadoElim);
     }
 
-  /**
+    /**
      * @Route("participante/get",name="participanteObtener")
      * @Method({"POST","GET"})
      */
@@ -55,7 +54,8 @@ class ParticipanteController extends Controller
       
       return new JsonResponse($jsonContent);
     }
-  /**
+
+    /**
      * @Route("participante/registrar",name="participanteRegistrar")
      * @Method({"POST","GET"})
      */
@@ -181,7 +181,13 @@ class ParticipanteController extends Controller
           $rutacertificadoDiscapacidadAll = $rutaDocumento.$fileNameCertificadoDiscapacidad;
         }
 
-        $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:Participante')->registrar($paisOrigenId, $tipoDocumento, $sexoId,$numeroDocumento, $nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$paisRepresentaId,$tipoParticipanteId,$rutaDocumentoIdentidadAll,$rutaConstanciaEstudioAll,$rutaFichaMedicaVigenteAll,$rutaFormularioInscripcionAll,$rutaPolizaSeguroAll,$estadoDis,$rutacertificadoDiscapacidadAll,$disDelegId,$rutaFotoPerfilAll,$arrayModalidades,$arrayDivisiones);        
+
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $this->getUser();
+
+        $usuarioId = $usuario->getId();
+
+        $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:Participante')->registrar($paisOrigenId, $tipoDocumento, $sexoId,$numeroDocumento, $nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$paisRepresentaId,$tipoParticipanteId,$rutaDocumentoIdentidadAll,$rutaConstanciaEstudioAll,$rutaFichaMedicaVigenteAll,$rutaFormularioInscripcionAll,$rutaPolizaSeguroAll,$estadoDis,$rutacertificadoDiscapacidadAll,$disDelegId,$rutaFotoPerfilAll,$arrayModalidades,$arrayDivisiones,$usuarioId);        
 
         if($estadoRegistro == 1){//SI SE REGISTRO CORRECTAMENTE
 
@@ -236,18 +242,21 @@ class ParticipanteController extends Controller
       //DELEGACION DISCIPLINA
       $disciplinaDelegacionId = $request->get('editDisDelegId');
 
+      //MOVIMIENTO
+      $estadoInscripcion = $request->get('editEstadoInscripcion');
+      $observacion = $request->get('editObservacion');
+
       //PARTICIPANTE
       $tipoParticipanteId = $request->get('editTipoParticipante');
       $estadoDis = $request->get('editEstadoDis');
 
-        //MODALIDADES
-        $modalidades = $request->get('editModalidades');
+      //MODALIDADES
+      $modalidades = $request->get('editModalidades');
 
         if( !empty($modalidades) ) //SI EXISTEN MODALIDADES
           $arrayModalidades = explode(',',$modalidades);
         else
           $arrayModalidades = Array();
-
 
         //DIVISIONES
         $divisiones = $request->get('editDivisiones');
@@ -339,7 +348,12 @@ class ParticipanteController extends Controller
           $rutacertificadoDiscapacidadAll = $rutaDocumento.$fileNameCertificadoDiscapacidad;
         }
 
-          $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:Participante')->editar($inscripcionId,$paisOrigenId,$tipoDocumento, $sexoId,$numeroDocumento, $nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$tipoParticipanteId,$rutaDocumentoIdentidadAll,$rutaConstanciaEstudioAll,$rutaFichaMedicaVigenteAll,$rutaFormularioInscripcionAll,$rutaPolizaSeguroAll,$estadoDis,$rutacertificadoDiscapacidadAll,$rutaFotoPerfilAll,$disciplinaDelegacionId);        
+        $em = $this->getDoctrine()->getManager();
+        $usuario = $this->getUser();
+
+        $usuarioId = $usuario->getId();
+
+        $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:Participante')->editar($inscripcionId,$paisOrigenId,$tipoDocumento, $sexoId,$numeroDocumento, $nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$tipoParticipanteId,$rutaDocumentoIdentidadAll,$rutaConstanciaEstudioAll,$rutaFichaMedicaVigenteAll,$rutaFormularioInscripcionAll,$rutaPolizaSeguroAll,$estadoDis,$rutacertificadoDiscapacidadAll,$rutaFotoPerfilAll,$disciplinaDelegacionId,$usuarioId,$estadoInscripcion,$observacion);        
 
         if($estadoRegistro == 1){//SI SE REGISTRO CORRECTAMENTE
 
@@ -436,6 +450,39 @@ class ParticipanteController extends Controller
         return new JsonResponse($estadoRegistro);
     }
 
+
+    /**
+     * @Route("panel/credenciales/{delegacionId}",name="pdfCredenciales")
+     * @Method({"POST","GET"})
+     */
+    public function generarPdfCredencialesAction(Request $request,$delegacionId){   
+       
+        $em = $this->getDoctrine()->getManager();
+        $participantes =  $em->getRepository('SudJuvenilesBundle:participante')->getParticipantesByDisDelegId($delegacionId);
+
+        $html = $this->renderView('SudJuvenilesBundle:credenciales:inscripcionPdf.html.twig', array('participantes'=>$participantes) );
+
+        $pdf = $this->container->get("white_october.tcpdf")->create(
+               'PORTRAID', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false
+        );
+        $pdf->SetAuthor('DNRPD');
+        $pdf->SetTitle('Eventos Deportivos');
+        $pdf->SetSubject('Juegos Sudamericanos Escolares 2018');
+        $pdf->SetKeywords('TCPDF, PDF, Eventos Deportivos, IPD, Juegos Sudamericanos, credenciales');
+        $pdf->setFontSubsetting(true);
+        $pdf->setPrintHeader(false);
+
+
+
+        $pdf->SetFont('helvetica', '', 11, '', true);
+        $pdf->AddPage();
+        $pdf->setCellPaddings(0, 0, 0, 0);
+        $pdf->writeHTMLCell(
+               $w = 0, $h = 0, $x = '', $y = '', $html, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = false
+        );
+        $pdf->Output("JuegosSudamericos.pdf", 'I');
+        exit;
+    }
 
 }
 

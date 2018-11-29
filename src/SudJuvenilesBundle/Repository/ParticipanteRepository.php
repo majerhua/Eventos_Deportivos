@@ -71,7 +71,8 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
                         par.ruta_ficha_medica_vigente rutaFichaMedica,
                         par.ruta_formulario_inscripcion rutaFormularioInscripcion,
                         par.ruta_foto_perfil rutaFotoPerfil,
-                        par.ruta_poliza_seguro rutaPolizaSeguro
+                        par.ruta_poliza_seguro rutaPolizaSeguro,
+                        mov.estado_inscripcion_id estadoInscripcionId
 
                       FROM inscripcion ins
                       INNER JOIN participante par ON par.id = ins.participante_id
@@ -79,8 +80,12 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
                       INNER JOIN persona per ON per.id = par.persona_id
                       INNER JOIN tipo_documento tipDoc ON tipDoc.id = per.tipo_documento
                       INNER JOIN sexo sex ON sex.id = per.sexo_id
-                      INNER JOIN pais pais ON pais.id = per.pais_origen_id 
-                      WHERE ins.id = '$id'";
+                      INNER JOIN pais pais ON pais.id = per.pais_origen_id
+                      INNER JOIN movimientos mov ON mov.inscripcion_id = ins.id 
+                      INNER JOIN (  SELECT MAX(id) idMaxMov
+                                    FROM movimientos  GROUP BY inscripcion_id ) maxMov
+                                    ON  maxMov.idMaxMov = mov.id 
+                      WHERE ins.id = '$id' ";
 
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
@@ -95,10 +100,10 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
 
   }
 
-	public function registrar($paisOrigenId,$tipoDocumentoId,$sexoId,$numeroDocumento,$nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$paisRepresentaId,$tipoParticipanteId,$rutaDocIdentidad,$rutaConstEstudio,$rutaFichaMedicaVigente,$rutaFormularioInscripcion,$rutaPolizaSeguro,$estadoDis,$rutaCertificadoDis,$disDelegId,$rutaFotoPerfil,$arrayModalidades,$arrayDivisiones){
+	public function registrar($paisOrigenId,$tipoDocumentoId,$sexoId,$numeroDocumento,$nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$paisRepresentaId,$tipoParticipanteId,$rutaDocIdentidad,$rutaConstEstudio,$rutaFichaMedicaVigente,$rutaFormularioInscripcion,$rutaPolizaSeguro,$estadoDis,$rutaCertificadoDis,$disDelegId,$rutaFotoPerfil,$arrayModalidades,$arrayDivisiones,$usuarioId){
 
 		//try {
-              $query="EXEC registrarParticipante $paisOrigenId,$tipoDocumentoId,$sexoId,'$numeroDocumento','$nombre','$apellidoPaterno','$apellidoMaterno','$fechaNacimiento','$correo',$paisRepresentaId,$tipoParticipanteId,'$rutaDocIdentidad','$rutaConstEstudio','$rutaFichaMedicaVigente','$rutaFormularioInscripcion','$rutaPolizaSeguro',$estadoDis,'$rutaCertificadoDis','$rutaFotoPerfil',$disDelegId";
+              $query="EXEC registrarParticipante $paisOrigenId,$tipoDocumentoId,$sexoId,'$numeroDocumento','$nombre','$apellidoPaterno','$apellidoMaterno','$fechaNacimiento','$correo',$paisRepresentaId,$tipoParticipanteId,'$rutaDocIdentidad','$rutaConstEstudio','$rutaFichaMedicaVigente','$rutaFormularioInscripcion','$rutaPolizaSeguro',$estadoDis,'$rutaCertificadoDis','$rutaFotoPerfil',$disDelegId,$usuarioId";
               $stmt = $this->getEntityManager()->getConnection()->prepare($query);
               $stmt->execute();
 
@@ -168,10 +173,10 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
 	}
 
 
-public function editar($idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,$numeroDocumento,$nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$tipoParticipanteId,$rutaDocIdentidad,$rutaConstEstudio,$rutaFichaMedicaVigente,$rutaFormularioInscripcion,$rutaPolizaSeguro,$estadoDis,$rutaCertificadoDis,$rutaFotoPerfil,$disciplinaDelegacionId){
+public function editar($idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,$numeroDocumento,$nombre,$apellidoPaterno,$apellidoMaterno,$fechaNacimiento,$correo,$tipoParticipanteId,$rutaDocIdentidad,$rutaConstEstudio,$rutaFichaMedicaVigente,$rutaFormularioInscripcion,$rutaPolizaSeguro,$estadoDis,$rutaCertificadoDis,$rutaFotoPerfil,$disciplinaDelegacionId,$usuarioId,$estadoInscripcion,$observacion){
 
     //try {
-              $query="EXEC editarParticipante $idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,'$numeroDocumento','$nombre','$apellidoPaterno','$apellidoMaterno','$fechaNacimiento','$correo',$tipoParticipanteId,'$rutaDocIdentidad','$rutaConstEstudio','$rutaFichaMedicaVigente','$rutaFormularioInscripcion','$rutaPolizaSeguro',$estadoDis,'$rutaCertificadoDis','$rutaFotoPerfil',$disciplinaDelegacionId";
+              $query="EXEC editarParticipante $idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,'$numeroDocumento','$nombre','$apellidoPaterno','$apellidoMaterno','$fechaNacimiento','$correo',$tipoParticipanteId,'$rutaDocIdentidad','$rutaConstEstudio','$rutaFichaMedicaVigente','$rutaFormularioInscripcion','$rutaPolizaSeguro',$estadoDis,'$rutaCertificadoDis','$rutaFotoPerfil',$disciplinaDelegacionId,$usuarioId,$estadoInscripcion,'$observacion'";
               $stmt = $this->getEntityManager()->getConnection()->prepare($query);
               $stmt->execute();
 
@@ -197,11 +202,13 @@ public function editar($idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,$nu
                       tipDoc.nombre tipoDocumentoExport,
                       per.numero_documento numeroDocumento,
                       sex.nombre sexo,
+                      paisRepresenta.nombre paisRepresenta,
                       cat.descripcion categoriaExport,
                       tipoPar.nombre tipoParticipanteExport,
                       dis.nombre disciplinaExport,
                       per.fecha_nacimiento fechaNacimientoExport,
-                      
+                      par.ruta_foto_perfil rutaFotoPerfil,
+                      deleg.url_imagen flag_bandera,
                       CONVERT(VARCHAR(100),STUFF(( SELECT  ',' +
                        CONVERT(VARCHAR(100),modal.nombre)
                           FROM    inscripcion_modalidad AS insMod
@@ -231,13 +238,18 @@ public function editar($idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,$nu
                       INNER JOIN pais pa ON pa.id = deleg.pais_id
                       INNER JOIN disciplina dis ON dis.id = disDeleg.disciplina_id
                       INNER JOIN participante par ON par.id = ins.participante_id
+                      INNER JOIN pais paisRepresenta ON paisRepresenta.id = par.pais_representa_id
                       INNER JOIN tipo_participante tipoPar ON tipoPar.id = par.tipo_participante_id
                       INNER JOIN tipo_grupo tipGrup On tipGrup.id = deleg.tipo_grupo_id
                       INNER JOIN categoria cat ON cat.id = dis.categoria_id
                       INNER JOIN persona per ON per.id = par.persona_id
                       INNER JOIN tipo_documento tipDoc ON tipDoc.id = per.tipo_documento
                       INNER JOIN sexo sex ON sex.id = per.sexo_id
-                      INNER JOIN estado_inscripcion estadoIns ON estadoIns.id = ins.estado 
+                      INNER JOIN movimientos mov ON mov.inscripcion_id = ins.id
+                      INNER JOIN (  SELECT MAX(id) idMaxiMovi,inscripcion_id FROM movimientos movMax
+                                    GROUP BY  inscripcion_id ) 
+                      maxiMovimiento ON maxiMovimiento.idMaxiMovi = mov.id
+                      INNER JOIN estado_inscripcion estadoIns ON estadoIns.id = mov.estado_inscripcion_id 
                       WHERE  ins.estado = 1
                       AND deleg.id = '$delegId'";
 

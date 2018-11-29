@@ -164,4 +164,22 @@ class InscripcionRepository extends \Doctrine\ORM\EntityRepository
         }
   	}
 
+    public function estadosInscripcion(){
+
+        try {
+          $query=" SELECT *FROM estado_inscripcion; ";
+
+            $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+            $stmt->execute();
+            $estadoInscripcion = $stmt->fetchAll();
+
+            return $estadoInscripcion;
+
+        }catch (DBALException $e) {
+            $message = $e->getCode();
+            return $message;
+        }
+    }
+
+
 }

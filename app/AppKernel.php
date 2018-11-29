@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Realestate\MssqlBundle\RealestateMssqlBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new MewesK\TwigExcelBundle\MewesKTwigExcelBundle(),
+            new WhiteOctober\TCPDFBundle\WhiteOctoberTCPDFBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

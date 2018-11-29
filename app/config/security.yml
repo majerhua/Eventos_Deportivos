@@ -52,4 +52,4 @@ security:
         - {path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - {path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - {path: ^/logout, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-        #- {path: ^(/panel), roles: [ROLE_ADMIN]}
+        - {path: ^/panel, roles: [ROLE_ADMIN,ROLE_DELEGACION,ROLE_ACREDITADOR]}

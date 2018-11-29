@@ -143,90 +143,66 @@
 
         <br>
 
+            {% set cantVueltas = ( ((galeriaVideos|length)/3) - 1)  %}
+            {% set cantVueltasInt = cantVueltas|round %}
+                
+            {% if cantVueltas < cantVueltasInt %}
+                {% set cantVueltas = (cantVueltas - 0.5)|round %}
+            {% else  %}  
+                {% set cantVueltas = cantVueltasInt  %}     
+            {% endif %}
+
         <div id="carousel-videos" class="carousel slide carousel-multi-item" data-ride="carousel">
 
             <div class="carousel-inner mdb-lightbox" role="listbox">
 
-                <div class="carousel-item active text-center">
+                {% for i in 0..cantVueltas %}
 
-                    <div class="col-md-3 d-md-inline-block">
+                    {% set numInicio = i*3 %}
+                    {% set numFin = i*3 + 2 %}
 
-                        <div class="container-escenario-item card">
+                    {% if i == 0 %}
 
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/CPUPtJqsD1A"
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                        <div class="carousel-item active text-center">
+                            {% for j in numInicio..numFin %}
 
-                            </div>
+                                {% set  arrayFechaGrabo =  galeriaVideos[j]['video_url']|split('=') %} 
+                                {% set  keyVideo =  arrayFechaGrabo[1] %}
 
+                                <div class="col-md-3 d-md-inline-block">
+                                    <div class="container-escenario-item card">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{keyVideo}}"
+                                                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
                         </div>
-                    </div>
 
-                    <div class="col-md-3 d-md-inline-block">
+                    {% elseif i > 0 %}
 
-                        <div class="container-escenario-item card">
+                        <div class="carousel-item  text-center">
+                            {% for j in numInicio..numFin %}
 
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/CPUPtJqsD1A"
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                {% set  arrayFechaGrabo =  galeriaVideos[j]['video_url']|split('=') %} 
+                                {% set  keyVideo =  arrayFechaGrabo[1] %}
 
-                            </div>
+                                <div class="col-md-3 d-md-inline-block">
+                                    <div class="container-escenario-item card">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{keyVideo}}"
+                                                frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                                        </div>
+                                    </div>
+                                </div>
 
+                            {% endfor %}
                         </div>
-                    </div>
+                    {% endif %}
 
-                    <div class="col-md-3 d-md-inline-block">
-                        <div class="container-escenario-item card">
-
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/CPUPtJqsD1A"
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="carousel-item text-center">
-
-                    <div class="col-md-3 d-md-inline-block">
-                        <div class="container-escenario-item card">
-
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/CPUPtJqsD1A"
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 d-md-inline-block">
-                        <div class="container-escenario-item card">
-
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/CPUPtJqsD1A"
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 d-md-inline-block">
-                        <div class="container-escenario-item card">
-
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/CPUPtJqsD1A"
-                                    frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
+                {% endfor %}
                 
             </div>
 

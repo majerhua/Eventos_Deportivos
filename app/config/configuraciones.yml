@@ -1,0 +1,12 @@
+parameters:
+  tipoUsuario:
+    administrador: 1
+    acreditador: 2
+    delegacion: 3
+
+twig:
+  globals:
+    tipoUsuario:
+      administrador: 1
+      acreditador: 2
+      delegacion: 3  
