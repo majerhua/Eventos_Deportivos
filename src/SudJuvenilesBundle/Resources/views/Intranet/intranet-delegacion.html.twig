@@ -1521,10 +1521,10 @@ const changeTipoParticipante = function(element){
 
         if("{{confCondDoc['cond_doc_fot_perf']}}" == 1){
             $("[atr-id='cond_doc_fot_perf']").show(); //OBLIGATORIO
-            $("[atr-id='cond_doc_fot_perf']").attr('required',true);
+            $("#fotoPerfil").attr('required',true);
         }else if( "{{confCondDoc['cond_doc_fot_perf']}}" == 2 ){
             $("[atr-id='cond_doc_fot_perf']").show(); //NO OBLIGATORIO
-            $("[atr-id='cond_doc_fot_perf']").removeAttr('required');
+            $("#fotoPerfil").removeAttr('required');
         }else if( "{{confCondDoc['cond_doc_fot_perf']}}" == 3 ){
             $("[atr-id='cond_doc_fot_perf']").hide(); //NO SE SOLICITA
         }
@@ -1659,6 +1659,7 @@ const obtenerInfoParti = function(disDelegId,inscripcionId,disciplinaCategoria,d
                 $("#editNumeroDocumento").attr('readonly','readonly');
 
                 $("#container-editTipoDocumento").empty();
+                $("#container-editTipoDocumento").append(`<input class='form-control' disabled  value=${datosParticipante.nombreTipoDocumento}><input type='hidden' id='editTipoDocumento' name='editTipoDocumento' value=${datosParticipante.tipoDocumento} >`);
                 $("#editTipoDocumento").attr('readonly','readonly');
 
                 $("#editNombre").attr('readonly','readonly');
@@ -1666,15 +1667,18 @@ const obtenerInfoParti = function(disDelegId,inscripcionId,disciplinaCategoria,d
                 $("#editApellidoMaterno").attr('readonly','readonly');
 
                 $("#container-editSexoId").empty();
+                $("#container-editSexoId").append(`<input class='form-control' disabled  value=${datosParticipante.sexoNombre}><input type='hidden' id='editSexoId' name='editSexoId' value=${datosParticipante.sexoId} >`);
                 $("#editSexoId").attr('readonly','readonly');
 
                 $("#editFechaNacimiento").attr('readonly','readonly');
                 $("#editCorreo").attr('readonly','readonly');
 
                 $("#container-editPaisOrigen").empty();
+                $("#container-editPaisOrigen").append(`<input class='form-control' disabled  value=${datosParticipante.paisOrigenNombre}><input type='hidden' id='editPaisOrigen' name='editPaisOrigen' value=${datosParticipante.paisOrigen} >`);
                 $("#editPaisOrigen").attr('readonly','readonly');
 
                 $("#container-editTipoParticipante").empty();
+                $("#container-editSexoId").append(`<input class='form-control' disabled  value=${datosParticipante.sexoNombre}><input type='hidden' id='editTipoParticipante' name='editTipoParticipante' value=${datosParticipante.sexoId} >`);
                 $("#editTipoParticipante").attr('readonly','readonly');
 
                 $("#edit-lista-documentacion").hide();
@@ -1816,7 +1820,7 @@ const obtenerInfoParti = function(disDelegId,inscripcionId,disciplinaCategoria,d
             const estadoInscripcionByTipoUsuario = {
                 '1':[1,3,4,5,6], //administrador
                 '2':[1,3,4,5,6], //acreditador
-                '3':[1,5] //delegacion
+                '3':[1,4,5] //delegacion
             }
 
             var arrayEstadosTipoUsuario = estadoInscripcionByTipoUsuario["{{tipoUsuarioId}}"];

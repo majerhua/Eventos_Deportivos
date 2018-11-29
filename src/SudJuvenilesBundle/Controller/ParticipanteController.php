@@ -250,8 +250,11 @@ class ParticipanteController extends Controller
       $tipoParticipanteId = $request->get('editTipoParticipante');
       $estadoDis = $request->get('editEstadoDis');
 
+
+
       //MODALIDADES
       $modalidades = $request->get('editModalidades');
+
 
         if( !empty($modalidades) ) //SI EXISTEN MODALIDADES
           $arrayModalidades = explode(',',$modalidades);
