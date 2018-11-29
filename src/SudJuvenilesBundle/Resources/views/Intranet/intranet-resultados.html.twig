@@ -4,29 +4,32 @@
 
 
     {% include 'SudJuvenilesBundle:Default:loader.html.twig' %} 
+
     {% include 'SudJuvenilesBundle:Default:menu_intranet.html.twig' %}
 
-
-
     <div class="section-title">
+
         <div class="container">
-            <h1 class="text-center container-header-orange card">Ressultados</h1>
+
+            <h1 class="text-center container-header-orange card">Resultados</h1>
+
         </div>
+
     </div>
 
     <section class="section-white">
 
         <div class="container">
 
-            <div class="row">
+            {% include 'SudJuvenilesBundle:Intranet:resultados-galeria.html.twig' %}
 
-                {% include 'SudJuvenilesBundle:Intranet:resultados-galeria.html.twig' %}
-
-            </div>
+            <br>
+            <br>
 
             <div class="text-right">
-                <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modal-nuevo-resultado">Publicar
-                    resultado</button>
+
+                <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modal-nuevo-resultado">Publicar resultado</button>
+
             </div>
 
         </div>
@@ -39,15 +42,20 @@
 
         <div class="modal-dialog modal-lg" role="document">
 
-                <div class="modal-content">
+            <div class="modal-content">
+
+                <form id="submit_form_guardar" action="#" enctype="multipart/form-data">
 
                     <div class="modal-header header-modal">
 
                         <h4 class="modal-title">Publica un nuevo resultado</h4>
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
                             <span aria-hidden="true" style="color:white;">&times;</span>
+
                         </button>
+
                     </div>
 
                     <div class="modal-body">
@@ -56,103 +64,153 @@
 
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-                                <form id="submit_form_guardar" action="#" enctype="multipart/form-data">
+                                <div id="alerta-error" class="alert alert-danger collapse text-center"></div>
 
-                                    <div id="alerta-error" class="alert alert-danger collapse text-center"></div>
+                                <ul class="list-group">
 
-                                    <ul class="list-group">
-                                        <li class="list-group-item">
+                                    <li class="list-group-item">
 
-                                            <div class="row">
+                                        <div class="row">
 
-                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
 
-                                                    <p><span style="color:#B31A12">*</span><strong> Foto:</strong></p>
+                                                <p><span style="color:#B31A12">*</span><strong> Foto:</strong></p>
 
-                                                </div>
+                                            </div>
 
-                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
 
-                                                    <div class="form-group">
-                                                        <input type="file" class="form-control-file" name="fileResultado" id="fileResultado">
-                                                    </div>
+                                                <div class="form-group">
+
+                                                    <input type="file" class="form-control-file" name="fileResultado" id="fileResultado" required="true">
 
                                                 </div>
 
                                             </div>
-                                        </li>
 
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                    <p><span style="color:#B31A12">*</span><strong> Titulo:</strong></p>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <input id="tituloResultado" class="form-control"  name="tituloResultado" type="text">
-                                                </div>
+                                        </div>
+
+                                    </li>
+
+                                    <li class="list-group-item">
+
+                                        <div class="row">
+
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+
+                                                <p><span style="color:#B31A12">*</span><strong> Titulo:</strong></p>
+
                                             </div>
-                                        </li>
 
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                    <p><span style="color:#B31A12">*</span><strong> Fecha:</strong></p>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <input class="form-control" type="date"  name="fechaResultado" id="fechaResultado">
-                                                </div>
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+
+                                                <input id="tituloResultado" class="form-control"  name="tituloResultado" type="text" required="true">
+
                                             </div>
-                                        </li>
 
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                    <p><span style="color:#B31A12">*</span><strong> Disciplina:</strong></p>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <select class="form-control" id="disciplinaResultado" name="disciplinaResultado">
-                                                        <option value="">--Seleccionar--</option>
-                                                        {% for dis in disciplinas if dis.categoria_id == 2 %}
-                                                            <option value="{{dis.id}}" >{{dis.nombre}}</option>
-                                                        {% endfor %}
+                                        </div>
 
-                                                    </select>
-                                                </div>
+                                    </li>
+
+                                    <li class="list-group-item">
+                
+                                        <div class="row">
+                
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                
+                                                <p><span style="color:#B31A12">*</span><strong> Fecha:</strong></p>
+                
                                             </div>
-                                        </li>
-
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                    <p><span style="color:#B31A12">*</span><strong>Descripción:</strong></p>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <textarea id="descripcionResultado" name="descripcionResultado" class="form-control" ></textarea>
-                                                </div>
+                
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+                
+                                                <input class="form-control" type="date"  name="fechaResultado" id="fechaResultado" required="true">
+                
                                             </div>
-                                        </li>
-                                    </ul>
+                
+                                        </div>
+                
+                                    </li>
 
-                                    <br>
+                                    <li class="list-group-item">
+                
+                                        <div class="row">
+                
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                
+                                                <p><span style="color:#B31A12">*</span><strong> Disciplina:</strong></p>
+                
+                                            </div>
+                
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+                
+                                                <select class="form-control" id="disciplinaResultado" name="disciplinaResultado" required="true" required="true">
+                
+                                                    <option value="">--Seleccionar--</option>
+                
+                                                    {% for dis in disciplinas if dis.categoria_id == 2 %}
+                
+                                                        <option value="{{dis.id}}" >{{dis.nombre}}</option>
+                
+                                                    {% endfor %}
 
-                                    <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span><br>
-                                    <span style="color:grey; font-size:12px;"> Los formatos válidos en las imágenes son:
-                                        'png', 'jpg' o 'jpeg'. Peso máximo de 5M. </span>
-                                </form>
+                                                </select>
+                
+                                            </div>
+                
+                                        </div>
+                
+                                    </li>
+
+                                    <li class="list-group-item">
+                
+                                        <div class="row">
+                
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                
+                                                <p><span style="color:#B31A12">*</span><strong>Descripción:</strong></p>
+                
+                                            </div>
+                
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+                
+                                                <textarea id="descripcionResultado" name="descripcionResultado" class="form-control" required="true"></textarea>
+                
+                                            </div>
+                
+                                        </div>
+                
+                                    </li>
+                
+                                </ul>
+
+                                <br>
+
+                                <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span><br>
+                
+                                <span style="color:grey; font-size:12px;"> Los formatos válidos en las imágenes son: 'png', 'jpg' o 'jpeg'. Peso máximo de 5M. </span>
+                
+                
                             </div>
+                
                         </div>
+                
                     </div>
 
                     <div class="modal-footer">
 
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button id="btn_guardar" type="button" class="btn btn-success">Publicar</button>
+                
+                        <button id="btn_guardar" type="submit" class="btn btn-success">Publicar</button>
 
                     </div>
-                </div>
-           
+
+                </form>
+
+            </div>
 
         </div>
+    
     </div>
 
 
@@ -160,15 +218,20 @@
 
         <div class="modal-dialog modal-lg" role="document">
 
-                <div class="modal-content">
+            <div class="modal-content">
+
+                <form id="submit_form_editar" action="#" enctype="multipart/form-data">
 
                     <div class="modal-header header-modal">
 
                         <h4 class="modal-title">Modificar Publicación</h4>
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            
                             <span aria-hidden="true" style="color:white;">&times;</span>
+                        
                         </button>
+                    
                     </div>
 
                     <div class="modal-body">
@@ -177,141 +240,215 @@
 
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-                                <form id="submit_form_editar" action="#" enctype="multipart/form-data">
+                                <div id="alerta-error" class="alert alert-danger collapse text-center"></div>
 
-                                    <div id="alerta-error" class="alert alert-danger collapse text-center"></div>
+                                <ul class="list-group">
+                                
+                                    <li class="list-group-item">
 
-                                    <ul class="list-group">
-                                        <li class="list-group-item">
+                                        <div class="row">
+                                
+                                            <input type="hidden" name="editResultadoGaleriaId" id="editResultadoGaleriaId" >
+                                
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
 
-                                            <div class="row">
-                                                <input type="hidden" name="editResultadoGaleriaId" id="editResultadoGaleriaId" >
-                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                                                <p><span style="color:#B31A12">*</span><strong> Foto:</strong></p>
 
-                                                    <p><span style="color:#B31A12">*</span><strong> Foto:</strong></p>
+                                            </div>
 
-                                                </div>
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
 
-                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
-                                                    <div class="form-group">
-                                                        <input type="file" class="form-control-file" name="editFileResultado" id="editFileResultado">
-                                                    </div>
-
+                                                <div class="form-group">
+                                
+                                                    <input type="file" class="form-control-file" name="editFileResultado" id="editFileResultado" required="true">
+                                
                                                 </div>
 
                                             </div>
-                                        </li>
 
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                    <p><span style="color:#B31A12">*</span><strong> Titulo:</strong></p>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <input id="editTituloResultado" class="form-control"  name="editTituloResultado" type="text">
-                                                </div>
+                                        </div>
+                                
+                                    </li>
+
+                                    <li class="list-group-item">
+                                
+                                        <div class="row">
+                                
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                                
+                                                <p><span style="color:#B31A12">*</span><strong> Titulo:</strong></p>
+                                
                                             </div>
-                                        </li>
-
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                    <p><span style="color:#B31A12">*</span><strong> Fecha:</strong></p>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <input class="form-control" type="date"  name="editFechaResultado" id="editFechaResultado">
-                                                </div>
+                                
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+                                
+                                                <input id="editTituloResultado" class="form-control"  name="editTituloResultado" type="text" required="true">
+                                
                                             </div>
-                                        </li>
+                                
+                                        </div>
+                                
+                                    </li>
 
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                    <p><span style="color:#B31A12">*</span><strong> Disciplina:</strong></p>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <select class="form-control" id="editDisciplinaResultado" name="editDisciplinaResultado">
-                                                        <option value="">--Seleccionar--</option>
-                                                        {% for dis in disciplinas if dis.categoria_id == 2 %}
-                                                            <option value="{{dis.id}}" >{{dis.nombre}}</option>
-                                                        {% endfor %}
+                                    <li class="list-group-item">
 
-                                                    </select>
-                                                </div>
+                                        <div class="row">
+
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+
+                                                <p><span style="color:#B31A12">*</span><strong> Fecha:</strong></p>
+
                                             </div>
-                                        </li>
 
-                                        <li class="list-group-item">
-                                            <div class="row">
-                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                    <p><span style="color:#B31A12">*</span><strong>Descripción:</strong></p>
-                                                </div>
-                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <textarea id="editDescripcionResultado" name="editDescripcionResultado" class="form-control"></textarea>
-                                                </div>
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+
+                                                <input class="form-control" type="date"  name="editFechaResultado" id="editFechaResultado" required="true">
+
                                             </div>
-                                        </li>
-                                    </ul>
 
-                                    <br>
+                                        </div>
 
-                                    <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span><br>
-                                    <span style="color:grey; font-size:12px;"> Los formatos válidos en las imágenes son:
-                                        'png', 'jpg' o 'jpeg'. Peso máximo de 5M. </span>
-                                </form>
+                                    </li>
+
+                                    <li class="list-group-item">
+
+                                        <div class="row">
+
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+
+                                                <p><span style="color:#B31A12">*</span><strong> Disciplina:</strong></p>
+
+                                            </div>
+
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+
+                                                <select class="form-control" id="editDisciplinaResultado" name="editDisciplinaResultado" required="true">
+
+                                                    <option value="">--Seleccionar--</option>
+
+                                                    {% for dis in disciplinas if dis.categoria_id == 2 %}
+
+                                                        <option value="{{dis.id}}" >{{dis.nombre}}</option>
+
+                                                    {% endfor %}
+
+                                                </select>
+
+                                            </div>
+
+                                        </div>
+
+                                    </li>
+
+                                    <li class="list-group-item">
+
+                                        <div class="row">
+
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+
+                                                <p><span style="color:#B31A12">*</span><strong>Descripción:</strong></p>
+
+                                            </div>
+
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+
+                                                <textarea id="editDescripcionResultado" name="editDescripcionResultado" class="form-control" required="true"></textarea>
+
+                                            </div>
+
+                                        </div>
+
+                                    </li>
+
+                                </ul>
+
+                                <br>
+
+                                <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span><br>
+
+                                <span style="color:grey; font-size:12px;"> Los formatos válidos en las imágenes son: 'png', 'jpg' o 'jpeg'. Peso máximo de 5M. </span>
+
                             </div>
+
                         </div>
+
                     </div>
 
                     <div class="modal-footer">
+                        
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button id="btn_editar" type="button" class="btn btn-success">Publicar</button>
+                        
+                        <button id="btn_editar" type="submit" class="btn btn-success">Publicar</button>
+                    
                     </div>
-                </div>
-           
 
-        </div>
-    </div>
-
-<div class="modal fade" id="modal-eliminar-galeriaResultado" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title text-center" style="font-size:1.1em;">Desea eliminar Imagen?</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </form>
+            
             </div>
 
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <input type="hidden" name="elimGaleriaResultId" id="elimGaleriaResultId">
-                            <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                        </div>
-                        <div class="col-lg-6">
-                            <button class="btn btn-danger" id="btnConfElimResultado">Aceptar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
-</div>
 
-{% include 'SudJuvenilesBundle:Default:footer.html.twig' %} 
+    </div>
+
+    <div class="modal fade" id="modal-eliminar-galeriaResultado" role="dialog" aria-hidden="true">
+    
+        <div class="modal-dialog modal-sm">
+    
+            <div class="modal-content">
+
+                <div class="modal-header">
+    
+                    <h5 class="modal-title text-center" style="font-size:1.1em;">Desea eliminar Imagen?</h5>
+    
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    
+                </div>
+
+                <div class="modal-body">
+    
+                    <div class="container">
+    
+                        <div class="row">
+    
+                            <div class="col-lg-6">
+    
+                                <input type="hidden" name="elimGaleriaResultId" id="elimGaleriaResultId">
+    
+                                <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+    
+                            </div>
+    
+                            <div class="col-lg-6">
+    
+                                <button class="btn btn-danger" id="btnConfElimResultado">Aceptar</button>
+    
+                            </div>
+    
+                        </div>
+    
+                    </div>
+    
+                </div>
+    
+            </div>
+    
+        </div>
+    
+    </div>
+
+    {% include 'SudJuvenilesBundle:Default:footer.html.twig' %} 
+
 {% endblock %}
-
 
 {% block javascripts %}
 
     <script>
 
-
         $('[data-toggle="tooltip"]').tooltip();
 
-        $('#btn_guardar').click( function () {
+        $('#submit_form_guardar').on("submit", function (e) {
+            
+            e.preventDefault();
 
             var obj = new FormData($("#submit_form_guardar")[0]);
             
@@ -339,6 +476,7 @@
                     alertify.error('Error Sistema');
                 }
             });
+
         });
 
         $("#btnConfElimResultado").on('click',function(){
@@ -364,6 +502,7 @@
                     alertify.error('Error Sistema');
                 }
             });
+
         });
 
         const galeriaResultEliminar = function(galeriaResultId){
@@ -397,7 +536,9 @@
             });
         };
 
-        $('#btn_editar').click( function () {
+        $('#submit_form_editar').on("submit", function (e) {
+            
+            e.preventDefault();
 
             var obj = new FormData($("#submit_form_editar")[0]);
             
@@ -427,6 +568,6 @@
             });
         });
 
-
     </script>
+
 {% endblock %}

@@ -1,41 +1,62 @@
-   <div class="container">
+<div class="container">
+
     <div class="count">
-        <span class="label label-primary">
-            <b>Fotos en total:</b> {{ pagination.getTotalItemCount }}
-        </span>
+
+        <p>Fotos en total <span class="badge badge-info">  {{ pagination.getTotalItemCount }}</span></p>
+
     </div>
 
     <br>
 
-
- 
     <div class="row">
-     
+        
         {% for entry in pagination %}
 
-            <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
-                <div class="d-flex justify-content-end bg-dark" style="padding:8px 10px 4px 0;">
-                    <i class="fas fa-edit" style="color:white;cursor:pointer;" title="Editar" data-toggle="modal" data-target="#modal-editar-resultado" onclick="obtenerInformaciongaleriaResultModificar({{entry['galResultId']}})"></i>&nbsp;&nbsp;&nbsp;
-                    <i  class="fas fa-trash-alt" style="color:white;cursor:pointer;" title="Eliminar" onclick="galeriaResultEliminar({{entry['galResultId']}})"  data-toggle="modal" data-target="#modal-eliminar-galeriaResultado"></i>
-                </div>
-               <div class="container-escenario-item card">
-                    <img src="{{asset(entry['foto_url'])}}" style="height:200px;"  width="100%">
-                    <div class="header-foto-item">
-                        <h5 class="card-title">{{entry['disciplina']}}</h5>
-                        <p class="card-title"><strong> {{entry['titulo']}}</strong></p>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+            
+            <div class="card" style="margin-bottom: 16px;">
+
+                <div class="container-escenario-item">
+                    
+                    <img src="{{asset(entry['foto_url'])}}" alt="Notebook" style="width:100%;">
+
+                    <div class="img-container">
+
+                        <p><small>{{entry['disciplina']}}</small></p>
+        
+                        <p class="card-title"><strong>{{entry['titulo']}}</strong></p>
+        
                         <p class="card-text">{{entry['descripcion_foto']}}</p>
-                        <p class="card-text text-right">{{entry['fecha_tomo_foto']}}</p>
+        
+                        <p class="card-text text-right"><small>{{entry['fecha_tomo_foto']}}</small></p>
+
                     </div>
+            
                 </div>
+            
+                <div class="d-flex justify-content-end bg-light" style="padding-right: 8px;">
+
+                    <i class="fas fa-edit" style="color:#424242; cursor:pointer;" title="Editar" data-toggle="modal" data-target="#modal-editar-resultado" onclick="obtenerInformaciongaleriaResultModificar({{entry['galResultId']}})" ></i>&nbsp;&nbsp;&nbsp;
+
+                    <i  class="fas fa-trash-alt" style="color:#424242; cursor:pointer;" title="Eliminar"  onclick="galeriaResultEliminar({{entry['galResultId']}})"  data-toggle="modal" data-target="#modal-eliminar-galeriaResultado"></i>
+
+                </div>
+
             </div>      
+
+        </div>
 
         {% endfor %}
 
     </div>
+
 </div>
+
 {# display navigation #}
 <div class="navigation">
-        {{ knp_pagination_render(pagination) }}
+
+    {{ knp_pagination_render(pagination) }}
+
 </div>
 
 
