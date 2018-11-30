@@ -15,7 +15,7 @@ class PaisRepository extends \Doctrine\ORM\EntityRepository
 
 	public function getPaises(){
 		try {
-            $query=" SELECT *FROM pais; ";
+            $query=" SELECT *FROM pais ORDER BY nombre;";
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
             $paises = $stmt->fetchAll();

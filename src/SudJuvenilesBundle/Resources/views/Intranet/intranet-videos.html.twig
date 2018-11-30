@@ -1,45 +1,58 @@
 {% extends '::base.html.twig' %}
+
 {% block title %}Sudamericanos Juveniles{% endblock %}
+
 {% block body  %}
 
     {% include 'SudJuvenilesBundle:Default:loader.html.twig' %} 
+
     {% include 'SudJuvenilesBundle:Default:menu_intranet.html.twig' %}
 
     <div class="section-title">
-        <div class="container">
-            <h1 class="text-center container-header-orange card">Videos</h1>
-        </div>
-    </div>
 
+        <div class="container">
+
+            <h1 class="text-center container-header-orange card">Videos</h1>
+
+        </div>
+
+    </div>
 
     <section class="section-white">
 
         <div class="container">
+          
             {% include 'SudJuvenilesBundle:Intranet:videos-galeria.html.twig' %}
+          
             <br>
             <br>
 
             <div class="text-right">
-                <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modal-nueva-video">Publicar
-                    video</button>
+          
+                <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#modal-nueva-video">Publicar video</button>
+
             </div>
 
         </div>
 
     </section>
 
-
-<div class="modal fade" id="modal-nueva-video" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal-nueva-video" role="dialog" aria-hidden="true">
 
         <div class="modal-dialog modal-lg" role="document">
 
-                <div class="modal-content">
+            <div class="modal-content">
+
+                <form id="submit_form_guardar" action="#" enctype="multipart/form-data" method="POST" >
+
                     <div class="modal-header header-modal container-header-yellow">
 
                         <h4 class="modal-title">Publica un nuevo video</h4>
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
                             <span aria-hidden="true" style="color:white;">&times;</span>
+
                         </button>
 
                     </div>
@@ -51,8 +64,6 @@
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
                                 <div id="alerta-error" class="alert alert-danger collapse text-center"></div>
-
-                                    <form id="submit_form_guardar" action="#" enctype="multipart/form-data" method="POST" >
 
                                         <ul class="list-group">
 
@@ -63,12 +74,15 @@
                                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
 
                                                         <p><span style="color:#B31A12">*</span><strong> Link Video:</strong></p>
+
                                                     </div>
 
                                                     <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
 
                                                         <div class="form-group">
-                                                            <input type="text" class="form-control"  name="linkVideo" id="linkVideo">
+
+                                                            <input type="text" class="form-control" name="linkVideo" id="linkVideo" required="true">
+
                                                         </div>
 
                                                     </div>
@@ -77,49 +91,74 @@
                                             </li>
 
                                             <li class="list-group-item">
+
                                                 <div class="row">
+
                                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+
                                                         <p><span style="color:#B31A12">*</span><strong> Fecha:</strong></p>
+
                                                     </div>
+
                                                     <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                        <input id="fechaVideo" name="fechaVideo" class="form-control" type="date">
+
+                                                        <input id="fechaVideo" name="fechaVideo" class="form-control" type="date" required="true">
+
                                                     </div>
+
                                                 </div>
+
                                             </li>
 
                                         </ul>
+
                                     </form>
                                 <br>
 
-                                <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span><br>
-                                <span style="color:grey; font-size:12px;"> Los formatos válidos en las imágenes son:
-                                    'png', 'jpg' o 'jpeg'. Peso máximo de 5M. </span>
+                                <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span>
+                                
+                                <br>
+                                
+                                <span style="color:grey; font-size:12px;">Se debe copiar y pegar el enlace del video desde YouTube</span>
 
                             </div>
+
                         </div>
+
                     </div>
+
                     <div class="modal-footer">
 
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button id="btn_guardar" type="button" class="btn btn-success">Publicar</button>
+
+                        <button type="submit" class="btn btn-success">Publicar</button>
 
                     </div>
-                </div>
+
+                </form>
+
+            </div>
             
         </div>
-</div>
+    
+    </div>
 
-<div class="modal fade" id="modal-editar-video" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal-editar-video" role="dialog" aria-hidden="true">
 
         <div class="modal-dialog modal-lg" role="document">
 
-                <div class="modal-content">
+            <div class="modal-content">
+
+                <form id="submit_form_editar" action="#" enctype="multipart/form-data" method="POST" >
+
                     <div class="modal-header header-modal container-header-yellow">
 
                         <h4 class="modal-title">Edita el video seleccionado</h4>
 
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
                             <span aria-hidden="true" style="color:white;">&times;</span>
+
                         </button>
 
                     </div>
@@ -132,90 +171,153 @@
 
                                 <div id="alerta-error" class="alert alert-danger collapse text-center"></div>
 
-                                    <form id="submit_form_editar" action="#" enctype="multipart/form-data" method="POST" >
+                                <ul class="list-group">
 
-                                        <ul class="list-group">
+                                    <li class="list-group-item">
 
-                                            <li class="list-group-item">
+                                        <div class="row">
 
-                                                <div class="row">
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                                            
+                                                <p><span style="color:#B31A12">*</span><strong> Link Video:</strong></p>
+                                            
+                                            </div>
+                                            
+                                            <input type="hidden" name="editVideoGaleriaId" id="editVideoGaleriaId" >
+                                            
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
 
-                                                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                        <p><span style="color:#B31A12">*</span><strong> Link Video:</strong></p>
-                                                    </div>
-                                                    <input type="hidden" name="editVideoGaleriaId" id="editVideoGaleriaId" >
-                                                    <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
-                                                        <div class="form-group">
-                                                            <input type="text" class="form-control"  name="editLinkVideo" id="editLinkVideo">
-                                                        </div>
-
-                                                    </div>
-
+                                                <div class="form-group">
+                                            
+                                                    <input type="text" class="form-control"  name="editLinkVideo" id="editLinkVideo" required="true">
+                                            
                                                 </div>
-                                            </li>
 
-                                            <li class="list-group-item">
-                                                <div class="row">
-                                                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                        <p><span style="color:#B31A12">*</span><strong> Fecha:</strong></p>
-                                                    </div>
-                                                    <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                        <input id="editFechaVideo" name="editFechaVideo" class="form-control" type="date">
-                                                    </div>
-                                                </div>
-                                            </li>
+                                            </div>
 
-                                        </ul>
-                                    </form>
+                                        </div>
+
+                                    </li>
+
+                                    <li class="list-group-item">
+                                        
+                                        <div class="row">
+                                        
+                                            <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                                        
+                                                <p><span style="color:#B31A12">*</span><strong> Fecha:</strong></p>
+                                        
+                                            </div>
+                                        
+                                            <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+                                        
+                                                <input id="editFechaVideo" name="editFechaVideo" class="form-control" type="date" required="true">
+                                        
+                                            </div>
+                                        
+                                        </div>
+                                    
+                                    </li>
+
+                                </ul>
+                            
                                 <br>
 
-                                <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span><br>
-                                <span style="color:grey; font-size:12px;"> Los formatos válidos en las imágenes son:
-                                    'png', 'jpg' o 'jpeg'. Peso máximo de 5M. </span>
+                                <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span>
+                                
+                                <br>
+                                
+                                <span style="color:grey; font-size:12px;">Se debe copiar y pegar el enlace del video desde YouTube</span>
 
                             </div>
+                    
                         </div>
+
                     </div>
+                    
                     <div class="modal-footer">
 
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                        <button id="btn_editar" type="button" class="btn btn-success">Publicar</button>
+                    
+                        <button id="btn_editar" type="submit" class="btn btn-success">Publicar</button>
 
                     </div>
-                </div>
+
+                </form>
+
+            </div>
             
         </div>
-</div>
 
-
-<div class="modal fade" id="modal-eliminar-galeriaVideo" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title text-center" style="font-size:1.1em;">Desea eliminar Video?</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <div class="modal-body">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <input type="hidden" name="elimGaleriaVideoId" id="elimGaleriaVideoId">
-                            <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                        </div>
-                        <div class="col-lg-6">
-                            <button class="btn btn-danger" id="btnConfElimVideo">Aceptar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
-</div>
 
- {% include 'SudJuvenilesBundle:Default:footer.html.twig' %} 
+    <div class="modal fade" id="modal-eliminar-galeriaVideo" role="dialog" aria-hidden="true">
+        
+        <div class="modal-dialog modal-sm">
+        
+            <div class="modal-content">
+
+                <div class="modal-header header-modal container-header-yellow">
+
+                    <p class="modal-title"><strong>¿Desea eliminar este video?</strong></p>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    
+                        <span aria-hidden="true" style="color:white;">&times;</span>
+                    
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+        
+                    <div class="container">
+        
+                        <div class="row justify-content-md-center">
+
+                            <div class="col-lg-5">
+
+                                <br>
+
+                                <img src="{{asset('assets/images/trash.png')}}" class="img-fluid">
+
+                                <br>
+                                <br>
+                                <br>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+        
+                            <div class="col">
+        
+                                <input type="hidden" name="elimGaleriaVideoId" id="elimGaleriaVideoId">
+        
+                                <button class="btn btn-default btn-block" data-dismiss="modal">Cancelar</button>
+        
+                            </div>
+        
+                            <div class="col">
+        
+                                <button class="btn btn-danger btn-block" id="btnConfElimVideo">Aceptar</button>
+        
+                            </div>
+        
+                        </div>
+        
+                    </div>
+        
+                </div>
+        
+            </div>
+        
+        </div>
+    
+    </div>
+
+    {% include 'SudJuvenilesBundle:Default:footer.html.twig' %} 
 
 {% endblock %}
 
@@ -225,9 +327,8 @@
     <script>
 
         $('[data-toggle="tooltip"]').tooltip();
-        $('#btn_guardar').click( function () {
-
-            var obj = new FormData($("#submit_form_guardar")[0]);
+        
+        $('#submit_form_guardar').on("submit", function (e) {
             
             $.ajax({
                 url: "{{url('galeriaRegistrarVideo')}}",
@@ -309,7 +410,9 @@
             });
         };
 
-        $('#btn_editar').click( function () {
+        $('#submit_form_editar').on("submit", function (e) {
+
+            e.preventDefault();
 
             var obj = new FormData($("#submit_form_editar")[0]);
             
@@ -340,4 +443,5 @@
         });
 
     </script>
+
 {% endblock %}

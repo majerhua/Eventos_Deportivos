@@ -140,7 +140,7 @@ public function getDelegacionesWeb($periodoId){
 
         try {
             
-            $query="  SELECT *FROM tipo_participante WHERE estado=1 ";
+            $query="  SELECT *FROM tipo_participante WHERE estado=1 ORDER BY nombre;";
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
             $tiposParticipante = $stmt->fetchAll();

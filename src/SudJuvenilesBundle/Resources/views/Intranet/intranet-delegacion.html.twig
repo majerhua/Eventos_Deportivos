@@ -20,11 +20,12 @@
                     <h5 class="card-title text-center">{{delegacion['nombre']}}</h5>
 
                 </div>
+
             </div>
+
         </div>
 
     </div>
-
 
     <section class="section-white">
 
@@ -35,87 +36,101 @@
 
                 {% for disciplinaDeleg in disciplinasDelegacion %}
 
-                {% if disciplinaDeleg['disciplinaCategoria'] == 1 %}
+                    {% if disciplinaDeleg['disciplinaCategoria'] == 1 %}
 
-                <h4>Miembros no Deportivos</h4>
+                    <h4>Miembros no Deportivos</h4>
 
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-                            <button class="btn btn-lg btn-block btn-light" data-toggle="collapse" data-target="#collapseOne"
-                            aria-expanded="false" aria-controls="collapseOne">
-                            Delegación
-                        </button>
-                    </h5>
-                </div>
+                    <div class="card">
 
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                        <div class="card-header" id="headingOne">
 
-                    <div class="card-body">
+                            <h5 class="mb-0">
 
-                        <div class="panel panel-default" style="overflow-x:auto; overflow-y:scroll; height:40vh; ">
-                            <table class="table" style="width: 100%;">
-                                <thead class="container-header-yellow text-center">
-                                    <tr>
-                                        <th class="text-center" style="font-size:16px">Nombres y Apellidos</th>
-                                        <th class="text-center" style="font-size:16px">Doc de Identidad</th>
-                                        <th class="text-center" style="font-size:16px">Cargo</th>
-                                        <th class="text-center" style="font-size:16px">Sexo</th>
-                                        <th class="text-center" style="font-size:16px">Estado</th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
+                                <button class="btn btn-lg btn-block btn-light" data-toggle="collapse" data-target="#collapseOne"
+                                aria-expanded="false" aria-controls="collapseOne">
+                                Delegación
+                                </button>
 
-                                </thead>
+                            </h5>
 
-                                <tbody  class="buscar">
-
-                                    {% for participante in participantes %}
-
-                                    {% if participante['disciplinaId'] == disciplinaDeleg['disciplinaId']  %}
-                                    <tr>
-                                        <td  class="text-center">{{participante['nombresApellidos']}}</td>
-                                        <td  class="text-center">{{participante['numeroDocumento']}}</td>
-                                        <td  class="text-center">{{participante['tipoParticipante']}}</td>
-                                        <td  class="text-center">{{participante['sexo']}}</td>  
-
-                                        <td class="text-center">{{participante['estado']}}</td>
-
-                                        <td>
-                                            <button data-toggle="modal" data-target="#modal-editar-integrante" onclick="obtenerInfoParti({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" title="Editar" type="button" class="btn btn-info"><i class="fas fa-edit" style="color:white;" ></i></button>
-                                        </td>
-
-                                        <td><button onclick="detalleInformacionParticipante({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" title="Mostrar Detalle" title="Mostrar Documentos"  type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-detalle-integrante" ><i class="fas fa-eye" style="color:white;" ></i></button>
-                                        </td>
-
-                                        <td><button  title="Eliminar" onclick="setInscripcionIdInput({{participante['inscripcionId']}})"  type="button" class="btn btn-info " data-toggle="modal" data-target="#modal-eliminar-integrante"><i class="fas fa-trash-alt" style="color:white;" ></i></button>
-                                        </td>
-                                    </tr>
-
-                                    {% endif %}
-
-                                    {% endfor %}
-
-                                </tbody>
-                            </table>
                         </div>
 
-                        <br>
-                        <div class="dropdown-divider"></div>
-                        <br>
-                        {% if tipoUsuarioId != tipoUsuario['acreditador'] %}
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
-                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-nuevo-integrante" onclick="btnNuevoIntegrante({{disciplinaDeleg['disDelegId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['disciplinaId']}},{{disciplinaDeleg['delegacionTipoGrupo']}})">Nuevo
-                            integrante</button>
+                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+
+                            <div class="card-body">
+
+                                <div class="panel panel-default" style="overflow-x:auto; overflow-y:scroll; height:40vh; ">
+                                    
+                                    <table class="table" style="width: 100%;">
+                                    
+                                        <thead class="container-header-yellow text-center">
+                                    
+                                            <tr>
+                                    
+                                                <th class="text-center" style="font-size:16px">Nombres y Apellidos</th>
+                                                <th class="text-center" style="font-size:16px">Doc de Identidad</th>
+                                                <th class="text-center" style="font-size:16px">Cargo</th>
+                                                <th class="text-center" style="font-size:16px">Sexo</th>
+                                                <th class="text-center" style="font-size:16px">Estado</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody  class="buscar">
+
+                                            {% for participante in participantes %}
+
+                                                {% if participante['disciplinaId'] == disciplinaDeleg['disciplinaId']  %}
+                                                
+                                                <tr>
+
+                                                    <td  class="text-center">{{participante['nombresApellidos']}}</td>
+                                                    <td  class="text-center">{{participante['numeroDocumento']}}</td>
+                                                    <td  class="text-center">{{participante['tipoParticipante']}}</td>
+                                                    <td  class="text-center">{{participante['sexo']}}</td>  
+                                                    <td class="text-center">{{participante['estado']}}</td>
+                                                    <td><button data-toggle="modal" data-target="#modal-editar-integrante" onclick="obtenerInfoParti({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" title="Editar" type="button" class="btn btn-info"><i class="fas fa-edit" style="color:white;" ></i></button></td>
+                                                    <td><button onclick="detalleInformacionParticipante({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" title="Mostrar Detalle" title="Mostrar Documentos"  type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-detalle-integrante" ><i class="fas fa-eye" style="color:white;" ></i></button></td>
+                                                    <td><button  title="Eliminar" onclick="setInscripcionIdInput({{participante['inscripcionId']}})"  type="button" class="btn btn-info " data-toggle="modal" data-target="#modal-eliminar-integrante"><i class="fas fa-trash-alt" style="color:white;" ></i></button></td>
+
+                                                </tr>
+
+                                                {% endif %}
+
+                                            {% endfor %}
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                                <br>
+
+                                <div class="dropdown-divider"></div>
+
+                                <br>
+
+                                {% if tipoUsuarioId != tipoUsuario['acreditador'] %}
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-nuevo-integrante" onclick="btnNuevoIntegrante({{disciplinaDeleg['disDelegId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['disciplinaId']}},{{disciplinaDeleg['delegacionTipoGrupo']}})">Nuevo integrante</button>
+
+                                    </div>
+
+                                {%  endif %}
+
                             </div>
-                        {%  endif %}
+
+                        </div>
 
                     </div>
-                </div>
-            </div>
 
-            {% endif %}
+                {% endif %}
 
             {% endfor %}
 
@@ -124,98 +139,109 @@
             <br>
 
             <h4>Miembros deportivos</h4>
+
             {% set cont = 0 %}
+
             {% for disciplinaDeleg in disciplinasDelegacion %}
 
-            {% if disciplinaDeleg['disciplinaCategoria'] == 2 %}
+                {% if disciplinaDeleg['disciplinaCategoria'] == 2 %}
 
-            <div class="card">
+                    <div class="card">
 
-                <div class="card-header" id="headingTwo">
-                    <h5 class="mb-0">
-                        <button class="btn btn-lg btn-block btn-light" data-toggle="collapse" data-target="#collapseMd{{cont}}"
-                        aria-expanded="false" aria-controls="collapseMd{{cont}}">
-                        {{ disciplinaDeleg['disciplinaNombre']|lower|capitalize }}
-                    </button>
-                </h5>
-            </div>
+                        <div class="card-header" id="headingTwo">
 
-            <div id="collapseMd{{cont}}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
-                <div class="card-body">
+                            <h5 class="mb-0">
 
-                    <div class="panel panel-default" style="overflow-x:auto; overflow-y:scroll; height:50vh; ">
+                                <button class="btn btn-lg btn-block btn-light" data-toggle="collapse" data-target="#collapseMd{{cont}}"
+                                aria-expanded="false" aria-controls="collapseMd{{cont}}">
+                                {{ disciplinaDeleg['disciplinaNombre']|lower|capitalize }}
+                                </button>
 
-                        <table class="table" style="width: 100%;">
-                            <thead class="container-header-yellow text-center">
-                                <tr>
-                                    <th class="text-center" style="font-size:16px">Nombres y Apellidos</th>
-                                    <th class="text-center" style="font-size:16px">Doc de Identidad</th>
-                                    <th class="text-center" style="font-size:16px">Tipo</th>
-                                    <th class="text-center" style="font-size:16px">Sexo</th>
-                                    <th class="text-center" style="font-size:16px">Estado</th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
+                            </h5>
 
-                            <tbody  class="buscar">
+                        </div>
 
-                                {% for participante in participantes %}
+                        <div id="collapseMd{{cont}}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
 
-                                {% if participante['disciplinaId'] == disciplinaDeleg['disciplinaId']  %}
-                                <tr>
-                                    <td  class="text-center">{{participante['nombresApellidos']}}</td>
-                                    <td  class="text-center">{{participante['numeroDocumento']}}</td>
-                                    <td  class="text-center">{{participante['tipoParticipante']}}</td>
-                                    <td  class="text-center">{{participante['sexo']}}</td>  
+                            <div class="card-body">
 
-                                    <td class="text-center">{{participante['estado']}}</td>
+                                <div class="panel panel-default" style="overflow-x:auto; overflow-y:scroll; height:50vh; ">
 
-                                    <td>
-                                        <button onclick="obtenerInfoParti({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" data-toggle="modal" data-target="#modal-editar-integrante"  data-toggle="tooltip" title="Editar" type="button" class="btn btn-info "><i class="fas fa-edit" style="color:white;"></i></button>
-                                    </td>
+                                    <table class="table" style="width: 100%;">
 
-                                    <td>
-                                        <button onclick="detalleInformacionParticipante({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" title="Mostrar Detalle"  type="button" class="btn btn-info " data-toggle="modal" data-toggle="tooltip" data-target="#modal-detalle-integrante" ><i class="fas fa-eye" style="color:white;" ></i></button>
-                                    </td>
+                                        <thead class="container-header-yellow text-center">
 
-                                    
-                                        <td>
-                                            <button  title="Eliminar" onclick="setInscripcionIdInput({{participante['inscripcionId']}})"  type="button" class="btn btn-info " data-toggle="modal" data-target="#modal-eliminar-integrante"><i class="fas fa-trash-alt" style="color:white;"></i>
-                                            </button>
-                                        </td>                                
+                                            <tr>
 
-                                </tr>
+                                                <th class="text-center" style="font-size:16px">Nombres y Apellidos</th>
+                                                <th class="text-center" style="font-size:16px">Doc de Identidad</th>
+                                                <th class="text-center" style="font-size:16px">Tipo</th>
+                                                <th class="text-center" style="font-size:16px">Sexo</th>
+                                                <th class="text-center" style="font-size:16px">Estado</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+
+                                            </tr>
+
+                                        </thead>
+
+                                        <tbody  class="buscar">
+
+                                            {% for participante in participantes %}
+
+                                                {% if participante['disciplinaId'] == disciplinaDeleg['disciplinaId']  %}
+
+                                                    <tr>
+
+                                                        <td class="text-center">{{participante['nombresApellidos']}}</td>
+                                                        <td class="text-center">{{participante['numeroDocumento']}}</td>
+                                                        <td class="text-center">{{participante['tipoParticipante']}}</td>
+                                                        <td class="text-center">{{participante['sexo']}}</td>
+                                                        <td class="text-center">{{participante['estado']}}</td>
+                                                        <td><button onclick="obtenerInfoParti({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" data-toggle="modal" data-target="#modal-editar-integrante"  data-toggle="tooltip" title="Editar" type="button" class="btn btn-info "><i class="fas fa-edit" style="color:white;"></i></button></td>
+                                                        <td><button onclick="detalleInformacionParticipante({{disciplinaDeleg['disDelegId']}},{{participante['inscripcionId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['delegacionTipoGrupo']}},{{disciplinaDeleg['disciplinaId']}})" title="Mostrar Detalle"  type="button" class="btn btn-info " data-toggle="modal" data-toggle="tooltip" data-target="#modal-detalle-integrante" ><i class="fas fa-eye" style="color:white;" ></i></button></td>
+                                                        <td><button  title="Eliminar" onclick="setInscripcionIdInput({{participante['inscripcionId']}})"  type="button" class="btn btn-info " data-toggle="modal" data-target="#modal-eliminar-integrante"><i class="fas fa-trash-alt" style="color:white;"></i></button></td>                                
+
+                                                    </tr>
+
+                                                {% endif %}
+
+                                            {% endfor %}
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                                <br>
+
+                                <div class="dropdown-divider"></div>
+                                
+                                <br>
+
+                                {% if tipoUsuarioId != tipoUsuario['acreditador'] %}
+                                
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                
+                                        <button type="button" onclick="btnNuevoIntegrante({{disciplinaDeleg['disDelegId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['disciplinaId']}},{{disciplinaDeleg['delegacionTipoGrupo']}})"  class="btn btn-success" data-toggle="modal" data-target="#modal-nuevo-integrante">Nuevo integrante</button>
+
+                                    </div>
 
                                 {% endif %}
 
-                                {% endfor %}
+                            </div>
 
-                            </tbody>
-                        </table>
+                        </div>
 
                     </div>
 
-                    <br>
-                    <div class="dropdown-divider"></div>
-                    <br>
+                {% endif %}
 
-                    {% if tipoUsuarioId != tipoUsuario['acreditador'] %}
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
-                            <button type="button" onclick="btnNuevoIntegrante({{disciplinaDeleg['disDelegId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['disciplinaId']}},{{disciplinaDeleg['delegacionTipoGrupo']}})"  class="btn btn-success" data-toggle="modal" data-target="#modal-nuevo-integrante">Nuevo
-                        integrante</button>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-
-        </div>
-
-        {% endif %}
-
-        {% set cont = cont + 1 %}
-        {% endfor %}
+                {% set cont = cont + 1 %}
+                
+            {% endfor %}
 
     </div>
 
@@ -411,7 +437,7 @@
                             <li class="list-group-item">
                                 <div class="row">
                                     <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                        <p><strong>Pais de origen:</strong></p>
+                                        <p><strong>País de nacimiento:</strong></p>
                                     </div>
                                     <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
                                         <p id="detPaisOrigen">Peru</p>
@@ -593,6 +619,7 @@
                                                     <select class="form-control" name="tipoDocumento"  id="tipoDocumento" required="true">
                                                         <option value="1">DNI</option>
                                                         <option value="2">Pasaporte</option>
+                                                        <option value="3">Cédula de identidad</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -618,7 +645,7 @@
                                             <p><span style="color:#B31A12">*</span><strong> Nombres:</strong></p>
                                         </div>
                                         <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                            <input  class="form-control" name="nombre" id="nombre" type="text" required="true" maxlength="120">
+                                            <input  class="form-control" name="nombre" id="nombre" type="text" required="true" maxlength="120" oninput="this.value = this.value.toUpperCase()">
                                         </div>
                                     </div>
                                 </li>
@@ -632,7 +659,7 @@
                                                     Paterno</strong></p>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <input  class="form-control" id="apellidoPaterno" name="apellidoPaterno"  type="text" required="true" maxlength="100">
+                                                    <input  class="form-control" id="apellidoPaterno" name="apellidoPaterno"  type="text" required="true" maxlength="100" oninput="this.value = this.value.toUpperCase()">
                                                 </div>
                                             </div>
                                         </div>
@@ -643,7 +670,7 @@
                                                     Materno:</strong></p>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                                                    <input class="form-control" name="apellidoMaterno"  id="apellidoMaterno" type="text" required="true" maxlength="120">
+                                                    <input class="form-control" name="apellidoMaterno"  id="apellidoMaterno" type="text" required="true" maxlength="120" oninput="this.value = this.value.toUpperCase()">
                                                 </div>
                                             </div>
                                         </div>
@@ -659,8 +686,8 @@
                                                 </div>
                                                 <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
                                                     <select class="form-control" name="sexoId" id="sexoId" required="true">
-                                                        <option value="1" >Hombre</option>
-                                                        <option value="2" >Mujer</option>
+                                                        <option value="1" >MASCULINO</option>
+                                                        <option value="2" >FEMENINO</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -668,8 +695,7 @@
                                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-                                                    <p><span style="color:#B31A12">*</span><strong> Fecha de
-                                                    Nacimiento:</strong></p>
+                                                    <p><span style="color:#B31A12">*</span><strong> Fecha de Nacimiento:</strong></p>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
                                                     <input class="form-control" type="date"  name="fechaNacimiento" id="fechaNacimiento" required="true">
@@ -687,14 +713,14 @@
                                                     <p><span style="color:#B31A12">*</span><strong> Correo:</strong></p>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <input type="email" class="form-control" name="correo" id="correo" required="true">
+                                                    <input type="email" class="form-control" name="correo" id="correo" required="true" oninput="this.value = this.value.toUpperCase()">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                             <div class="row">
                                                 <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                    <p><span style="color:#B31A12">*</span><strong> País Origen:</strong></p>
+                                                    <p><span style="color:#B31A12">*</span><strong> País de nacimiento:</strong></p>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
                                                     <select class="form-control" name="paisOrigen" id="paisOrigen" required="true">
@@ -934,6 +960,7 @@
                                                     <select class="form-control" name="editTipoDocumento"  id="editTipoDocumento">
                                                         <option value="1">DNI</option>
                                                         <option value="2">Pasaporte</option>
+                                                        <option value="3">Cédula de identidad</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -958,7 +985,7 @@
                                             <p><span style="color:#B31A12">*</span><strong> Nombres:</strong></p>
                                         </div>
                                         <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                            <input  class="form-control" name="editNombre" id="editNombre" type="text">
+                                            <input  class="form-control" name="editNombre" id="editNombre" type="text" oninput="this.value = this.value.toUpperCase()">
                                         </div>
                                     </div>
                                 </li>
@@ -972,7 +999,7 @@
                                                     Paterno</strong></p>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <input  class="form-control" id="editApellidoPaterno" name="editApellidoPaterno"  type="text">
+                                                    <input  class="form-control" id="editApellidoPaterno" name="editApellidoPaterno"  type="text" oninput="this.value = this.value.toUpperCase()">
                                                 </div>
                                             </div>
                                         </div>
@@ -983,7 +1010,7 @@
                                                     Materno:</strong></p>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                                                    <input class="form-control" name="editApellidoMaterno"  id="editApellidoMaterno" type="text">
+                                                    <input class="form-control" name="editApellidoMaterno"  id="editApellidoMaterno" type="text" oninput="this.value = this.value.toUpperCase()">
                                                 </div>
                                             </div>
                                         </div>
@@ -999,8 +1026,8 @@
                                                 </div>
                                                 <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8" id="container-editSexoId" >
                                                     <select class="form-control" name="editSexoId" id="editSexoId">
-                                                        <option value="1" >Hombre</option>
-                                                        <option value="2" >Mujer</option>
+                                                        <option value="1" >MASCULINO</option>
+                                                        <option value="2" >FEMENINO</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -1027,7 +1054,7 @@
                                                     <p><span style="color:#B31A12">*</span><strong> Correo:</strong></p>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-                                                    <input type="email" class="form-control" name="editCorreo" id="editCorreo">
+                                                    <input type="email" class="form-control" name="editCorreo" id="editCorreo" oninput="this.value = this.value.toUpperCase()">
                                                 </div>
                                             </div>
                                         </div>
@@ -1035,7 +1062,7 @@
                                         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                             <div class="row">
                                                 <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                                    <p><span style="color:#B31A12">*</span><strong> País Origen:</strong></p>
+                                                    <p><span style="color:#B31A12">*</span><strong> País de nacimiento:</strong></p>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8" id="container-editPaisOrigen" >
                                                     <select class="form-control" name="editPaisOrigen" id="editPaisOrigen">
@@ -1248,151 +1275,153 @@
 
 {% block javascripts %}
 
-<script>
+    <script>
 
-$('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip();
 
-var modalidadInscripcion =  new Array();
-var divisionInscripcion =  new Array();
+        var modalidadInscripcion =  new Array();
+        var divisionInscripcion =  new Array();
 
-    //ELIMINAR INSCRIPCION
-    $("#btnConfElimInscripcion").on('click',function(){
-        let datos = { 'inscripcionId':$("#elimInscripcionId").val() };
-        $.ajax({
-            url: "{{url('participanteEliminar')}}",
+        var existenModalidades = false;
+        var existenDivisiones = false;
 
-            type: 'POST',
-            data: datos ,
-            beforeSend: function() {
-                console.log("Datos a Enviar ==> ",datos);
-            },
-            success: function(data) {
-                if( data == 0 ){
-                    alertify.warning("<p style='color:black'; >Ocurrio un Error en el Sistema!</p>");
-                }else if(data==1){
-                    alertify.success("Se elimino al participante correctamente!.");
+
+        //ELIMINAR INSCRIPCION
+        $("#btnConfElimInscripcion").on('click',function(){
+            let datos = { 'inscripcionId':$("#elimInscripcionId").val() };
+            $.ajax({
+                url: "{{url('participanteEliminar')}}",
+
+                type: 'POST',
+                data: datos ,
+                beforeSend: function() {
+                    console.log("Datos a Enviar ==> ",datos);
+                },
+                success: function(data) {
+                    if( data == 0 ){
+                        alertify.warning("<p style='color:black'; >Ocurrio un Error en el Sistema!</p>");
+                    }else if(data==1){
+                        alertify.success("Se elimino al participante correctamente!.");
+                    }
+                },
+                error: function (error) {
+                    console.log("Error =>",error);
                 }
-            },
-            error: function (error) {
-                console.log("Error =>",error);
-            }
+            });
         });
-    });
 
 
-    //PASAR INSCRIPCION ID AL INPUT PARA ELIMINAR INSCRIPCION
-    const setInscripcionIdInput = function(inscripcionId){
-        $("#elimInscripcionId").val(inscripcionId);
-    };
+        //PASAR INSCRIPCION ID AL INPUT PARA ELIMINAR INSCRIPCION
+        const setInscripcionIdInput = function(inscripcionId){
+            $("#elimInscripcionId").val(inscripcionId);
+        };
 
-    //DETALLE PARTICIPANTE
-    const detalleInformacionParticipante = function(disDelegId,inscripcionId,disciplinaCategoria,delegTipoGrupo,disciplinaId){
+        //DETALLE PARTICIPANTE
+        const detalleInformacionParticipante = function(disDelegId,inscripcionId,disciplinaCategoria,delegTipoGrupo,disciplinaId){
 
+            $("#detModalidades").empty();
+            $("#detTipoParticipante").empty();
+            $("#detDivisiones").empty();
+            $("#detAsignaciones").empty();
+            $("#detNumeroDocumento").empty();
+            $("#detTipoDocumento").empty();
+            $("#detNombre").empty();
+            $("#detApellidoPaterno").empty();
+            $("#detApellidoMaterno").empty();
+            $("#detSexoId").empty();
+            $("#detFechaNacimiento").empty();
+            $("#detCorreo").empty();
+            $("#detPaisOrigen").empty();
+            $("#container-modalidad-detalle").hide();
+            $("#container-divisiones-detalle").hide();
 
-        $("#detModalidades").empty();
-        $("#detTipoParticipante").empty();
-        $("#detDivisiones").empty();
-        $("#detAsignaciones").empty();
-        $("#detNumeroDocumento").empty();
-        $("#detTipoDocumento").empty();
-        $("#detNombre").empty();
-        $("#detApellidoPaterno").empty();
-        $("#detApellidoMaterno").empty();
-        $("#detSexoId").empty();
-        $("#detFechaNacimiento").empty();
-        $("#detCorreo").empty();
-        $("#detPaisOrigen").empty();
-        $("#container-modalidad-detalle").hide();
-        $("#container-divisiones-detalle").hide();
-
-        const datos = {
-            'inscripcionId':inscripcionId
-        }
+            const datos = {
+                'inscripcionId':inscripcionId
+            }
 
         $.ajax({
             url: "{{url('participanteObtener')}}",
             type: 'POST',
             data: datos ,
-            beforeSend: function() {
-                    //console.log("Datos a Enviar ==> ",datos);
-                },
-                success: function(data) {
-                    console.log(data);
-                    let datosParticipante = JSON.parse(data)[0];
+            beforeSend: function() {},
+            success: function(data) {
 
-                    console.log("Datos Participante =>",datosParticipante);
+                console.log(data);
+                let datosParticipante = JSON.parse(data)[0];
 
-                    $("#detNumeroDocumento").text(datosParticipante.numeroDocumento);
-                    $("#detTipoDocumento").text(datosParticipante.nombreTipoDocumento);
-                    $("#detNombre").text(datosParticipante.nombre);
-                    $("#detApellidoPaterno").text(datosParticipante.apellidoPaterno);
-                    $("#detApellidoMaterno").text(datosParticipante.apellidoMaterno);
-                    $("#detSexoId").text(datosParticipante.sexoNombre);
-                    $("#detFechaNacimiento").text(datosParticipante.fechaNacimiento);
-                    $("#detCorreo").text(datosParticipante.correo);
-                    $("#detPaisOrigen").text(datosParticipante.paisOrigenNombre);
+                console.log("Datos Participante =>",datosParticipante);
 
-                    $("#detFotoPerfil").attr('src','/sudamericanos_juveniles/web/'+datosParticipante.rutaFotoPerfil)
+                $("#detNumeroDocumento").text(datosParticipante.numeroDocumento);
+                $("#detTipoDocumento").text(datosParticipante.nombreTipoDocumento);
+                $("#detNombre").text(datosParticipante.nombre);
+                $("#detApellidoPaterno").text(datosParticipante.apellidoPaterno);
+                $("#detApellidoMaterno").text(datosParticipante.apellidoMaterno);
+                $("#detSexoId").text(datosParticipante.sexoNombre);
+                $("#detFechaNacimiento").text(datosParticipante.fechaNacimiento);
+                $("#detCorreo").text(datosParticipante.correo);
+                $("#detPaisOrigen").text(datosParticipante.paisOrigenNombre);
 
-                    if(datosParticipante.rutaDocumentoIdentidad != null){
+                $("#detFotoPerfil").attr('src','/sudamericanos_juveniles/web/'+datosParticipante.rutaFotoPerfil)
 
-                        $("#detContainer-docIdentidad").show();
-                        $("#detDocumentoIdentidad").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaDocumentoIdentidad);
-                        $("#detDesDocumentoIdentidad").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaDocumentoIdentidad);
-                    }else{
-                        $("#detContainer-docIdentidad").hide();
-                    }
+                if(datosParticipante.rutaDocumentoIdentidad != null){
 
-                    if(datosParticipante.rutaConstanciaEstudio != null){
+                    $("#detContainer-docIdentidad").show();
+                    $("#detDocumentoIdentidad").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaDocumentoIdentidad);
+                    $("#detDesDocumentoIdentidad").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaDocumentoIdentidad);
+                }else{
+                    $("#detContainer-docIdentidad").hide();
+                }
 
-                        $("#detContainer-docConsEstudio").show();
-                        $("#detConstEstudio").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaConstanciaEstudio);
-                        $("#detDesConstEstudio").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaConstanciaEstudio);
-                    }else{
-                        $("#detContainer-docConsEstudio").hide();
-                    }
+                if(datosParticipante.rutaConstanciaEstudio != null){
 
-                    if(datosParticipante.rutaFichaMedica != null){
+                    $("#detContainer-docConsEstudio").show();
+                    $("#detConstEstudio").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaConstanciaEstudio);
+                    $("#detDesConstEstudio").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaConstanciaEstudio);
+                }else{
+                    $("#detContainer-docConsEstudio").hide();
+                }
 
-                        $("#detContainer-docFichVigente").show();
-                        $("#detFichaMedicaVigente").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFichaMedica);
-                        $("#detDesFichaMedicaVigente").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFichaMedica);
-                    }else{
-                        $("#detContainer-docFichVigente").hide();
-                    }
+                if(datosParticipante.rutaFichaMedica != null){
 
-                    if(datosParticipante.rutaFormularioInscripcion != null){
+                    $("#detContainer-docFichVigente").show();
+                    $("#detFichaMedicaVigente").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFichaMedica);
+                    $("#detDesFichaMedicaVigente").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFichaMedica);
+                }else{
+                    $("#detContainer-docFichVigente").hide();
+                }
 
-                        $("#detContainer-docFormIns").show();
-                        $("#detFormularioInscripcion").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFormularioInscripcion);
-                        $("#detDesFormularioInscripcion").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFormularioInscripcion);
-                    }else{
-                        $("#detContainer-docFormIns").hide();
-                    }
+                if(datosParticipante.rutaFormularioInscripcion != null){
 
-                    if(datosParticipante.rutaPolizaSeguro != null){
+                    $("#detContainer-docFormIns").show();
+                    $("#detFormularioInscripcion").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFormularioInscripcion);
+                    $("#detDesFormularioInscripcion").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFormularioInscripcion);
+                }else{
+                    $("#detContainer-docFormIns").hide();
+                }
 
-                        $("#detContainer-docPolizSegu").show();
-                        $("#detPolizaSeguro").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaPolizaSeguro);
-                        $("#detDesPolizaSeguro").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaPolizaSeguro);  
-                    }else{
-                        $("#detContainer-docPolizSegu").hide();
-                    }
+                if(datosParticipante.rutaPolizaSeguro != null){
 
-                    if( datosParticipante.rutaCertificadoDiscapacidad != null){
+                    $("#detContainer-docPolizSegu").show();
+                    $("#detPolizaSeguro").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaPolizaSeguro);
+                    $("#detDesPolizaSeguro").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaPolizaSeguro);  
+                }else{
+                    $("#detContainer-docPolizSegu").hide();
+                }
 
-                        $("#detContainer-docCertDis").show();
-                        $("#detCertificadoDis").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaCertificadoDiscapacidad);
-                        $("#detDesCertificadoDis").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaCertificadoDiscapacidad);
-                    }else{
-                        $("#detContainer-docCertDis").hide();
-                    }
+                if( datosParticipante.rutaCertificadoDiscapacidad != null){
 
-                    var arrayModalidad = new Array();
-                    var arrayDivision = new Array();
-                    var arrayAsignacion = new Array();
+                    $("#detContainer-docCertDis").show();
+                    $("#detCertificadoDis").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaCertificadoDiscapacidad);
+                    $("#detDesCertificadoDis").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaCertificadoDiscapacidad);
+                }else{
+                    $("#detContainer-docCertDis").hide();
+                }
 
-                    if(datosParticipante.modalidades != null){
+                var arrayModalidad = new Array();
+                var arrayDivision = new Array();
+                var arrayAsignacion = new Array();
+
+                if(datosParticipante.modalidades != null){
                      arrayModalidad = datosParticipante.modalidades.split(",");
                      $("#container-modalidad-detalle").show();
                  }else{
@@ -1415,44 +1444,44 @@ var divisionInscripcion =  new Array();
 
                 {% for tipPar in tiposParticipante %}
 
-                if( "{{tipPar['categoria_id']}}" == disciplinaCategoria && "{{tipPar['tipo_grupo_id']}}" == delegTipoGrupo &&  "{{tipPar['id']}}" ){ 
+                    if( "{{tipPar['categoria_id']}}" == disciplinaCategoria && "{{tipPar['tipo_grupo_id']}}" == delegTipoGrupo &&  "{{tipPar['id']}}" ){ 
 
-                    if(  "{{tipPar['id']}}" == datosParticipante.tipoParticipante )
-                        $("#detTipoParticipante").append("{{tipPar['nombre']}}");
-                }
+                        if(  "{{tipPar['id']}}" == datosParticipante.tipoParticipante )
+                            $("#detTipoParticipante").append("{{tipPar['nombre']}}");
+                    }
 
                 {%  endfor %}
 
                 {%  for modalidad in modalidades %}
 
-                if("{{modalidad['disciplinaId']}}" == disciplinaId ){
+                    if("{{modalidad['disciplinaId']}}" == disciplinaId ){
 
-                    for(let i=0; i<arrayModalidad.length; i++){
+                        for(let i=0; i<arrayModalidad.length; i++){
 
-                        if( "{{modalidad['modalidadId']}}" == arrayModalidad[i] )
-                            $("#detModalidades").append("{{modalidad['modalidadNombre']}}" + ",  ");
+                            if( "{{modalidad['modalidadId']}}" == arrayModalidad[i] )
+                                $("#detModalidades").append("{{modalidad['modalidadNombre']}}" + ",  ");
+
+                        }
 
                     }
-
-                }
 
                 {% endfor %}
 
 
                 {%  for division in divisiones %}
 
-                if("{{division['disciplinaId']}}" == disciplinaId ){
+                    if("{{division['disciplinaId']}}" == disciplinaId ){
 
-                    for(let i=0; i<arrayDivision.length; i++){
+                        for(let i=0; i<arrayDivision.length; i++){
 
-                        if( "{{division['divisionId']}}" == arrayDivision[i] ){
-                            console.log("{{division['divisionNombre']}}");
-                            $("#detDivisiones").append("{{division['divisionNombre']}}" + ",  ");
+                            if( "{{division['divisionId']}}" == arrayDivision[i] ){
+                                console.log("{{division['divisionNombre']}}");
+                                $("#detDivisiones").append("{{division['divisionNombre']}}" + ",  ");
+                            }
+
                         }
 
                     }
-
-                }
 
                 {% endfor %}
 
@@ -1460,141 +1489,151 @@ var divisionInscripcion =  new Array();
 
                 {%  for asignacion in asignaciones %}
 
-                for(let i=0; i<arrayAsignacion.length; i++){
+                    for(let i=0; i<arrayAsignacion.length; i++){
 
-                    if( "{{asignacion['asignacionId']}}" == arrayAsignacion[i] ){
-                        console.log("{{asignacion['asignacionNombre']}}");
-                        $("#detAsignaciones").append("{{asignacion['asignacionNombre']}}" + ",  ");
+                        if( "{{asignacion['asignacionId']}}" == arrayAsignacion[i] ){
+                    
+                            console.log("{{asignacion['asignacionNombre']}}");
+                            $("#detAsignaciones").append("{{asignacion['asignacionNombre']}}" + ",  ");
+                    
+                        }
+                    
                     }
-                }
 
                 {% endfor %}
 
 
 
-        // console.log("Informacion Participante => ",datosParticipante);
-    },
-    error: function (error) {
-        console.log("Error =>",error);
-    }
-});
-};
+                // console.log("Informacion Participante => ",datosParticipante);
+            },
+            error: function (error) {
+                console.log("Error =>",error);
+            }
+        });
+
+    };
 
 
-const changeTipoParticipante = function(element){
+    const changeTipoParticipante = function(element){
 
+        var tipoParticipanteId = null;
 
-    var tipoParticipanteId = null;
+        if(element.value)
+            tipoParticipanteId = element.value;
+        else 
+            tipoParticipanteId = element;
 
-    if(element.value)
-        tipoParticipanteId = element.value;
-    else 
-        tipoParticipanteId = element;
+        if(tipoParticipanteId == 1){
 
-    if(tipoParticipanteId == 1){
+             if (existenModalidades){
+                
+                $("#container-modalidad-nuevo").show();
+                $("#container-modalidad-editar").show();
+            
+            }
 
-        $("#container-modalidad-nuevo").show();
-        $("#container-divisiones-nuevo").show();
+            if (existenDivisiones){
+            
+                $("#container-divisiones-nuevo").show();
+                $("#container-divisiones-editar").show();
+            
+            }
+            
+        }else{
+            $("#container-modalidad-nuevo").hide();
+            $("#container-divisiones-nuevo").hide();
 
-        $("#container-modalidad-editar").show();
-        $("#container-divisiones-editar").show();
+            $("#container-modalidad-editar").hide();
+            $("#container-divisiones-editar").hide(); 
 
-        
-    }else{
-        $("#container-modalidad-nuevo").hide();
-        $("#container-divisiones-nuevo").hide();
+            modalidadInscripcion = [];
+            divisionInscripcion = [];
 
-        $("#container-modalidad-editar").hide();
-        $("#container-divisiones-editar").hide(); 
+            $(".form-check-input").prop('checked',false);               
 
-        modalidadInscripcion = [];
-        divisionInscripcion = [];
-
-        $(".form-check-input").prop('checked',false);               
-
-    }
-
-    let disciplinaId = $("#disciplinaId").val();
-
-    {% for confCondDoc in configuracionCondicionDocumento %}
-
-    if( "{{confCondDoc['tipoParticipanteId']}}" == tipoParticipanteId && "{{confCondDoc['disciplinaId']}}" == disciplinaId  ){
-
-        if("{{confCondDoc['cond_doc_fot_perf']}}" == 1){
-            $("[atr-id='cond_doc_fot_perf']").show(); //OBLIGATORIO
-            $("#fotoPerfil").attr('required',true);
-        }else if( "{{confCondDoc['cond_doc_fot_perf']}}" == 2 ){
-            $("[atr-id='cond_doc_fot_perf']").show(); //NO OBLIGATORIO
-            $("#fotoPerfil").removeAttr('required');
-        }else if( "{{confCondDoc['cond_doc_fot_perf']}}" == 3 ){
-            $("[atr-id='cond_doc_fot_perf']").hide(); //NO SE SOLICITA
         }
 
-        if("{{confCondDoc['cond_doc_ident']}}" == 1){
-            $("[atr-id='cond_doc_ident']").show(); //OBLIGATORIO
-            $("#documentoIdentidad").attr('required',true);
-        }else if( "{{confCondDoc['cond_doc_ident']}}" == 2 ){
-            $("[atr-id='cond_doc_ident']").show(); //NO OBLIGATORIO
-            $("#documentoIdentidad").removeAttr('required');
-        }else if( "{{confCondDoc['cond_doc_ident']}}" == 3 ){
-            $("[atr-id='cond_doc_ident']").hide(); //NO SE SOLICITA
+        let disciplinaId = $("#disciplinaId").val();
+
+        {% for confCondDoc in configuracionCondicionDocumento %}
+
+        if( "{{confCondDoc['tipoParticipanteId']}}" == tipoParticipanteId && "{{confCondDoc['disciplinaId']}}" == disciplinaId  ){
+
+            if("{{confCondDoc['cond_doc_fot_perf']}}" == 1){
+                $("[atr-id='cond_doc_fot_perf']").show(); //OBLIGATORIO
+                $("#fotoPerfil").attr('required',true);
+            }else if( "{{confCondDoc['cond_doc_fot_perf']}}" == 2 ){
+                $("[atr-id='cond_doc_fot_perf']").show(); //NO OBLIGATORIO
+                $("#fotoPerfil").removeAttr('required');
+            }else if( "{{confCondDoc['cond_doc_fot_perf']}}" == 3 ){
+                $("[atr-id='cond_doc_fot_perf']").hide(); //NO SE SOLICITA
+            }
+
+            if("{{confCondDoc['cond_doc_ident']}}" == 1){
+                $("[atr-id='cond_doc_ident']").show(); //OBLIGATORIO
+                $("#documentoIdentidad").attr('required',true);
+            }else if( "{{confCondDoc['cond_doc_ident']}}" == 2 ){
+                $("[atr-id='cond_doc_ident']").show(); //NO OBLIGATORIO
+                $("#documentoIdentidad").removeAttr('required');
+            }else if( "{{confCondDoc['cond_doc_ident']}}" == 3 ){
+                $("[atr-id='cond_doc_ident']").hide(); //NO SE SOLICITA
+            }
+
+            if("{{confCondDoc['cond_doc_const_est']}}" == 1){
+                $("[atr-id='cond_doc_const_est']").show(); //OBLIGATORIO
+                $("#constEstudio").attr('required',true);
+            }else if( "{{confCondDoc['cond_doc_const_est']}}" == 2 ){
+                $("[atr-id='cond_doc_const_est']").show(); //NO OBLIGATORIO
+                $("#constEstudio").removeAttr('required');
+            }else if( "{{confCondDoc['cond_doc_const_est']}}" == 3 ){
+                $("[atr-id='cond_doc_const_est']").hide(); //NO SE SOLICITA
+            }
+
+            if("{{confCondDoc['cond_doc_ficha_medica']}}" == 1){
+                $("[atr-id='cond_doc_ficha_medica']").show(); //OBLIGATORIO
+                $("#fichaMedicaVigente").attr('required',true);
+            }else if( "{{confCondDoc['cond_doc_ficha_medica']}}" == 2 ){
+                $("[atr-id='cond_doc_ficha_medica']").show(); //NO OBLIGATORIO
+                $("#fichaMedicaVigente").removeAttr('required');
+            }else if( "{{confCondDoc['cond_doc_ficha_medica']}}" == 3 ){
+                $("[atr-id='cond_doc_ficha_medica']").hide(); //NO SE SOLICITA
+            }
+
+            if("{{confCondDoc['cond_doc_form_inscrip']}}" == 1){
+                $("[atr-id='cond_doc_form_inscrip']").show(); //OBLIGATORIO
+                $("#formularioInscripcion").attr('required',true);
+            }else if( "{{confCondDoc['cond_doc_form_inscrip']}}" == 2 ){
+                $("[atr-id='cond_doc_form_inscrip']").show(); //NO OBLIGATORIO
+                $("#formularioInscripcion").removeAttr('required');
+            }else if( "{{confCondDoc['cond_doc_form_inscrip']}}" == 3 ){
+                $("[atr-id='cond_doc_form_inscrip']").hide(); //NO SE SOLICITA
+            }
+
+            if("{{confCondDoc['cond_doc_poliz_seg']}}" == 1){
+                $("[atr-id='cond_doc_poliz_seg']").show(); //OBLIGATORIO
+                $("#polizaSeguro").attr('required',true);
+            }else if( "{{confCondDoc['cond_doc_poliz_seg']}}" == 2 ){
+                $("[atr-id='cond_doc_poliz_seg']").show(); //NO OBLIGATORIO
+                $("#polizaSeguro ").removeAttr('required');
+            }else if( "{{confCondDoc['cond_doc_poliz_seg']}}" == 3 ){
+                $("[atr-id='cond_doc_poliz_seg']").hide(); //NO SE SOLICITA
+            }
+
+            if("{{confCondDoc['cond_doc_cert_disc']}}" == 1){
+                $("[atr-id='cond_doc_cert_disc']").show(); //OBLIGATORIO
+                $("#certificadoDis").attr('required',true);
+            }else if( "{{confCondDoc['cond_doc_cert_disc']}}" == 2 ){
+                $("[atr-id='cond_doc_cert_disc']").show(); //NO OBLIGATORIO
+                $("#certificadoDis").removeAttr('required');
+            }else if( "{{confCondDoc['cond_doc_cert_disc']}}" == 3 ){
+                $("[atr-id='cond_doc_cert_disc']").hide(); //NO SE SOLICITA
+            }
+
         }
 
-        if("{{confCondDoc['cond_doc_const_est']}}" == 1){
-            $("[atr-id='cond_doc_const_est']").show(); //OBLIGATORIO
-            $("#constEstudio").attr('required',true);
-        }else if( "{{confCondDoc['cond_doc_const_est']}}" == 2 ){
-            $("[atr-id='cond_doc_const_est']").show(); //NO OBLIGATORIO
-            $("#constEstudio").removeAttr('required');
-        }else if( "{{confCondDoc['cond_doc_const_est']}}" == 3 ){
-            $("[atr-id='cond_doc_const_est']").hide(); //NO SE SOLICITA
-        }
+    {% endfor %}
 
-        if("{{confCondDoc['cond_doc_ficha_medica']}}" == 1){
-            $("[atr-id='cond_doc_ficha_medica']").show(); //OBLIGATORIO
-            $("#fichaMedicaVigente").attr('required',true);
-        }else if( "{{confCondDoc['cond_doc_ficha_medica']}}" == 2 ){
-            $("[atr-id='cond_doc_ficha_medica']").show(); //NO OBLIGATORIO
-            $("#fichaMedicaVigente").removeAttr('required');
-        }else if( "{{confCondDoc['cond_doc_ficha_medica']}}" == 3 ){
-            $("[atr-id='cond_doc_ficha_medica']").hide(); //NO SE SOLICITA
-        }
-
-        if("{{confCondDoc['cond_doc_form_inscrip']}}" == 1){
-            $("[atr-id='cond_doc_form_inscrip']").show(); //OBLIGATORIO
-            $("#formularioInscripcion").attr('required',true);
-        }else if( "{{confCondDoc['cond_doc_form_inscrip']}}" == 2 ){
-            $("[atr-id='cond_doc_form_inscrip']").show(); //NO OBLIGATORIO
-            $("#formularioInscripcion").removeAttr('required');
-        }else if( "{{confCondDoc['cond_doc_form_inscrip']}}" == 3 ){
-            $("[atr-id='cond_doc_form_inscrip']").hide(); //NO SE SOLICITA
-        }
-
-        if("{{confCondDoc['cond_doc_poliz_seg']}}" == 1){
-            $("[atr-id='cond_doc_poliz_seg']").show(); //OBLIGATORIO
-            $("#polizaSeguro").attr('required',true);
-        }else if( "{{confCondDoc['cond_doc_poliz_seg']}}" == 2 ){
-            $("[atr-id='cond_doc_poliz_seg']").show(); //NO OBLIGATORIO
-            $("#polizaSeguro ").removeAttr('required');
-        }else if( "{{confCondDoc['cond_doc_poliz_seg']}}" == 3 ){
-            $("[atr-id='cond_doc_poliz_seg']").hide(); //NO SE SOLICITA
-        }
-
-        if("{{confCondDoc['cond_doc_cert_disc']}}" == 1){
-            $("[atr-id='cond_doc_cert_disc']").show(); //OBLIGATORIO
-            $("#certificadoDis").attr('required',true);
-        }else if( "{{confCondDoc['cond_doc_cert_disc']}}" == 2 ){
-            $("[atr-id='cond_doc_cert_disc']").show(); //NO OBLIGATORIO
-            $("#certificadoDis").removeAttr('required');
-        }else if( "{{confCondDoc['cond_doc_cert_disc']}}" == 3 ){
-            $("[atr-id='cond_doc_cert_disc']").hide(); //NO SE SOLICITA
-        }
-
-    }
-
-{% endfor %}
-
-};
+    };
 
 
 //OBTENER INFORMACION PARTICIPANTE PARA EDITAR
@@ -1651,9 +1690,6 @@ const obtenerInfoParti = function(disDelegId,inscripcionId,disciplinaCategoria,d
             $("#editFechaNacimiento").val(datosParticipante.fechaNacimiento);
             $("#editCorreo").val(datosParticipante.correo);
             $("#editPaisOrigen").val(datosParticipante.paisOrigen);
-
-
-
 
             if("{{tipoUsuarioId}}" == "{{tipoUsuario['acreditador']}}"){
 
@@ -1887,41 +1923,99 @@ const btnNuevoIntegrante = function(disDelegId,disciplinaCategoria,disciplinaId,
     modalidadInscripcion = [];
     divisionInscripcion = [];
 
-    $("#tipoParticipante").empty();
-    $("#tipoParticipante").append("<option value=''>--Seleccionar--</option>");
-    $("#modal-container-modalidades").empty();
-    $("#modal-container-divisiones").empty();
+    existenModalidades = false;
+    existenDivisiones = false;
 
-    $("#disDelegId").val(disDelegId);
-    $("#paisRepresenta").val("{{delegacion['paisId']}}");
-    $("#disciplinaId").val(disciplinaId);
+    var modcounter = 0;
+    var divcounter = 0;
 
-    {% for tipPar in tiposParticipante %}
-
-    if( "{{tipPar['categoria_id']}}" == disciplinaCategoria && "{{tipPar['tipo_grupo_id']}}" == delegTipoGrupo ){ 
-        $("#tipoParticipante").append("<option value='{{tipPar['id']}}'>{{tipPar['nombre']}}</option>");
-    }
-
-    {%  endfor %}
+            $("#container-modalidad-nuevo").hide();
+            $("#container-divisiones-nuevo").hide();
 
 
-    {%  for modalidad in modalidades %}
+            $("#fotoPerfil").val('');
+            $("#numeroDocumento").val('');
+            $("#nombre").val('');
+            $("#apellidoPaterno").val('');
+            $("#apellidoMaterno").val('');
+            $("#nombre").val('');
+            $("#correo").val('');
+            $("#fechaNacimiento").val('');
+            $("#documentoIdentidad").val('');
+            $("#constEstudio").val('');
+            $("#fichaMedicaVigente").val('');
+            $("#formularioInscripcion").val('');
+            $("#polizaSeguro").val('');
+            $("#certificadoDis").val('');
 
-    if("{{modalidad['disciplinaId']}}" == disciplinaId ){
-        $("#modal-container-modalidades").append("<div class='col-xs-6 col-sm-8 col-md-8 col-lg-4'><div class='form-group form-check'><label class='form-check-label'><input class='form-check-input' type='checkbox' onclick='checkModalidad(this)' value='{{modalidad['modalidadId']}}' >{{modalidad['modalidadNombre']}}</label></div></div>");
-    }
+            $("#tipoDocumento").empty();
+            $("#tipoDocumento").append("<option value=''>--Seleccionar--</option>");
+            $("#tipoDocumento").append("<option value='1'>DNI</option>");
+            $("#tipoDocumento").append("<option value='2'>PASAPORTE</option>");
+            $("#tipoDocumento").append("<option value='3'>CEDULA DE IDENTIDAD</option>");
 
-    {% endfor %}
+            $("#tipoParticipante").empty();
+            $("#tipoParticipante").append("<option value=''>--Seleccionar--</option>");
 
-    {%  for division in divisiones %}
+            $("#paisOrigen").empty();
+            $("#paisOrigen").append("<option value=''>--Seleccionar--</option>");
 
-    if("{{division['disciplinaId']}}" == disciplinaId ){
-        $("#modal-container-divisiones").append("<div class='col-xs-6 col-sm-8 col-md-8 col-lg-4'><div class='form-group form-check'><label class='form-check-label'><input class='form-check-input' type='checkbox' onclick='checkDivision(this)' value='{{division['divisionId']}}'>{{division['divisionNombre']}}</label></div></div>");
-    }
+            $("#sexoId").empty();
+            $("#sexoId").append("<option value=''>--Seleccionar--</option>");
+            $("#sexoId").append("<option value='1'>MASCULINO</option>");
+            $("#sexoId").append("<option value='2'>FEMENINO</option>");
 
-    {% endfor %}
+            $("#modal-container-modalidades").empty();
+            $("#modal-container-divisiones").empty();
 
-};
+            $("#disDelegId").val(disDelegId);
+            $("#paisRepresenta").val("{{delegacion['paisId']}}");
+            $("#disciplinaId").val(disciplinaId);
+
+            
+            {% for pais in paises %}
+
+                $("#paisOrigen").append("<option value='{{pais['id']}}'>{{pais['nombre']}}</option>");
+
+            {% endfor %}
+
+            {% for tipPar in tiposParticipante %}
+
+                if( "{{tipPar['categoria_id']}}" == disciplinaCategoria && "{{tipPar['tipo_grupo_id']}}" == delegTipoGrupo ){ 
+
+                    $("#tipoParticipante").append("<option value='{{tipPar['id']}}'>{{tipPar['nombre']}}</option>");
+
+                }
+
+            {%  endfor %}
+
+            {%  for modalidad in modalidades %}
+
+                if("{{modalidad['disciplinaId']}}" == disciplinaId ){
+
+                    $("#modal-container-modalidades").append("<div class='col-xs-6 col-sm-8 col-md-8 col-lg-4'><div class='form-group form-check'><label class='form-check-label'><input class='form-check-input' type='checkbox' onclick='checkModalidad(this)' value='{{modalidad['modalidadId']}}' >{{modalidad['modalidadNombre']}}</label></div></div>");
+                    modcounter++;
+
+                }
+
+            {% endfor %}
+
+            existenModalidades = modcounter > 0;
+
+            {%  for division in divisiones %}
+
+                if("{{division['disciplinaId']}}" == disciplinaId ){
+
+                    $("#modal-container-divisiones").append("<div class='col-xs-6 col-sm-8 col-md-8 col-lg-4'><div class='form-group form-check'><label class='form-check-label'><input class='form-check-input' type='checkbox' onclick='checkDivision(this)' value='{{division['divisionId']}}'>{{division['divisionNombre']}}</label></div></div>");
+                    divcounter++;
+
+                }
+
+            {% endfor %}
+
+            existenDivisiones = divcounter > 0;
+
+        };
 
 $('#submit_form_editar').on("submit",function(e) {
     e.preventDefault();
