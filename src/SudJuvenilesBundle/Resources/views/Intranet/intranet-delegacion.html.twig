@@ -248,9 +248,26 @@
     <br>
     <br>
 
-    <div class="text-right">
-        <button type="button" class="btn btn-success btn-lg" id="descargar-credenciales-participantes">Descargar credenciales</button>
-        <button type="button" class="btn btn-success btn-lg"  id="descargar-listado-participantes" >Descargar listado</button>
+    <div class="row justify-content-between">
+
+        <div class="col-0 col-xs-0 col-sm-0 col-md-2 col-lg-4">
+
+        </div>
+
+        {% if tipoUsuarioId != tipoUsuario['delegacion'] %}
+
+            <div class="col-12 col-xs-12 col-sm-12 col-md-5 col-lg-4">
+                <button type="button" class="btn btn-success btn-lg btn-block" id="descargar-credenciales-participantes">Descargar credenciales</button>
+                <br>
+
+            </div>
+
+        {% endif %}
+
+        <div class="col-12 col-xs-12 col-sm-12 col-md-5 col-lg-4">
+            <button type="button" class="btn btn-success btn-lg btn-block"  id="descargar-listado-participantes" >Descargar listado</button>
+        </div>
+
     </div>
 
 
@@ -262,29 +279,67 @@
 
 
 <div class="modal fade" id="modal-eliminar-integrante" role="dialog" aria-hidden="true">
+    
     <div class="modal-dialog modal-sm">
+
         <div class="modal-content">
 
-            <div class="modal-header">
-              <h5 class="modal-title text-center" style="font-size:1.1em;">Desea eliminar Participante?</h5>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
+            <div class="modal-header header-modal container-header-yellow">
 
-          <div class="modal-body">
-              <div class="container">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <input type="hidden" name="elimInscripcionId" id="elimInscripcionId">
-                        <button class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                    </div>
-                    <div class="col-lg-6">
-                        <button class="btn btn-danger" id="btnConfElimInscripcion">Aceptar</button>
-                    </div>
-                </div>
+                <p class="modal-title"><strong>¿Desea eliminar al participante?</strong></p>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                
+                    <span aria-hidden="true" style="color:white;">&times;</span>
+                
+                </button>
+
             </div>
+
+            <div class="modal-body">
+
+                <div class="container">
+
+                    <div class="row justify-content-md-center">
+
+                        <div class="col-lg-5">
+
+                            <br>
+
+                            <img src="{{asset('assets/images/trash.png')}}" class="img-fluid">
+
+                            <br>
+                            <br>
+                            <br>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col">
+        
+                            <input type="hidden" name="elimInscripcionId" id="elimInscripcionId">
+                            <button class="btn btn-default btn-block" data-dismiss="modal">Cancelar</button>
+
+                        </div>
+
+                        <div class="col">
+
+                            <button class="btn btn-danger btn-block" id="btnConfElimInscripcion">Eliminar</button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
+
     </div>
-</div>
 
 </div>
 
@@ -314,7 +369,7 @@
 
                             <div class="container-escenario-item container">
 
-                                <img src="images/flag_argentina.png" id="detFotoPerfil" class="img-fluid card">
+                                <img id="detFotoPerfil" class="img-fluid card">
 
                             </div>
 
@@ -503,42 +558,42 @@
 
                                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="detContainer-docIdentidad">
 
-                                        <a class="btn btn-info btn-block text-left" id="detDesDocumentoIdentidad" style="color:white;"><i class="fa fa-download"></i>&nbsp; &nbsp; Documento de identidad</a>
+                                        <a class="btn btn-info btn-block text-left" id="detDesDocumentoIdentidad" style="color:white;" target="_blank"><i class="fa fa-download"></i>&nbsp; &nbsp; Documento de identidad</a>
                                         <br>
 
                                     </div>
 
                                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="detContainer-docConsEstudio">
 
-                                        <a class="btn btn-info btn-block text-left" id="detDesConstEstudio" style="color:white;"><i class="fa fa-download"></i>&nbsp; &nbsp; Constancia de estudios</a>
+                                        <a class="btn btn-info btn-block text-left" id="detDesConstEstudio" style="color:white;" target="_blank"><i class="fa fa-download"></i>&nbsp; &nbsp; Constancia de estudios</a>
                                         <br>
 
                                     </div>
 
                                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="detContainer-docFichVigente">
 
-                                        <a class="btn btn-info btn-block text-left" id="detDesFichaMedicaVigente" style="color:white;"><i class="fa fa-download"></i>&nbsp; &nbsp; Ficha medica vigente</a>
+                                        <a class="btn btn-info btn-block text-left" id="detDesFichaMedicaVigente" style="color:white;" target="_blank"><i class="fa fa-download"></i>&nbsp; &nbsp; Ficha medica vigente</a>
                                         <br>
 
                                     </div>
 
                                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="detContainer-docFormIns">
 
-                                        <a class="btn btn-info btn-block text-left" id="detDesdetFormularioInscripcion" style="color:white;"><i class="fa fa-download"></i>&nbsp; &nbsp; Formulario de inscripcion</a>
+                                        <a class="btn btn-info btn-block text-left" id="detDesdetFormularioInscripcion" style="color:white;" target="_blank"><i class="fa fa-download"></i>&nbsp; &nbsp; Formulario de inscripcion</a>
                                         <br>
 
                                     </div>
 
                                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="detContainer-docPolizSegu">
 
-                                        <a class="btn btn-info btn-block text-left" id="detDesPolizaSeguro" style="color:white;"><i class="fa fa-download"></i>&nbsp; &nbsp; Poliza de seguro</a>
+                                        <a class="btn btn-info btn-block text-left" id="detDesPolizaSeguro" style="color:white;" target="_blank"><i class="fa fa-download"></i>&nbsp; &nbsp; Poliza de seguro</a>
                                         <br>
 
                                     </div>
 
                                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="detContainer-docCertDis">
 
-                                        <a class="btn btn-info btn-block text-left" id="detDesCertificadoDis" style="color:white;"><i class="fa fa-download"></i>&nbsp; &nbsp; Certificado de discapacidad</a>
+                                        <a class="btn btn-info btn-block text-left" id="detDesCertificadoDis" style="color:white;" target="_blank"><i class="fa fa-download"></i>&nbsp; &nbsp; Certificado de discapacidad</a>
                                         <br>
 
                                     </div>
@@ -602,7 +657,7 @@
                                         </div>
                                         <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
                                             <div class="form-group">
-                                                <input type="file" class="form-control-file" name="fotoPerfil"  id="fotoPerfil" required="true">
+                                                <input type="file" class="form-control-file" name="fotoPerfil"  id="fotoPerfil" required="true" accept="image/*">
                                             </div>
                                         </div>
                                     </div>
@@ -943,7 +998,7 @@
 
                                         <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
                                             <div class="form-group">
-                                                <input type="file" class="form-control-file" name="editFotoPerfil"  id="editFotoPerfil">
+                                                <input type="file" class="form-control-file" name="editFotoPerfil"  id="editFotoPerfil" accept="image/*">
                                             </div>
                                         </div>
                                     </div>
@@ -1231,7 +1286,7 @@
                                 <li class="list-group-item" atr-id="cond_doc_ident" style="display:none;">
                                     <div class="row">
                                         <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-                                            <p><span style="color:#B31A12">*</span><strong> Observación </strong></p>
+                                            <p><span style="color:#B31A12">*</span><strong> Comentario </strong></p>
                                         </div>
 
                                         <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
@@ -1288,21 +1343,26 @@
 
         //ELIMINAR INSCRIPCION
         $("#btnConfElimInscripcion").on('click',function(){
+
             let datos = { 'inscripcionId':$("#elimInscripcionId").val() };
+
             $.ajax({
                 url: "{{url('participanteEliminar')}}",
-
                 type: 'POST',
                 data: datos ,
                 beforeSend: function() {
                     console.log("Datos a Enviar ==> ",datos);
                 },
                 success: function(data) {
-                    if( data == 0 ){
-                        alertify.warning("<p style='color:black'; >Ocurrio un Error en el Sistema!</p>");
-                    }else if(data==1){
-                        alertify.success("Se elimino al participante correctamente!.");
-                    }
+
+                    if(data == 1){
+                        alertify.success('<p style="color:white">Se elimino Correctamente.</p>');
+                        setTimeout(function(){ location.reload(true) }, 1000);
+                        
+                    }else if(data == 0){
+                        alertify.warning('<p style="color:black">Ocurrio un Error a la hora de Eliminar.</p>')
+                    }                    
+
                 },
                 error: function (error) {
                     console.log("Error =>",error);
@@ -2132,6 +2192,22 @@ $("#descargar-credenciales-participantes").on('click',function(){
     window.open("{{url('pdfCredenciales',{delegacionId:delegacionId})}}","_blank");
 });
 
+
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1;
+var yyyy = today.getFullYear();
+if(dd<10){
+    dd='0'+dd
+} 
+if(mm<10){
+    mm='0'+mm
+} 
+
+today = yyyy+'-'+mm+'-'+dd;
+
+$("#fechaNacimiento").attr("max", today);
+$("#editFechaNacimiento").attr("max", today);
 
 </script>
 

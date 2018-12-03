@@ -87,7 +87,7 @@
 
                                                     <div class="form-group">
                                                         
-                                                        <input type="file" class="form-control-file"  name="fileFoto" id="fileFoto" required="true">
+                                                        <input type="file" class="form-control-file"  name="fileFoto" id="fileFoto" required="true" accept="image/*">
                                                     
                                                     </div>
 
@@ -231,7 +231,7 @@
 
                                                         <div class="form-group">
 
-                                                            <input type="file" class="form-control-file"  name="editFileFoto" id="editFileFoto" required="true">
+                                                            <input type="file" class="form-control-file"  name="editFileFoto" id="editFileFoto" required="true" accept="image/*">
 
                                                         </div>
 
@@ -373,6 +373,7 @@
 
                             <div class="col">
 
+                                <input type="hidden" name="elimGaleriaFotoId" id="elimGaleriaFotoId">
                                 <button class="btn btn-default btn-block" data-dismiss="modal">Cancelar</button>
 
                             </div>
@@ -393,6 +394,20 @@
 
         </div>
 
+    </div>
+
+    <div class="modal fade" id="modal-image" role="dialog" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg">
+    
+            <div class="modal-content">
+
+                <img id="img-modal" class="img-fluid">
+
+            </div>
+        
+        </div>
+    
     </div>
     
 {% endblock %}
@@ -462,6 +477,8 @@
             });
         });
 
+
+
         //OBTENER INFORMACION GALERIA PARA MODIFICAR
         const obtenerInformaciongaleriaFotoModificar = function(galeriaFotoId){
 
@@ -526,7 +543,13 @@
             });
         });
 
+        
+        function imageModal(img){
 
+            $('#modal-image').modal('show');
+            $('#img-modal').attr('src', img.src);
+
+        }
 
     </script>
 {% endblock %}
