@@ -114,15 +114,56 @@
 
                                 <br>
 
-                                {% if tipoUsuarioId != tipoUsuario['acreditador'] %}
+                                <div class="row">
 
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-8">
 
-                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-nuevo-integrante" onclick="btnNuevoIntegrante({{disciplinaDeleg['disDelegId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['disciplinaId']}},{{disciplinaDeleg['delegacionTipoGrupo']}})">Nuevo integrante</button>
+                                        <div class="row">
+                                        
+                                            <div class="col-4">
+
+                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>  
+                                                
+                                            </div>
+
+                                            <div class="col-4">
+                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>  
+                                            </div>
+
+                                            <div class="col-4">
+                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>  
+                                            </div>
+
+                                            <div class="col-4">
+                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>  
+                                            </div>
+
+                                            <div class="col-4">
+                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>
+                                            </div>
+
+                                            <div class="col-4">
+                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>
+                                            </div>
+
+                                        </div>
 
                                     </div>
 
-                                {%  endif %}
+                                    {% if tipoUsuarioId != tipoUsuario['acreditador'] %}
+
+                                        <br>
+                                        <br>
+
+                                        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-4 text-right">
+
+                                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-nuevo-integrante" onclick="btnNuevoIntegrante({{disciplinaDeleg['disDelegId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['disciplinaId']}},{{disciplinaDeleg['delegacionTipoGrupo']}})">Nuevo integrante</button>
+
+                                        </div>
+
+                                    {%  endif %}
+
+                                </div>
 
                             </div>
 
