@@ -1627,6 +1627,7 @@
                 $("#fotoPerfil").removeAttr('required');
             }else if( "{{confCondDoc['cond_doc_fot_perf']}}" == 3 ){
                 $("[atr-id='cond_doc_fot_perf']").hide(); //NO SE SOLICITA
+                $("#fotoPerfil").removeAttr('required');
             }
 
             if("{{confCondDoc['cond_doc_ident']}}" == 1){
@@ -1637,7 +1638,9 @@
                 $("#documentoIdentidad").removeAttr('required');
             }else if( "{{confCondDoc['cond_doc_ident']}}" == 3 ){
                 $("[atr-id='cond_doc_ident']").hide(); //NO SE SOLICITA
+                $("#documentoIdentidad").removeAttr('required');
             }
+
 
             if("{{confCondDoc['cond_doc_const_est']}}" == 1){
                 $("[atr-id='cond_doc_const_est']").show(); //OBLIGATORIO
@@ -1647,6 +1650,7 @@
                 $("#constEstudio").removeAttr('required');
             }else if( "{{confCondDoc['cond_doc_const_est']}}" == 3 ){
                 $("[atr-id='cond_doc_const_est']").hide(); //NO SE SOLICITA
+                $("#constEstudio").removeAttr('required');
             }
 
             if("{{confCondDoc['cond_doc_ficha_medica']}}" == 1){
@@ -1657,6 +1661,7 @@
                 $("#fichaMedicaVigente").removeAttr('required');
             }else if( "{{confCondDoc['cond_doc_ficha_medica']}}" == 3 ){
                 $("[atr-id='cond_doc_ficha_medica']").hide(); //NO SE SOLICITA
+                $("#fichaMedicaVigente").removeAttr('required');
             }
 
             if("{{confCondDoc['cond_doc_form_inscrip']}}" == 1){
@@ -1667,6 +1672,7 @@
                 $("#formularioInscripcion").removeAttr('required');
             }else if( "{{confCondDoc['cond_doc_form_inscrip']}}" == 3 ){
                 $("[atr-id='cond_doc_form_inscrip']").hide(); //NO SE SOLICITA
+                $("#formularioInscripcion").removeAttr('required');
             }
 
             if("{{confCondDoc['cond_doc_poliz_seg']}}" == 1){
@@ -1677,6 +1683,7 @@
                 $("#polizaSeguro ").removeAttr('required');
             }else if( "{{confCondDoc['cond_doc_poliz_seg']}}" == 3 ){
                 $("[atr-id='cond_doc_poliz_seg']").hide(); //NO SE SOLICITA
+                $("#polizaSeguro ").removeAttr('required');
             }
 
             if("{{confCondDoc['cond_doc_cert_disc']}}" == 1){
@@ -1687,6 +1694,7 @@
                 $("#certificadoDis").removeAttr('required');
             }else if( "{{confCondDoc['cond_doc_cert_disc']}}" == 3 ){
                 $("[atr-id='cond_doc_cert_disc']").hide(); //NO SE SOLICITA
+                $("#certificadoDis").removeAttr('required');
             }
 
         }
@@ -1775,7 +1783,14 @@ const obtenerInfoParti = function(disDelegId,inscripcionId,disciplinaCategoria,d
                 $("#editPaisOrigen").attr('readonly','readonly');
 
                 $("#container-editTipoParticipante").empty();
-                $("#container-editSexoId").append(`<input class='form-control' disabled  value=${datosParticipante.sexoNombre}><input type='hidden' id='editTipoParticipante' name='editTipoParticipante' value=${datosParticipante.sexoId} >`);
+
+                {% for tipPar in tiposParticipante %}
+
+                    if(  "{{tipPar['id']}}" == datosParticipante.tipoParticipante )
+                        $("#container-editTipoParticipante").append(`<input class='form-control' disabled  value='{{tipPar['nombre']}}'><input type='hidden' id='editTipoParticipante' name='editTipoParticipante' value=${datosParticipante.tipoParticipante} >`);
+
+                {%  endfor %}
+
                 $("#editTipoParticipante").attr('readonly','readonly');
 
                 $("#edit-lista-documentacion").hide();
