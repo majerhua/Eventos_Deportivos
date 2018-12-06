@@ -29,10 +29,10 @@ class GaleriaVideosRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
-	public function registrarVideoGaleria($linkVideo,$fechaVideo, $usuarioId){
+	public function registrarVideoGaleria($linkVideo,$fechaVideo, $usuarioId, $periodoId ){
         
         try {
-            $query=" EXEC registrarVideosGaleria '$linkVideo','$fechaVideo', $usuarioId";
+            $query=" EXEC registrarVideosGaleria '$linkVideo','$fechaVideo', $usuarioId, $periodoId";
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
             $estadoRegistro = $stmt->fetchAll();
@@ -45,7 +45,7 @@ class GaleriaVideosRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
-	public function mostrarVideosGaleria(){
+	public function mostrarVideosGaleria($periodoActivoId){
         
         try {
 
@@ -53,7 +53,7 @@ class GaleriaVideosRepository extends \Doctrine\ORM\EntityRepository
             id,
             video_url,
             CONVERT(DATE,fecha_grabo_video,101) fecha_grabo_video
-            FROM galeria_videos WHERE estado=1
+            FROM galeria_videos WHERE estado=1 AND periodo_id = $periodoActivoId
             ORDER BY fecha_grabo_video DESC;";
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();

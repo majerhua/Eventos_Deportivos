@@ -111,8 +111,6 @@
                                             </li>
 
                                         </ul>
-
-                                    </form>
                                 <br>
 
                                 <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span>
@@ -132,7 +130,6 @@
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 
                         <button type="submit" class="btn btn-success">Publicar</button>
-
                     </div>
 
                 </form>
@@ -330,6 +327,9 @@
         
         $('#submit_form_guardar').on("submit", function (e) {
             
+            e.preventDefault();
+            var obj = new FormData($("#submit_form_guardar")[0]);
+
             $.ajax({
                 url: "{{url('galeriaRegistrarVideo')}}",
                 type: 'POST',

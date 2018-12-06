@@ -461,13 +461,12 @@ class ParticipanteController extends Controller
     public function generarPdfCredencialesAction(Request $request,$delegacionId){   
        
         $em = $this->getDoctrine()->getManager();
-        $participantes =  $em->getRepository('SudJuvenilesBundle:participante')->getParticipantesByDisDelegId($delegacionId);
+        $participantes =  $em->getRepository('SudJuvenilesBundle:participante')->getParticipantesByDisDelegPdfId($delegacionId);
 
         $html = $this->renderView('SudJuvenilesBundle:credenciales:inscripcionPdf.html.twig', array('participantes'=>$participantes) );
 
-        $pdf = $this->container->get("white_october.tcpdf")->create(
-               'PORTRAID', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false
-        );
+        $pdf = $this->container->get("white_october.tcpdf")->create(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        
         $pdf->SetAuthor('DNRPD');
         $pdf->SetTitle('Eventos Deportivos');
         $pdf->SetSubject('Juegos Sudamericanos Escolares 2018');
@@ -475,10 +474,8 @@ class ParticipanteController extends Controller
         $pdf->setFontSubsetting(true);
         $pdf->setPrintHeader(false);
 
-
-
         $pdf->SetFont('helvetica', '', 11, '', true);
-        $pdf->AddPage();
+        $pdf->AddPage('L', 'A4');
         $pdf->setCellPaddings(0, 0, 0, 0);
         $pdf->writeHTMLCell(
                $w = 0, $h = 0, $x = '', $y = '', $html, $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = false

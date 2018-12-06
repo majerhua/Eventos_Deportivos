@@ -49,11 +49,11 @@ class GaleriaFotosRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
-	public function registrarFotoGaleria($tituloFoto,$fechaFoto, $rutaFotoAll,$usuario,$fotoDescripcion){
+	public function registrarFotoGaleria($tituloFoto,$fechaFoto, $rutaFotoAll,$usuario,$fotoDescripcion,$periodoId){
         
         try {
 
-            $query=" EXEC registrarFotosGaleria '$tituloFoto','$fechaFoto','$rutaFotoAll','$usuario','$fotoDescripcion'";
+            $query=" EXEC registrarFotosGaleria '$tituloFoto','$fechaFoto','$rutaFotoAll','$usuario','$fotoDescripcion',$periodoId";
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
             $estadoRegistro = $stmt->fetchAll();
@@ -66,10 +66,10 @@ class GaleriaFotosRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
-	 public function mostrarFotoGaleria(){
+	 public function mostrarFotoGaleria($periodoActivoId){
         
         try {
-            $query=" SELECT *FROM galeria_fotos WHERE estado=1";
+            $query=" SELECT *FROM galeria_fotos WHERE estado=1 AND periodo_id = $periodoActivoId";
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
             $fotos = $stmt->fetchAll();

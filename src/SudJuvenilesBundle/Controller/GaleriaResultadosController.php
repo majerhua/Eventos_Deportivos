@@ -17,7 +17,6 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 class GaleriaResultadosController extends Controller
 {
 
-
     /**
      * @Route("galeria/resultados/editar", name="galeriaEditarResultado")
      * @Method({"POST","GET"})
@@ -44,7 +43,7 @@ class GaleriaResultadosController extends Controller
         $fileResultado = $file->get("editFileResultado");
 
         if(!empty($fileResultado)){
-            $fileNameResultado = $tituloResultado.'.'.$fileResultado->guessExtension();
+            $fileNameResultado = $disciplinaResultado.'_'.$idDoc.'.'.$fileResultado->guessExtension();
             $rutaResultadoAll = $rutaDocumento.$fileNameResultado;
         }else{
             $rutaResultadoAll = NULL;
@@ -70,12 +69,14 @@ class GaleriaResultadosController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $disciplinas = $em->getRepository('SudJuvenilesBundle:Disciplina')->getDisciplinas();
+        $periodoActivoId = $em->getRepository('SudJuvenilesBundle:Periodo')->getIdPeriodoActivo();
+
+        $disciplinas = $em->getRepository('SudJuvenilesBundle:Disciplina')->getDisciplinas($periodoActivoId);
 
         $usuario = $this->getUser();
         $username = $usuario->getUsername();
 
-        $galeriaResultados =  $em->getRepository('SudJuvenilesBundle:GaleriaResultados')->mostrarResultadosGaleria(); 
+        $galeriaResultados =  $em->getRepository('SudJuvenilesBundle:GaleriaResultados')->mostrarResultadosGaleria($periodoActivoId); 
  
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -83,7 +84,6 @@ class GaleriaResultadosController extends Controller
                 $request->query->getInt('page', 1),
                  6
         );
- 
 
         return $this->render('SudJuvenilesBundle:Intranet:intranet-resultados.html.twig',array('username' => $username,'disciplinas' => $disciplinas,'pagination'=>$pagination ));
     }
@@ -103,6 +103,7 @@ class GaleriaResultadosController extends Controller
 
         $usuario = $this->getUser();
         $usuarioId = $usuario->getId();
+        $periodoId = $usuario->getDelegacionId()->getPeriodoId();
 
         $file = $request->files;
 
@@ -110,10 +111,10 @@ class GaleriaResultadosController extends Controller
         $rutaDocumento = "assets/Resultado/$idDoc/";
 
         $fileResultado = $file->get("fileResultado");
-        $fileNameResultado = $tituloResultado.'.'.$fileResultado->guessExtension();
+        $fileNameResultado = $disciplinaResultado.'_'.$idDoc.'.'.$fileResultado->guessExtension();
         $rutaResultadoAll = $rutaDocumento.$fileNameResultado;
 
-        $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:GaleriaResultados')->registrarResultadoGaleria($tituloResultado,$fechaResultado, $rutaResultadoAll, $usuarioId, $descripcionResultado,$disciplinaResultado); 
+        $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:GaleriaResultados')->registrarResultadoGaleria($tituloResultado,$fechaResultado, $rutaResultadoAll, $usuarioId, $descripcionResultado,$disciplinaResultado,$periodoId); 
 
 
         if($estadoRegistro == 1 ){

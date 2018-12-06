@@ -121,15 +121,13 @@
        
         var verFotosDisciplina = function(disciplinaId){
 
-         
-            var arrayJson = '{{pagination.items|json_encode|raw}}';
+            var arrayJson = '{{pagination|json_encode|raw}}';
             var arrayObject = JSON.parse(arrayJson);
-
+            console.log(arrayObject);
             var newArrayObject = arrayObject.filter(function(elem){
                 return elem.disciplinaId == disciplinaId
             });
 
-            console.log(newArrayObject);
 
             $(`#pagination-container${disciplinaId}`).pagination({
                 dataSource: newArrayObject,

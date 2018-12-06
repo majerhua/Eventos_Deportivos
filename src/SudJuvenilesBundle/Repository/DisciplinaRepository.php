@@ -13,11 +13,11 @@ use Doctrine\DBAL\DBALException;
 class DisciplinaRepository extends \Doctrine\ORM\EntityRepository
 {
 
-    public function getDisciplinas(){
+    public function getDisciplinas($periodoActivoId){
 
         try {
 
-            $query="    SELECT *FROM disciplina ORDER BY nombre";
+            $query="  SELECT *FROM disciplina";
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
             $disciplinas = $stmt->fetchAll();

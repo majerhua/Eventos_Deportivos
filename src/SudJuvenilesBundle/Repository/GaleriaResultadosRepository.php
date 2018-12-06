@@ -28,11 +28,11 @@ class GaleriaResultadosRepository extends \Doctrine\ORM\EntityRepository
     }
 
 
-	public function registrarResultadoGaleria($tituloResultado,$fechaResultado,$rutaResultadoAll,$usuario,$resultadoDescripcion,$disciplinaResultado){
+	public function registrarResultadoGaleria($tituloResultado,$fechaResultado,$rutaResultadoAll,$usuario,$resultadoDescripcion,$disciplinaResultado,$periodoId){
         
         try {
 
-            $query=" EXEC registrarResultadoGaleria '$tituloResultado','$fechaResultado','$rutaResultadoAll','$usuario','$resultadoDescripcion',$disciplinaResultado";
+            $query=" EXEC registrarResultadoGaleria '$tituloResultado','$fechaResultado','$rutaResultadoAll','$usuario','$resultadoDescripcion',$disciplinaResultado,$periodoId";
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
             $estadoRegistro = $stmt->fetchAll();
@@ -91,21 +91,21 @@ class GaleriaResultadosRepository extends \Doctrine\ORM\EntityRepository
         }
     }
 
-	public function mostrarResultadosGaleria(){
+	public function mostrarResultadosGaleria($periodoActivoId){
         
         try {
             $query=" SELECT 
                     galResult.id galResultId,
-					galResult.titulo titulo,
-					galResult.foto_url,
-					galResult.descripcion_foto,
-					dis.nombre disciplina,
+                    galResult.titulo titulo,
+                    galResult.foto_url,
+                    galResult.descripcion_foto,
+                    dis.nombre disciplina,
                     dis.id disciplinaId,
-					CONVERT(date,galResult.fecha_tomo_foto,101) fecha_tomo_foto
-					FROM galeria_resultados galResult
-					INNER JOIN disciplina dis ON dis.id = galResult.disciplina_id
-                    WHERE galResult.estado=1
-					ORDER BY galResult.fecha_tomo_foto DESC";
+                    CONVERT(date,galResult.fecha_tomo_foto,101) fecha_tomo_foto
+                    FROM galeria_resultados galResult
+                    INNER JOIN disciplina dis ON dis.id = galResult.disciplina_id
+                    WHERE galResult.estado=1 AND galResult.periodo_id=1
+                    ORDER BY galResult.fecha_tomo_foto DESC";
             $stmt = $this->getEntityManager()->getConnection()->prepare($query);
             $stmt->execute();
             $resultados = $stmt->fetchAll();

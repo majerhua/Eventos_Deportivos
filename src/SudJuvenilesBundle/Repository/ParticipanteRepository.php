@@ -12,6 +12,32 @@ use Doctrine\DBAL\DBALException;
 class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
 {
 
+  public function contadorInscritosByDelegacion(){
+
+      $query="SELECT 
+                par.tipo_participante_id tipoParticipanteId,
+                dis.id disciplinaId,
+                COUNT(par.id) cantidad
+                FROM inscripcion ins
+                INNER JOIN disciplina_delegacion disDeleg ON disDeleg.id = ins.disciplina_delegacion_id
+                INNER JOIN delegacion deleg ON deleg.id = disDeleg.delegacion_id
+                INNER JOIN disciplina dis ON dis.id = disDeleg.disciplina_id
+                INNER JOIN participante par ON par.id = ins.participante_id
+                INNER JOIN pais paisRepresenta ON paisRepresenta.id = par.pais_representa_id
+                INNER JOIN tipo_participante tipoPar ON tipoPar.id = par.tipo_participante_id
+                INNER JOIN categoria cat ON cat.id = dis.categoria_id
+                WHERE  ins.estado = 1
+                AND deleg.id = 1
+                GROUP BY 
+                par.tipo_participante_id,
+                dis.id ";
+      $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+      $stmt->execute();
+      $cantidad = $stmt->fetchAll();
+
+      return $cantidad;
+  }
+
   public function eliminarParticipanteInscripcion($inscripcionId){
 
       $query="EXEC eliminarParticipanteInscripcion $inscripcionId";
@@ -72,7 +98,8 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
                         par.ruta_formulario_inscripcion rutaFormularioInscripcion,
                         par.ruta_foto_perfil rutaFotoPerfil,
                         par.ruta_poliza_seguro rutaPolizaSeguro,
-                        mov.estado_inscripcion_id estadoInscripcionId
+                        mov.estado_inscripcion_id estadoInscripcionId,
+                        mov.fecha_inscripcion fechaInscripcion
 
                       FROM inscripcion ins
                       INNER JOIN participante par ON par.id = ins.participante_id
@@ -192,6 +219,80 @@ public function editar($idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,$nu
   }
 
 
+  public function getParticipantesByDisDelegPdfId($delegId){
+
+    try {
+          $query="   SELECT 
+                      pa.nombre delegacionExport,
+                      per.apellido_paterno+' '+per.apellido_materno apellidosExport,
+                      per.nombre nombreExport,
+                      tipDoc.nombre tipoDocumentoExport,
+                      per.numero_documento numeroDocumento,
+                      sex.nombre sexo,
+                      paisRepresenta.nombre paisRepresenta,
+                      cat.descripcion categoriaExport,
+                      tipoPar.nombre tipoParticipanteExport,
+                      dis.nombre disciplinaExport,
+                      per.fecha_nacimiento fechaNacimientoExport,
+                      par.ruta_foto_perfil rutaFotoPerfil,
+                      deleg.url_imagen flag_bandera,
+                      CONVERT(VARCHAR(100),STUFF(( SELECT  ',' +
+                       CONVERT(VARCHAR(100),modal.nombre)
+                          FROM    inscripcion_modalidad AS insMod
+                          INNER JOIN modalidad modal ON modal.id = insMod.modalidad_id
+                          WHERE   insMod.inscripcion_id = ins.id
+                          FOR
+                          XML PATH('')
+                      ), 1, 1, '') ) AS modalidadesExport,
+                      
+                    CONVERT(VARCHAR(100),STUFF(( SELECT  ',' +
+                       CONVERT(VARCHAR(100),divi.nombre)
+                          FROM    inscripcion_divisiones AS insDiv
+                          INNER JOIN divisiones divi ON divi.id = insDiv.divisiones_id
+                          WHERE   insDiv.inscripcion_id = ins.id
+                          FOR
+                          XML PATH('')
+                      ), 1, 1, '') ) AS divisionesExport,
+                      
+                      dis.id disciplinaId,
+                      per.nombre+' '+per.apellido_paterno+' '+per.apellido_materno nombresApellidos,
+                      tipoPar.nombre tipoParticipante,
+                      estadoIns.nombre estado,
+                      ins.id inscripcionId,
+                      mov.fecha_inscripcion fechaInscripcion
+                      FROM inscripcion ins
+                      INNER JOIN disciplina_delegacion disDeleg ON disDeleg.id = ins.disciplina_delegacion_id
+                      INNER JOIN delegacion deleg ON deleg.id = disDeleg.delegacion_id
+                      INNER JOIN pais pa ON pa.id = deleg.pais_id
+                      INNER JOIN disciplina dis ON dis.id = disDeleg.disciplina_id
+                      INNER JOIN participante par ON par.id = ins.participante_id
+                      INNER JOIN pais paisRepresenta ON paisRepresenta.id = par.pais_representa_id
+                      INNER JOIN tipo_participante tipoPar ON tipoPar.id = par.tipo_participante_id
+                      INNER JOIN tipo_grupo tipGrup On tipGrup.id = deleg.tipo_grupo_id
+                      INNER JOIN categoria cat ON cat.id = dis.categoria_id
+                      INNER JOIN persona per ON per.id = par.persona_id
+                      INNER JOIN tipo_documento tipDoc ON tipDoc.id = per.tipo_documento
+                      INNER JOIN sexo sex ON sex.id = per.sexo_id
+                      INNER JOIN movimientos mov ON mov.inscripcion_id = ins.id
+                      INNER JOIN (  SELECT MAX(id) idMaxiMovi,inscripcion_id FROM movimientos movMax
+                                    GROUP BY  inscripcion_id ) 
+                      maxiMovimiento ON maxiMovimiento.idMaxiMovi = mov.id
+                      INNER JOIN estado_inscripcion estadoIns ON estadoIns.id = mov.estado_inscripcion_id 
+                      WHERE  ins.estado = 1
+                      AND deleg.id = '$delegId' AND mov.estado_inscripcion_id IN ( 3,5,6) ";
+
+            $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+            $stmt->execute();
+            $participantes = $stmt->fetchAll();
+
+            return $participantes;
+
+        }catch (DBALException $e) {
+            $message = $e->getCode();
+            return $message;
+        }
+  }
+
   public function getParticipantesByDisDelegId($delegId){
 
     try {
@@ -231,7 +332,8 @@ public function editar($idInscripcion,$paisOrigenId,$tipoDocumentoId,$sexoId,$nu
                       per.nombre+' '+per.apellido_paterno+' '+per.apellido_materno nombresApellidos,
                       tipoPar.nombre tipoParticipante,
                       estadoIns.nombre estado,
-                      ins.id inscripcionId
+                      ins.id inscripcionId,
+                      ins.fecha_inscripcion fechaInscripcion
                       FROM inscripcion ins
                       INNER JOIN disciplina_delegacion disDeleg ON disDeleg.id = ins.disciplina_delegacion_id
                       INNER JOIN delegacion deleg ON deleg.id = disDeleg.delegacion_id

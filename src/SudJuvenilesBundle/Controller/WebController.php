@@ -22,8 +22,9 @@ class WebController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $galeriaFotos =  $em->getRepository('SudJuvenilesBundle:GaleriaFotos')->mostrarFotoGaleria();
-        $galeriaVideos =  $em->getRepository('SudJuvenilesBundle:GaleriaVideos')->mostrarVideosGaleria();  
+        $periodoActivoId = $em->getRepository('SudJuvenilesBundle:Periodo')->getIdPeriodoActivo();
+        $galeriaFotos =  $em->getRepository('SudJuvenilesBundle:GaleriaFotos')->mostrarFotoGaleria($periodoActivoId);
+        $galeriaVideos =  $em->getRepository('SudJuvenilesBundle:GaleriaVideos')->mostrarVideosGaleria($periodoActivoId);  
 
         return $this->render('SudJuvenilesBundle:Web:index.html.twig',array('galeriaFotos'=>$galeriaFotos,'galeriaVideos'=>$galeriaVideos) );
     }
@@ -43,8 +44,9 @@ class WebController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-
-        $galeriaFotos =  $em->getRepository('SudJuvenilesBundle:GaleriaFotos')->mostrarFotoGaleria(); 
+        
+        $periodoActivoId = $em->getRepository('SudJuvenilesBundle:Periodo')->getIdPeriodoActivo();
+        $galeriaFotos =  $em->getRepository('SudJuvenilesBundle:GaleriaFotos')->mostrarFotoGaleria($periodoActivoId); 
  
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -64,8 +66,8 @@ class WebController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-
-        $galeriaVideos =  $em->getRepository('SudJuvenilesBundle:GaleriaVideos')->mostrarVideosGaleria(); 
+        $periodoActivoId = $em->getRepository('SudJuvenilesBundle:Periodo')->getIdPeriodoActivo();
+        $galeriaVideos =  $em->getRepository('SudJuvenilesBundle:GaleriaVideos')->mostrarVideosGaleria($periodoActivoId); 
  
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -84,16 +86,11 @@ class WebController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $disciplinas = $em->getRepository('SudJuvenilesBundle:Disciplina')->getDisciplinas();
+        $periodoActivoId = $em->getRepository('SudJuvenilesBundle:Periodo')->getIdPeriodoActivo();
+        $disciplinas = $em->getRepository('SudJuvenilesBundle:Disciplina')->getDisciplinas($periodoActivoId);
 
-        $galeriaResultados =  $em->getRepository('SudJuvenilesBundle:GaleriaResultados')->mostrarResultadosGaleria(); 
- 
-        $paginator = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-                 $galeriaResultados,
-                $request->query->getInt('page', 1),
-                 6
-        );
+        $galeriaResultados =  $em->getRepository('SudJuvenilesBundle:GaleriaResultados')->mostrarResultadosGaleria($periodoActivoId); 
+        $pagination = $galeriaResultados;
 
         return $this->render('SudJuvenilesBundle:Web:resultados.html.twig', array( 'disciplinas'=>$disciplinas,'pagination'=>$pagination ) );
     }

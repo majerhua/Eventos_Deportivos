@@ -89,7 +89,8 @@ class GaleriaFotosController extends Controller
         $usuario = $this->getUser();
         $username = $usuario->getUsername();
 
-        $galeriaFotos =  $em->getRepository('SudJuvenilesBundle:GaleriaFotos')->mostrarFotoGaleria(); 
+        $periodoActivoId = $em->getRepository('SudJuvenilesBundle:Periodo')->getIdPeriodoActivo();
+        $galeriaFotos =  $em->getRepository('SudJuvenilesBundle:GaleriaFotos')->mostrarFotoGaleria($periodoActivoId); 
  
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -116,6 +117,7 @@ class GaleriaFotosController extends Controller
 
         $usuario = $this->getUser();
         $usuarioId = $usuario->getId();
+        $periodoId = $usuario->getDelegacionId()->getPeriodoId();
 
         $file = $request->files;
 
@@ -126,7 +128,7 @@ class GaleriaFotosController extends Controller
         $fileNameFoto = $tituloFoto.'.'.$fileFoto->guessExtension();
         $rutaFotoAll = $rutaDocumento.$fileNameFoto;
 
-        $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:GaleriaFotos')->registrarFotoGaleria($tituloFoto,$fechaFoto, $rutaFotoAll, $usuarioId, $descripcionFoto); 
+        $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:GaleriaFotos')->registrarFotoGaleria($tituloFoto,$fechaFoto, $rutaFotoAll, $usuarioId, $descripcionFoto,$periodoId); 
 
         if($estadoRegistro == 1 ){
            $fileFoto->move($rutaDocumento, $fileNameFoto);

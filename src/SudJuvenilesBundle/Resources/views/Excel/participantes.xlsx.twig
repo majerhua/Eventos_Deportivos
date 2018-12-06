@@ -40,6 +40,8 @@
             {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Deporte{% endxlscell %}
             {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Modalidades{% endxlscell %}
             {% xlscell { style: { font: { size: '13',bold:'true' } } } %}División{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Estado{% endxlscell %}
+            {% xlscell { style: { font: { size: '13',bold:'true' } } } %}Fecha de Inscripción{% endxlscell %}
         {% endxlsrow %}
         {% for value in data %}
             {% xlsrow %}
@@ -54,6 +56,8 @@
                 {% xlscell %}{{ value.disciplinaExport }}{% endxlscell %}
                 {% xlscell %}{{ value.modalidadesExport }}{% endxlscell %}
                 {% xlscell %}{{ value.divisionesExport }}{% endxlscell %}
+                {% xlscell %}{{ value.estado }}{% endxlscell %}
+                {% xlscell %}{{ value.fechaInscripcion }}{% endxlscell %}
             {% endxlsrow %}
         {% endfor %}
     {% endxlssheet %}

@@ -47,7 +47,8 @@ class GaleriaVideosController extends Controller
         $usuario = $this->getUser();
         $username = $usuario->getUsername();
 
-        $galeriaVideos =  $em->getRepository('SudJuvenilesBundle:GaleriaVideos')->mostrarVideosGaleria(); 
+        $periodoActivoId = $em->getRepository('SudJuvenilesBundle:Periodo')->getIdPeriodoActivo();
+        $galeriaVideos =  $em->getRepository('SudJuvenilesBundle:GaleriaVideos')->mostrarVideosGaleria($periodoActivoId); 
  
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -92,8 +93,9 @@ class GaleriaVideosController extends Controller
 
         $usuario = $this->getUser();
         $usuarioId = $usuario->getId();
+        $periodoId = $usuario->getDelegacionId()->getPeriodoId();
 
-        $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:GaleriaVideos')->registrarVideoGaleria($linkVideo,$fechaVideo, $usuarioId); 
+        $estadoRegistro =  $em->getRepository('SudJuvenilesBundle:GaleriaVideos')->registrarVideoGaleria($linkVideo,$fechaVideo, $usuarioId,$periodoId); 
 
         return new JsonResponse($estadoRegistro); 
     }

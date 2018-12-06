@@ -59,6 +59,7 @@ class DelegacionController extends Controller
         $divisiones = $em->getRepository('SudJuvenilesBundle:Disciplina')->getDivisiones();
         $asignaciones = $em->getRepository('SudJuvenilesBundle:Asignacion')->getAsignaciones();
         $configuracionCondicionDocumento = $em->getRepository('SudJuvenilesBundle:Delegacion')->configuracionCondicionDocumento();
+        $contadorInscritosByDelegacion = $em->getRepository('SudJuvenilesBundle:Participante')->contadorInscritosByDelegacion();
 
         $estadosInscripcion = $em->getRepository('SudJuvenilesBundle:Inscripcion')->estadosInscripcion();
         $tipoUsuarioId = $usuario->getTipoUsuarioId()->getId();
@@ -67,7 +68,6 @@ class DelegacionController extends Controller
         $roleUsuario = $usuario->getRoles()[0];
 
         $delegacionIdByUsuario = $usuario->getDelegacionId()->getId();
-
 
         if( $roleUsuario == "ROLE_DELEGACION"){
 
@@ -79,7 +79,7 @@ class DelegacionController extends Controller
             return $this->render('SudJuvenilesBundle:Default:pagina_no_encontrada.html.twig' );
         }
 
-        return $this->render('SudJuvenilesBundle:Intranet:intranet-delegacion.html.twig',array( 'delegacion' => $delegacion[0], 'disciplinasDelegacion' => $disciplinasDelegacion, 'tiposParticipante' => $tiposParticipante,'paises'=>$paises, 'participantes' => $participantes, 'modalidades' => $modalidades,'divisiones'=>$divisiones, 'asignaciones'=>$asignaciones, 'configuracionCondicionDocumento' => $configuracionCondicionDocumento,'username'=>$username,'roleUsuario'=>$roleUsuario,'delegacionId'=>$delegacionId, 'estadosInscripcion' => $estadosInscripcion, 'tipoUsuarioId' => $tipoUsuarioId ) );
+        return $this->render('SudJuvenilesBundle:Intranet:intranet-delegacion.html.twig',array( 'delegacion' => $delegacion[0], 'disciplinasDelegacion' => $disciplinasDelegacion, 'tiposParticipante' => $tiposParticipante,'paises'=>$paises, 'participantes' => $participantes, 'modalidades' => $modalidades,'divisiones' => $divisiones, 'asignaciones'=>$asignaciones, 'configuracionCondicionDocumento' => $configuracionCondicionDocumento,'username'=>$username,'roleUsuario'=>$roleUsuario,'delegacionId'=>$delegacionId, 'estadosInscripcion' => $estadosInscripcion, 'tipoUsuarioId' => $tipoUsuarioId,'contadorInscritosByDelegacion' => $contadorInscritosByDelegacion) );
     }
 
 }
