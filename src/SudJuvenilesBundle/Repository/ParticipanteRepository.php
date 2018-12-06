@@ -14,23 +14,35 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
 
   public function contadorInscritosByDelegacion(){
 
-      $query="SELECT 
-                par.tipo_participante_id tipoParticipanteId,
-                dis.id disciplinaId,
-                COUNT(par.id) cantidad
-                FROM inscripcion ins
-                INNER JOIN disciplina_delegacion disDeleg ON disDeleg.id = ins.disciplina_delegacion_id
-                INNER JOIN delegacion deleg ON deleg.id = disDeleg.delegacion_id
-                INNER JOIN disciplina dis ON dis.id = disDeleg.disciplina_id
-                INNER JOIN participante par ON par.id = ins.participante_id
-                INNER JOIN pais paisRepresenta ON paisRepresenta.id = par.pais_representa_id
-                INNER JOIN tipo_participante tipoPar ON tipoPar.id = par.tipo_participante_id
-                INNER JOIN categoria cat ON cat.id = dis.categoria_id
-                WHERE  ins.estado = 1
-                AND deleg.id = 1
-                GROUP BY 
-                par.tipo_participante_id,
-                dis.id ";
+      $query="
+           WITH cantidadInscritosDelegacion AS (SELECT 
+              dis.id disciplinaId,
+              par.tipo_participante_id tipoParticipanteId,
+              deleg.id delegacionId,
+              COUNT(par.id) cantidad
+              FROM inscripcion ins
+              INNER JOIN disciplina_delegacion disDeleg ON disDeleg.id = ins.disciplina_delegacion_id
+              INNER JOIN delegacion deleg ON deleg.id = disDeleg.delegacion_id
+              INNER JOIN disciplina dis ON dis.id = disDeleg.disciplina_id
+              INNER JOIN participante par ON par.id = ins.participante_id
+              INNER JOIN pais paisRepresenta ON paisRepresenta.id = par.pais_representa_id
+              INNER JOIN tipo_participante tipoPar ON tipoPar.id = par.tipo_participante_id
+              INNER JOIN categoria cat ON cat.id = dis.categoria_id
+              WHERE  ins.estado = 1
+              GROUP BY 
+              par.tipo_participante_id,
+              deleg.id,
+              dis.id )
+              
+              SELECT  
+        cantInsDeleg.delegacionId,
+        cantInsDeleg.disciplinaId,
+                cantInsDeleg.tipoParticipanteId,
+                cantInsDeleg.cantidad,
+                tipPar.nombre tipoParticipanteNombre
+                FROM cantidadInscritosDelegacion cantInsDeleg
+              INNER JOIN tipo_participante tipPar ON tipPar.id = cantInsDeleg.tipoParticipanteId
+              ORDER BY cantInsDeleg.delegacionId";
       $stmt = $this->getEntityManager()->getConnection()->prepare($query);
       $stmt->execute();
       $cantidad = $stmt->fetchAll();
@@ -99,7 +111,8 @@ class ParticipanteRepository extends \Doctrine\ORM\EntityRepository
                         par.ruta_foto_perfil rutaFotoPerfil,
                         par.ruta_poliza_seguro rutaPolizaSeguro,
                         mov.estado_inscripcion_id estadoInscripcionId,
-                        mov.fecha_inscripcion fechaInscripcion
+                        mov.fecha_inscripcion fechaInscripcion,
+                        mov.descripcion comentario
 
                       FROM inscripcion ins
                       INNER JOIN participante par ON par.id = ins.participante_id

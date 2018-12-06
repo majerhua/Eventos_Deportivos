@@ -10,4 +10,16 @@ namespace SudJuvenilesBundle\Repository;
  */
 class TipoParticipanteRepository extends \Doctrine\ORM\EntityRepository
 {
+
+	public function getTipoParticipanteAll(){
+
+      $query="SELECT *FROM tipo_participante";
+               
+      $stmt = $this->getEntityManager()->getConnection()->prepare($query);
+      $stmt->execute();
+      $tipoParticipantes = $stmt->fetchAll();
+
+      return $tipoParticipantes;
+  }
+
 }

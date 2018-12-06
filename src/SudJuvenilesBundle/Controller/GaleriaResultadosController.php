@@ -67,6 +67,7 @@ class GaleriaResultadosController extends Controller
      */
     public function galeriaResultadosAction(Request $request)
     {
+        $tipoUsuario = $this->container->getParameter('tipoUsuario');
         $em = $this->getDoctrine()->getManager();
 
         $periodoActivoId = $em->getRepository('SudJuvenilesBundle:Periodo')->getIdPeriodoActivo();
@@ -75,6 +76,17 @@ class GaleriaResultadosController extends Controller
 
         $usuario = $this->getUser();
         $username = $usuario->getUsername();
+        $tipoUsuarioId = $usuario->getTipoUsuarioId()->getId();
+
+        if($tipoUsuarioId == $tipoUsuario['delegacion']){ //USUARIO DELEGACION
+
+            $delegacionId = $usuario->getDelegacionId()->getId();
+            return $this->redirectToRoute('delegacion',array('delegacionId'=>$delegacionId));
+        }else if($tipoUsuarioId == $tipoUsuario['acreditador']) {
+
+            $delegacionId = $usuario->getDelegacionId()->getId();
+            return $this->redirectToRoute('panel-delegaciones');
+        }
 
         $galeriaResultados =  $em->getRepository('SudJuvenilesBundle:GaleriaResultados')->mostrarResultadosGaleria($periodoActivoId); 
  

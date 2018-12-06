@@ -99,13 +99,9 @@
                                                 </tr>
 
                                                 {% endif %}
-
                                             {% endfor %}
-
                                         </tbody>
-
                                     </table>
-
                                 </div>
 
                                 <br>
@@ -120,37 +116,41 @@
 
                                         <div class="row">
                                         
-                                            <div class="col-4">
 
-                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>  
-                                                
-                                            </div>
+                                            {%  for tipPar in tiposParticipante %}
 
-                                            <div class="col-4">
-                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>  
-                                            </div>
+                                                {% if tipPar['categoria_id'] == disciplinaDeleg['disciplinaCategoria'] and tipPar['tipo_grupo_id'] ==  disciplinaDeleg['delegacionTipoGrupo'] %}
 
-                                            <div class="col-4">
-                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>  
-                                            </div>
+                                                    {% set flag = false %}
 
-                                            <div class="col-4">
-                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>  
-                                            </div>
+                                                    {% for contIns in contadorInscritosByDelegacion %}
 
-                                            <div class="col-4">
-                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>
-                                            </div>
+                                                        {% if contIns['disciplinaId'] == disciplinaDeleg['disciplinaId'] and contIns['tipoParticipanteId'] == tipPar['id'] and contIns['delegacionId'] == disciplinaDeleg['delegacionId'] %}
 
-                                            <div class="col-4">
-                                                <p><span class="badge badge-pill badge-warning">1</span> Presidente</p>
-                                            </div>
+                                                            <div class="col-4">
+                                                                <p><span  style="font-size:0.9em;" class="badge  badge-info"><span style="font-size:0.9em;" class="badge badge-pill badge-light">{{contIns['cantidad']}}</span>&nbsp;&nbsp;{{contIns['tipoParticipanteNombre']}}</span></p>  
+                                                            </div>
+                                                            {% set flag = true %}
+                                                            {% set break = true %}
+
+                                                        {% endif %}
+
+                                                    {%  endfor %}
+
+                                                    {% if flag == false %}
+                                                        <div class="col-4">
+                                                            <p><span style="font-size:0.9em;" class="badge  badge-info"><span style="font-size:0.9em;" class="badge badge-pill badge-light">0</span>&nbsp;&nbsp;{{tipPar['nombre']}}</span></p>  
+                                                        </div>
+                                                    {% endif %}
+
+                                                {% endif %}
+
+                                            {% endfor %}
+
 
                                         </div>
 
                                     </div>
-
-                                    {% if tipoUsuarioId != tipoUsuario['acreditador'] %}
 
                                         <br>
                                         <br>
@@ -161,7 +161,7 @@
 
                                         </div>
 
-                                    {%  endif %}
+                                 
 
                                 </div>
 
@@ -259,14 +259,55 @@
                                 
                                 <br>
 
-                                {% if tipoUsuarioId != tipoUsuario['acreditador'] %}
-                                
+
+                                <div class="row">
+
+                                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-8">
+
+                                        <div class="row">
+
+                                            {%  for tipPar in tiposParticipante %}
+
+                                                {% if tipPar['categoria_id'] == disciplinaDeleg['disciplinaCategoria'] and tipPar['tipo_grupo_id'] ==  disciplinaDeleg['delegacionTipoGrupo'] %}
+
+                                                    {% set flag = false %}
+
+                                                    {% for contIns in contadorInscritosByDelegacion %}
+
+                                                        {% if contIns['disciplinaId'] == disciplinaDeleg['disciplinaId'] and contIns['tipoParticipanteId'] == tipPar['id']  and contIns['delegacionId'] == disciplinaDeleg['delegacionId'] %}
+
+                                                            <div class="col-4">
+                                                                <p><span style="font-size:0.9em;" class="badge  badge-info"><span style="font-size:0.9em;" class="badge badge-pill badge-light">{{contIns['cantidad']}}</span>&nbsp;&nbsp;{{contIns['tipoParticipanteNombre']}}</span></p>  
+                                                            </div>
+                                                            {% set flag = true %}
+                                                            {% set break = true %}
+
+                                                        {% endif %}
+
+                                                    {%  endfor %}
+
+                                                    {% if flag == false %}
+                                                        <div class="col-4">
+                                                            <p><span style="font-size:0.9em;" class="badge  badge-info"><span style="font-size:0.9em;" class="badge badge-pill badge-light">0</span>&nbsp;&nbsp;{{tipPar['nombre']}}</span></p>  
+                                                        </div>
+                                                    {% endif %}
+
+                                                {% endif %}
+
+                                            {% endfor %}
+
+                                        </div>
+
+                                    </div>
+
+                                    <br>
+                                    <br>
+
                                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
-                                
                                         <button type="button" onclick="btnNuevoIntegrante({{disciplinaDeleg['disDelegId']}},{{disciplinaDeleg['disciplinaCategoria']}},{{disciplinaDeleg['disciplinaId']}},{{disciplinaDeleg['delegacionTipoGrupo']}})"  class="btn btn-success" data-toggle="modal" data-target="#modal-nuevo-integrante">Nuevo integrante</button>
                                     </div>
 
-                                {% endif %}
+                                </div>
 
                             </div>
 
@@ -574,6 +615,17 @@
                                     </div>
                                     <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
                                         <p id="detDivisiones">Hasta 60 Kg</p>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li class="list-group-item" id="container-comentario">
+                                <div class="row">
+                                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                                        <p><strong>Comentario:</strong></p>
+                                    </div>
+                                    <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+                                        <p id="detComentario">Hasta 60 Kg</p>
                                     </div>
                                 </div>
                             </li>
@@ -972,7 +1024,6 @@
                             <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span><br>
                             <span style="color:grey; font-size:12px;"> Los formatos válidos en las imágenes son:
                             'png', 'jpg' o 'jpeg'. Peso máximo de 5M. </span>
-
                         </div>
                     </div>
                 </div>
@@ -1454,6 +1505,7 @@
                 $("#detFechaNacimiento").text(datosParticipante.fechaNacimiento);
                 $("#detCorreo").text(datosParticipante.correo);
                 $("#detPaisOrigen").text(datosParticipante.paisOrigenNombre);
+                $("#detComentario").text(datosParticipante.comentario);
 
                 $("#detFotoPerfil").attr('src','/sudamericanos_juveniles/web/'+datosParticipante.rutaFotoPerfil)
 
@@ -2147,18 +2199,21 @@ $('#submit_form_editar').on("submit",function(e) {
         processData: false,
         beforeSend: function() {
             console.log("Datos a Enviar ==> ",obj);
+            $("#btn_editar").attr('disabled','disabled');
+            
         },
         success: function(data) {
 
-         if(data == 1){
-            alertify.success('<p style="color:white">Se edito Correctamente.</p>');
-            setTimeout(function(){ location.reload(true) }, 1000);
+             if(data == 1){
+                alertify.success('<p style="color:white">Se edito Correctamente.</p>');
+                setTimeout(function(){ location.reload(true) }, 1000);
 
-        }else if(data == 0){
-            alertify.warning('<p style="color:black">Ocurrio un Error a la hora de Registrar.</p>')
-        }else if(data == -1){
-            alertify.warning('<p style="color:black">Ya no existe vacantes para el participante.</p>')
-        }
+            }else if(data == 0){
+                alertify.warning('<p style="color:black">Ocurrio un Error a la hora de Registrar.</p>')
+            }else if(data == -1){
+                alertify.warning('<p style="color:black">Ya no existe vacantes para el participante.</p>')
+            }
+            setTimeout(function(){ $("#btn_editar").removeAttr('disabled'); }, 2000);
         },
         error: function (error) {
             console.log("Error =>",error);
@@ -2187,6 +2242,7 @@ $('#submit_form').on("submit",function(e) {
         processData: false,
         beforeSend: function() {
             console.log("Datos a Enviar ==> ",obj);
+            $("#btn_guardar").attr('disabled','disabled');
         },
         success: function(data) {
 
@@ -2201,6 +2257,8 @@ $('#submit_form').on("submit",function(e) {
             }else if(data == -2){
                 alertify.warning('<p style="color:black">Ya existe un participante activo en el evento con el mismo DNI!.</p>')
             }
+
+            setTimeout(function(){ $("#btn_guardar").removeAttr('disabled'); }, 2000);
         },
         error: function (error) {
             console.log("Error =>",error);

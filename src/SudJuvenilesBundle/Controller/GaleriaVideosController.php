@@ -42,10 +42,23 @@ class GaleriaVideosController extends Controller
      */
     public function galeriaVideosAction(Request $request)
     {
+        $tipoUsuario = $this->container->getParameter('tipoUsuario');
         $em = $this->getDoctrine()->getManager();
 
         $usuario = $this->getUser();
         $username = $usuario->getUsername();
+        $tipoUsuarioId = $usuario->getTipoUsuarioId()->getId();
+
+        if($tipoUsuarioId == $tipoUsuario['delegacion']){ //USUARIO DELEGACION
+
+            $delegacionId = $usuario->getDelegacionId()->getId();
+            return $this->redirectToRoute('delegacion',array('delegacionId'=>$delegacionId));
+
+        }else if($tipoUsuarioId == $tipoUsuario['acreditador']) {
+
+            $delegacionId = $usuario->getDelegacionId()->getId();
+            return $this->redirectToRoute('panel-delegaciones');
+        }
 
         $periodoActivoId = $em->getRepository('SudJuvenilesBundle:Periodo')->getIdPeriodoActivo();
         $galeriaVideos =  $em->getRepository('SudJuvenilesBundle:GaleriaVideos')->mostrarVideosGaleria($periodoActivoId); 

@@ -61,6 +61,8 @@ class DelegacionController extends Controller
         $configuracionCondicionDocumento = $em->getRepository('SudJuvenilesBundle:Delegacion')->configuracionCondicionDocumento();
         $contadorInscritosByDelegacion = $em->getRepository('SudJuvenilesBundle:Participante')->contadorInscritosByDelegacion();
 
+        
+
         $estadosInscripcion = $em->getRepository('SudJuvenilesBundle:Inscripcion')->estadosInscripcion();
         $tipoUsuarioId = $usuario->getTipoUsuarioId()->getId();
 
