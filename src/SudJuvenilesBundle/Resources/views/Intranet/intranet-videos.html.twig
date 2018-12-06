@@ -65,52 +65,54 @@
 
                                 <div id="alerta-error" class="alert alert-danger collapse text-center"></div>
 
-                                        <ul class="list-group">
+                                    <ul class="list-group">
 
-                                            <li class="list-group-item">
+                                        <li class="list-group-item">
 
-                                                <div class="row"  >
+                                            <div class="row"  >
 
-                                                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
 
-                                                        <p><span style="color:#B31A12">*</span><strong> Link Video:</strong></p>
-
-                                                    </div>
-
-                                                    <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
-                                                        <div class="form-group">
-
-                                                            <input type="text" class="form-control" name="linkVideo" id="linkVideo" required="true">
-
-                                                        </div>
-
-                                                    </div>
+                                                    <p><span style="color:#B31A12">*</span><strong> Link Video:</strong></p>
 
                                                 </div>
-                                            </li>
 
-                                            <li class="list-group-item">
+                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
 
-                                                <div class="row">
+                                                    <div class="form-group">
 
-                                                    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
-
-                                                        <p><span style="color:#B31A12">*</span><strong> Fecha:</strong></p>
-
-                                                    </div>
-
-                                                    <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
-
-                                                        <input id="fechaVideo" name="fechaVideo" class="form-control" type="date" required="true">
+                                                        <input type="text" class="form-control" name="linkVideo" id="linkVideo" required="true" pattern="^https:\/\/www\.youtube\.com/watch\?v=\w{11,11}$">
 
                                                     </div>
 
                                                 </div>
 
-                                            </li>
+                                            </div>
+                                        </li>
 
-                                        </ul>
+                                        <li class="list-group-item">
+
+                                            <div class="row">
+
+                                                <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4">
+
+                                                    <p><span style="color:#B31A12">*</span><strong> Fecha:</strong></p>
+
+                                                </div>
+
+                                                <div class="col-xs-6 col-sm-8 col-md-8 col-lg-8">
+
+                                                    <input id="fechaVideo" name="fechaVideo" class="form-control" type="date" required="true">
+
+                                                </div>
+
+                                            </div>
+
+                                        </li>
+
+
+                                    </ul>
+
                                 <br>
 
                                 <span style="color:#B31A12; font-size:12px;">(*) Campos obligatorios.</span>
@@ -186,7 +188,7 @@
 
                                                 <div class="form-group">
                                             
-                                                    <input type="text" class="form-control"  name="editLinkVideo" id="editLinkVideo" required="true">
+                                                    <input type="text" class="form-control"  name="editLinkVideo" id="editLinkVideo" required="true" pattern="^https:\/\/www\.youtube\.com/watch\?v=\w{11,11}$">
                                             
                                                 </div>
 
@@ -328,6 +330,7 @@
         $('#submit_form_guardar').on("submit", function (e) {
             
             e.preventDefault();
+
             var obj = new FormData($("#submit_form_guardar")[0]);
 
             $.ajax({
@@ -352,6 +355,7 @@
                     alertify.error('Error Sistema');
                 }
             });
+
         });
 
         $("#btnConfElimVideo").on('click',function(){
@@ -441,6 +445,23 @@
                 }
             });
         });
+
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1;
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        } 
+        if(mm<10){
+            mm='0'+mm
+        } 
+
+        today = yyyy+'-'+mm+'-'+dd;
+
+        $("#fechaVideo").attr("max", today);
+        $("#editFechaVideo").attr("max", today);
+
 
     </script>
 

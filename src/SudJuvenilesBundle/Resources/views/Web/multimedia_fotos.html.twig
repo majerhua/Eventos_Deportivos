@@ -28,7 +28,7 @@
 
                 <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
                    <div class="container-escenario-item card">
-                        <img src="{{asset(entry['foto_url'])}}" alt="Notebook" style="width:100%;">
+                        <img src="{{asset(entry['foto_url'])}}" alt="Notebook" style="width:100%;" onclick="imageModal(this)">
                         <div class="img-container">
                             <p class="card-title"><strong> {{entry['titulo']}}</strong></p>
                             <p class="card-text">{{entry['descripcion_foto']}}</p>
@@ -47,6 +47,31 @@
 
     </section>
 
+
+    <div class="modal fade" id="modal-image" role="dialog" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg">
+    
+            <div class="modal-content">
+
+                <img id="img-modal" class="img-fluid">
+
+            </div>
+        
+        </div>
+    
+    </div>
+
+    <script>
+
+        function imageModal(img){
+
+            $('#modal-image').modal('show');
+            $('#img-modal').attr('src', img.src);
+
+        }
+
+    </script>
 
     {% include 'SudJuvenilesBundle:Default:footer.html.twig' %} 
     

@@ -110,6 +110,20 @@
 
     </section>
     
+    <div class="modal fade" id="modal-image" role="dialog" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg">
+    
+            <div class="modal-content">
+
+                <img id="img-modal" class="img-fluid">
+
+            </div>
+        
+        </div>
+    
+    </div>
+
     {% include 'SudJuvenilesBundle:Default:footer.html.twig' %} 
     
 {% endblock %}
@@ -148,7 +162,7 @@
             $.each(data, function(index, item){               
                 html += "<div class='col-xs-12 col-sm-12 col-md-6 col-lg-4'><div class='container-escenario-item card'><p class='top-right'>"+item.fecha_tomo_foto+
                 "</p>"+
-                "<img src="+item.foto_url+" alt='Notebook' style='width:100%;'>"
+                "<img src="+item.foto_url+" alt='Notebook' style='width:100%;' onclick='imageModal(this)'>"
                 +"<div class='img-container'>"+
                 "<p class='card-title'><strong>"+item.titulo+"</strong></p>"
                 +"<p class='card-text'>"+item.descripcion_foto+"</p>"
@@ -157,6 +171,13 @@
             });
             html += "</div>";
             return html;
+        }
+
+        function imageModal(img){
+
+            $('#modal-image').modal('show');
+            $('#img-modal').attr('src', img.src);
+
         }
 
     </script>

@@ -336,11 +336,3 @@ img {
     color: white;
     font-size: 0.8em;
 }
-
-input:valid, textarea:valid {
-  background:rgb(35, 237, 17, 0.05);
-}
-
-input:invalid, textarea:invalid {
-  background:rgb(250, 4, 20, 0.05);
-}
