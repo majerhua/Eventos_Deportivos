@@ -231,7 +231,7 @@
 
                                                         <div class="form-group">
 
-                                                            <input type="file" class="form-control-file"  name="editFileFoto" id="editFileFoto" required="true" accept="image/*">
+                                                            <input type="file" class="form-control-file"  name="editFileFoto" id="editFileFoto" accept="image/*">
 
                                                         </div>
 
@@ -429,7 +429,8 @@
                 contentType: false,
                 cache: false,
                 processData: false,
-                beforeSend: function() {
+                beforeSend: function() {btn_editar
+                    $("#btn_editar").attr('disabled','disabled');
                 },
                 success: function(data) {
 
@@ -440,7 +441,7 @@
                     }else if(data == 0){
                         alertify.warning('<p style="color:black">Ocurrio un Error a la hora de actualizar.</p>')
                     }
-
+                    setTimeout(function(){ $("#btn_editar").removeAttr('disabled'); }, 1000);
                 },
                 error: function (error) {
                     alertify.error('Error Sistema');
@@ -459,6 +460,8 @@
                 type: 'POST',
                 data:{'galeriaFotId':$("#elimGaleriaFotoId").val()},
                 beforeSend: function() {
+                    
+                    $("#btnConfElimFoto").attr('disabled','disabled');
                 },
                 success: function(data) {
 
@@ -469,7 +472,7 @@
                     }else if(data == 0){
                         alertify.warning('<p style="color:black">Ocurrio un Error a la hora de Eliminar.</p>')
                     }
-
+                    setTimeout(function(){ $("#btnConfElimFoto").removeAttr('disabled'); }, 1000);
                 },
                 error: function (error) {
                     alertify.error('Error Sistema');
@@ -514,7 +517,7 @@
         $('#submit_form_guardar').on("submit",function(e) {
             
             e.preventDefault();
-
+            
             var obj = new FormData($("#submit_form_guardar")[0]);
             
             $.ajax({
@@ -525,6 +528,7 @@
                 cache: false,
                 processData: false,
                 beforeSend: function() {
+                    $("#btn_guardar").attr('disabled','disabled');
                 },
                 success: function(data) {
 
@@ -535,7 +539,7 @@
                     }else if(data == 0){
                         alertify.warning('<p style="color:black">Ocurrio un Error a la hora de Registrar.</p>')
                     }
-
+                    setTimeout(function(){ $("#btn_guardar").removeAttr('disabled'); }, 1000);
                 },
                 error: function (error) {
                     alertify.error('Error Sistema');

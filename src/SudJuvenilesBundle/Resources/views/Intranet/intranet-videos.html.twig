@@ -131,7 +131,7 @@
 
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
 
-                        <button type="submit" class="btn btn-success">Publicar</button>
+                        <button type="submit" id="btn_guardar" class="btn btn-success">Publicar</button>
                     </div>
 
                 </form>
@@ -188,7 +188,7 @@
 
                                                 <div class="form-group">
                                             
-                                                    <input type="text" class="form-control"  name="editLinkVideo" id="editLinkVideo" required="true" pattern="^https:\/\/www\.youtube\.com/watch\?v=\w{11,11}$">
+                                                    <input type="text" class="form-control"  name="editLinkVideo" id="editLinkVideo" required="true" pattern="^https:\/\/www\.youtube\.com/watch\?v=[A-Za-z0-9_-]{11,11}$">
                                             
                                                 </div>
 
@@ -341,8 +341,10 @@
                 cache: false,
                 processData: false,
                 beforeSend: function() {
+                    $("#btn_guardar").attr('disabled','disabled');
                 },
                 success: function(data) {
+
                     if(data == 1){
                         alertify.success('<p style="color:white">Se registro Correctamente.</p>');
                         setTimeout(function(){ location.reload(true) }, 1000);
@@ -350,6 +352,7 @@
                     }else if(data == 0){
                         alertify.warning('<p style="color:black">Ocurrio un Error a la hora de Registrar.</p>')
                     }
+                    setTimeout(function(){ $("#btn_guardar").removeAttr('disabled'); }, 1000);
                 },
                 error: function (error) {
                     alertify.error('Error Sistema');
@@ -367,7 +370,7 @@
                 type: 'POST',
                 data:datos,
                 beforeSend: function() {
-                    console.log(datos);
+                    $("#btnConfElimVideo").attr('disabled','disabled');
                 },
                 success: function(data) {
 
@@ -378,7 +381,7 @@
                     }else if(data == 0){
                         alertify.warning('<p style="color:black">Ocurrio un Error a la hora de Eliminar.</p>')
                     }
-
+                    setTimeout(function(){ $("#btnConfElimVideo").removeAttr('disabled'); }, 1000);
                 },
                 error: function (error) {
                     alertify.error('Error Sistema');
@@ -428,6 +431,7 @@
                 cache: false,
                 processData: false,
                 beforeSend: function() {
+                    $("#btn_editar").attr('disabled','disabled');
                 },
                 success: function(data) {
 
@@ -438,6 +442,7 @@
                     }else if(data == 0){
                         alertify.warning('<p style="color:black">Ocurrio un Error a la hora de actualizar.</p>')
                     }
+                    setTimeout(function(){ $("#btn_editar").removeAttr('disabled'); }, 1000);
 
                 },
                 error: function (error) {
