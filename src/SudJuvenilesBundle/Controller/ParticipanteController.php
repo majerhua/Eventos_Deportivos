@@ -461,9 +461,9 @@ class ParticipanteController extends Controller
     public function generarPdfCredencialesAction(Request $request,$delegacionId){   
        
         $em = $this->getDoctrine()->getManager();
-        $participantes =  $em->getRepository('SudJuvenilesBundle:participante')->getParticipantesByDisDelegPdfId($delegacionId);
+        $participantes =  $em->getRepository('SudJuvenilesBundle:Participante')->getParticipantesByDisDelegPdfId($delegacionId);
 
-        $html = $this->renderView('SudJuvenilesBundle:credenciales:inscripcionPdf.html.twig', array('participantes'=>$participantes) );
+        $html = $this->renderView('SudJuvenilesBundle:Credenciales:inscripcionPdf.html.twig', array('participantes'=>$participantes) );
 
         $pdf = $this->container->get("white_october.tcpdf")->create(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         
