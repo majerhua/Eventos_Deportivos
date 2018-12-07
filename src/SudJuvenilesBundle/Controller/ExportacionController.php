@@ -23,7 +23,7 @@ class ExportacionController extends Controller
     public function participantesExportAction($_filename,$delegacionId)
     {
         $em = $this->getDoctrine()->getManager();
-        $participantes =  $em->getRepository('SudJuvenilesBundle:participante')->getParticipantesByDisDelegId($delegacionId);
+        $participantes =  $em->getRepository('SudJuvenilesBundle:Participante')->getParticipantesByDisDelegId($delegacionId);
         return ['data' => $participantes]; 
     }
 
