@@ -1507,13 +1507,13 @@
                 $("#detPaisOrigen").text(datosParticipante.paisOrigenNombre);
                 $("#detComentario").text(datosParticipante.comentario);
 
-                $("#detFotoPerfil").attr('src','/sudamericanos_juveniles/web/'+datosParticipante.rutaFotoPerfil)
+                $("#detFotoPerfil").attr('src','{{rutabasedocumentosProd}}'+datosParticipante.rutaFotoPerfil)
 
                 if(datosParticipante.rutaDocumentoIdentidad != null){
 
                     $("#detContainer-docIdentidad").show();
-                    $("#detDocumentoIdentidad").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaDocumentoIdentidad);
-                    $("#detDesDocumentoIdentidad").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaDocumentoIdentidad);
+                    $("#detDocumentoIdentidad").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaDocumentoIdentidad);
+                    $("#detDesDocumentoIdentidad").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaDocumentoIdentidad);
                 }else{
                     $("#detContainer-docIdentidad").hide();
                 }
@@ -1521,8 +1521,8 @@
                 if(datosParticipante.rutaConstanciaEstudio != null){
 
                     $("#detContainer-docConsEstudio").show();
-                    $("#detConstEstudio").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaConstanciaEstudio);
-                    $("#detDesConstEstudio").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaConstanciaEstudio);
+                    $("#detConstEstudio").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaConstanciaEstudio);
+                    $("#detDesConstEstudio").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaConstanciaEstudio);
                 }else{
                     $("#detContainer-docConsEstudio").hide();
                 }
@@ -1530,8 +1530,8 @@
                 if(datosParticipante.rutaFichaMedica != null){
 
                     $("#detContainer-docFichVigente").show();
-                    $("#detFichaMedicaVigente").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFichaMedica);
-                    $("#detDesFichaMedicaVigente").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFichaMedica);
+                    $("#detFichaMedicaVigente").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaFichaMedica);
+                    $("#detDesFichaMedicaVigente").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaFichaMedica);
                 }else{
                     $("#detContainer-docFichVigente").hide();
                 }
@@ -1539,8 +1539,8 @@
                 if(datosParticipante.rutaFormularioInscripcion != null){
 
                     $("#detContainer-docFormIns").show();
-                    $("#detFormularioInscripcion").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFormularioInscripcion);
-                    $("#detDesFormularioInscripcion").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaFormularioInscripcion);
+                    $("#detFormularioInscripcion").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaFormularioInscripcion);
+                    $("#detDesFormularioInscripcion").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaFormularioInscripcion);
                 }else{
                     $("#detContainer-docFormIns").hide();
                 }
@@ -1548,8 +1548,8 @@
                 if(datosParticipante.rutaPolizaSeguro != null){
 
                     $("#detContainer-docPolizSegu").show();
-                    $("#detPolizaSeguro").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaPolizaSeguro);
-                    $("#detDesPolizaSeguro").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaPolizaSeguro);  
+                    $("#detPolizaSeguro").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaPolizaSeguro);
+                    $("#detDesPolizaSeguro").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaPolizaSeguro);  
                 }else{
                     $("#detContainer-docPolizSegu").hide();
                 }
@@ -1557,8 +1557,8 @@
                 if( datosParticipante.rutaCertificadoDiscapacidad != null){
 
                     $("#detContainer-docCertDis").show();
-                    $("#detCertificadoDis").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaCertificadoDiscapacidad);
-                    $("#detDesCertificadoDis").attr('href','/sudamericanos_juveniles/web/'+datosParticipante.rutaCertificadoDiscapacidad);
+                    $("#detCertificadoDis").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaCertificadoDiscapacidad);
+                    $("#detDesCertificadoDis").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaCertificadoDiscapacidad);
                 }else{
                     $("#detContainer-docCertDis").hide();
                 }
@@ -2018,7 +2018,7 @@ const obtenerInfoParti = function(disDelegId,inscripcionId,disciplinaCategoria,d
             const estadoInscripcionByTipoUsuario = {
                 '1':[1,3,4,5,6], //administrador
                 '2':[1,3,4,5,6], //acreditador
-                '3':[1,4,5] //delegacion
+                '3':[4,5] //delegacion
             }
 
             var arrayEstadosTipoUsuario = estadoInscripcionByTipoUsuario["{{tipoUsuarioId}}"];

@@ -9,4 +9,6 @@ twig:
     tipoUsuario:
       administrador: 1
       acreditador: 2
-      delegacion: 3  
+      delegacion: 3
+    rutabasedocumentosDev:  /sudamericanos_juveniles/web/
+    rutabasedocumentosProd: /sisweb/eventosdeportivos/web/
