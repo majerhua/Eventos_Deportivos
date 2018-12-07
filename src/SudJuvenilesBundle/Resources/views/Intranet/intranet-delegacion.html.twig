@@ -665,7 +665,7 @@
 
                                     <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" id="detContainer-docFormIns">
 
-                                        <a class="btn btn-info btn-block text-left" id="detDesdetFormularioInscripcion" style="color:white;" target="_blank"><i class="fa fa-download"></i>&nbsp; &nbsp; Formulario de inscripcion</a>
+                                        <a class="btn btn-info btn-block text-left" id="detDesFormularioInscripcion" style="color:white;" target="_blank"><i class="fa fa-download"></i>&nbsp; &nbsp; Formulario de inscripcion</a>
                                         <br>
 
                                     </div>
@@ -1507,13 +1507,13 @@
                 $("#detPaisOrigen").text(datosParticipante.paisOrigenNombre);
                 $("#detComentario").text(datosParticipante.comentario);
 
-                $("#detFotoPerfil").attr('src','{{rutabasedocumentosProd}}'+datosParticipante.rutaFotoPerfil)
+                $("#detFotoPerfil").attr('src','{{rutabasedocumentos}}'+datosParticipante.rutaFotoPerfil)
 
                 if(datosParticipante.rutaDocumentoIdentidad != null){
 
                     $("#detContainer-docIdentidad").show();
-                    $("#detDocumentoIdentidad").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaDocumentoIdentidad);
-                    $("#detDesDocumentoIdentidad").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaDocumentoIdentidad);
+                    $("#detDocumentoIdentidad").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaDocumentoIdentidad);
+                    $("#detDesDocumentoIdentidad").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaDocumentoIdentidad);
                 }else{
                     $("#detContainer-docIdentidad").hide();
                 }
@@ -1521,8 +1521,8 @@
                 if(datosParticipante.rutaConstanciaEstudio != null){
 
                     $("#detContainer-docConsEstudio").show();
-                    $("#detConstEstudio").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaConstanciaEstudio);
-                    $("#detDesConstEstudio").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaConstanciaEstudio);
+                    $("#detConstEstudio").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaConstanciaEstudio);
+                    $("#detDesConstEstudio").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaConstanciaEstudio);
                 }else{
                     $("#detContainer-docConsEstudio").hide();
                 }
@@ -1530,8 +1530,8 @@
                 if(datosParticipante.rutaFichaMedica != null){
 
                     $("#detContainer-docFichVigente").show();
-                    $("#detFichaMedicaVigente").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaFichaMedica);
-                    $("#detDesFichaMedicaVigente").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaFichaMedica);
+                    $("#detFichaMedicaVigente").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaFichaMedica);
+                    $("#detDesFichaMedicaVigente").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaFichaMedica);
                 }else{
                     $("#detContainer-docFichVigente").hide();
                 }
@@ -1539,8 +1539,8 @@
                 if(datosParticipante.rutaFormularioInscripcion != null){
 
                     $("#detContainer-docFormIns").show();
-                    $("#detFormularioInscripcion").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaFormularioInscripcion);
-                    $("#detDesFormularioInscripcion").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaFormularioInscripcion);
+                    $("#detFormularioInscripcion").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaFormularioInscripcion);
+                    $("#detDesFormularioInscripcion").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaFormularioInscripcion);
                 }else{
                     $("#detContainer-docFormIns").hide();
                 }
@@ -1548,8 +1548,8 @@
                 if(datosParticipante.rutaPolizaSeguro != null){
 
                     $("#detContainer-docPolizSegu").show();
-                    $("#detPolizaSeguro").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaPolizaSeguro);
-                    $("#detDesPolizaSeguro").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaPolizaSeguro);  
+                    $("#detPolizaSeguro").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaPolizaSeguro);
+                    $("#detDesPolizaSeguro").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaPolizaSeguro);  
                 }else{
                     $("#detContainer-docPolizSegu").hide();
                 }
@@ -1557,8 +1557,8 @@
                 if( datosParticipante.rutaCertificadoDiscapacidad != null){
 
                     $("#detContainer-docCertDis").show();
-                    $("#detCertificadoDis").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaCertificadoDiscapacidad);
-                    $("#detDesCertificadoDis").attr('href','{{rutabasedocumentosProd}}'+datosParticipante.rutaCertificadoDiscapacidad);
+                    $("#detCertificadoDis").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaCertificadoDiscapacidad);
+                    $("#detDesCertificadoDis").attr('href','{{rutabasedocumentos}}'+datosParticipante.rutaCertificadoDiscapacidad);
                 }else{
                     $("#detContainer-docCertDis").hide();
                 }
